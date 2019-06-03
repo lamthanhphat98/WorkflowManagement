@@ -1,0 +1,126 @@
+<div class="view">
+  <app-home></app-home>
+  <div class="content">
+    <div class="future-checklist">
+      <div class="container">
+        <h2 class="header"><i class="fa fa-users" style="color:silver;border-color: black"></i> My Name </h2>
+        <h3 class="organization">Admin of <span style="color:brown">Organization Name</span></h3>
+        <hr class="line">
+        <p class="description">
+          <b><i class="far fa-lightbulb"></i> Organization:</b>
+          You can create organization to manage all tasks and all members.
+            
+        </p>
+        <h3 class="invite-member">Create new organization</h3>
+        <hr class="line">
+        <div class="invite-user">
+          
+            <div class="row" style="padding-left:170px;">
+                <div class="form-group has-feedback col-sm-7"> 
+                  <!-- ngRepeat: match in matches track by $index -->
+                  <h4 style="font-size: 16px"> You can be an admin of multiple organizations on Workflow 3i and copy templates between them.</h4>
+           
+                </div>
+             
+              <div class="col-sm-4" >
+                  <button (click)="openPopup()"  class="btn btn-success btn-stretch-xs" style="height: 40px;width:150px" > <i class="fa fa-plus"></i> New Organization </button>
+                </div>
+              </div>            
+          
+          <form autocomplete="off" *ngIf="openNewOrganization==true" class="form-inline" (submit)="onSubmit()">
+            <div class="row" style="padding-left:170px;">
+                <div class="form-group has-feedback col-sm-7"> 
+                  <!-- ngRepeat: match in matches track by $index -->
+                <input  id="organization" name="organization" [(ngModel)]="organization.name" placeholder="New Organization" required="true" class="form-control" style="height: 40px;width: 400px;">
+                 
+           
+                </div>
+             
+              <div class="col-sm-3" >
+                  <button (click)="ClearInput()"  class="btn btn-danger btn-stretch-xs" style="height: 40px;width:60px" >Clear </button>
+
+                  <button type="submit"   class="btn btn-success btn-stretch-xs" style="height: 40px;width:60px;margin-left:30px" >OK</button>
+                
+                </div>
+              </div>
+              
+
+
+          </form>
+          
+        </div>
+        <h3 class="invite-member">You have 3 of organization(s)</h3>
+          <hr class="line">
+  
+          
+        <div class="invite-user" style="margin-left: 160px;margin-top: 20px;">
+           <table class="table" style="width: 807px;">
+             <thead>
+                <tr> <th colspan="2"  class="col-md-7"  style="font-size: 20px">NAME</th>
+                  <th width="1" >
+                  </th>
+                   <th width="1" >
+                      <th width="1" >
+                 
+
+                </th>
+                
+              </tr>
+               
+             </thead>
+             <tbody>
+               <tr  style="margin-top:10px;">
+                 <td colspan="2" class="col-md-6" style="font-size: 18px">
+                  asdasdasdasdasdasdasdasdasdasdasdasdasdas
+                 </td>
+                 <td  width="1"  class="col-md-1" style="padding-left:100px;">
+                  
+
+                  </td>
+                 <td  width="1"  class="col-md-1" style="padding-left:100px;">
+                    <button class="btn btn-default">SWITCH</button>
+
+                  </td>
+                  <td  width="1"  class="col-md-2" style="padding-left:70px;">
+                      
+                    <button class="btn btn-transparent"><i class="fa fa-times"></i></button>
+
+                  </td>
+                  
+
+               </tr>
+
+               <tr  style="margin-top:10px;">
+                  <td colspan="2" class="col-md-6" style="font-size: 18px">
+                   asdasdasdasdasdasdasdasdasdasdasdasdasdas
+                  </td>
+                  <td  width="1"  class="col-md-1" style="padding-left:100px;">
+                   
+ 
+                   </td>
+                  <td  width="1"  class="col-md-1" style="padding-left:100px;">
+                     <button class="btn btn-default">SWITCH</button>
+ 
+                   </td>
+                   <td  width="1"  class="col-md-2" style="padding-left:70px;">
+                     <button class="btn btn-transparent"><i class="fa fa-times"></i></button>
+ 
+                   </td>
+                   
+ 
+                </tr>
+              
+
+         
+               
+               
+             </tbody>
+            
+           </table>
+  
+          </div>
+          
+      </div>
+    </div>
+  </div>
+</div>

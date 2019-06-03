@@ -1,0 +1,38 @@
+.content{
+    margin-top:55px;
+    width: 100%;
+    height: 100%;
+}
+div{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    
+}
+.header
+{
+    font-size: 45px;
+    padding-top:30px;
+    padding-left:175px;
+}
+.line
+{
+    text-align: center;
+    
+    width: 70%;
+
+}
+.description
+{
+    color:brown;
+    padding-top:10px;
+    padding-left:175px;
+}
+.createform
+{
+    color: #777777;
+    text-align: right;
+    margin-top: 0px;
+ 
+    
+}
+
+

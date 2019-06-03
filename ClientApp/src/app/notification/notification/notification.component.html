@@ -1,0 +1,49 @@
+<div class="view">
+  <app-home></app-home>
+  <div class="content">
+    <div class="future-checklist">
+      <div class="container">
+                   
+        <div class="invite-user" style="margin-left: 200px;margin-top: 17px;">
+           <table class="table table-hover" style="width: 700px;">
+             <thead class="thead-dark">
+                <tr> <th colspan="2"  class="col-md-7"  style="font-size: 20px">No due date</th>
+                  <th width="2" >
+                   <th width="1" >                
+                </th>              
+              </tr>               
+             </thead>
+             <tbody>
+               <tr  style="margin-top:10px;" *ngFor="let item of this.listComments">
+                 <td colspan="2" class="col-md-6" style="font-size: 18px">
+                  <img src="assets/img/checklist.png" style="width: 25px;height: 31.8px;"/>
+                  <span> {{item.userId}}</span>
+                 </td>
+               
+                 <td  width="2"  class="col-md-2" style="padding-left:80px;">
+                   
+
+                  </td>
+                  <td  width="1"  class="col-md-2" style="padding-left:60px;">
+                    <a href="/commentdetail" title="name" >
+                      <img style="width: 35px;height: 40px;border-radius: 15%" src="http://thinkingstiff.com/images/matt.jpg"/>
+                    </a>
+                   
+
+                  </td>
+                  
+
+               </tr>
+              
+               
+               
+             </tbody>
+            
+           </table>
+  
+          </div>
+          
+      </div>
+    </div>
+  </div>
+</div>

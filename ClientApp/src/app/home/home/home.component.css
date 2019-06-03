@@ -1,0 +1,63 @@
+
+div{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    
+}
+
+#imageUrl
+{
+    width: 30px;
+    height: 25px;
+}
+li>a>span
+{
+    font-size: 17px;
+    color:#EEEEEE;
+    margin-left:10px;
+}
+li>a>img#imageUrl
+{
+    margin-right: 10px;
+   border-radius: 15%;
+    
+}
+.inbox
+{
+    border-radius: 100%;
+    width: 50px;
+    padding-right: 5px;
+
+}
+.logo
+{
+    width: 30px;
+    height: 25px;
+}
+.comment
+{
+    width: 220px;
+    height: 56px;
+  
+}
+li>a>span.inbox
+{
+    
+    font-size: 14px;
+    background-color: #EEEEEE;
+    border-radius: 25%;
+    color:#2C98E3;
+    font: bold;
+   
+}
+
+.sidebar
+{
+    width: 270px;
+    height: 80%;
+}
+.disabled {
+    pointer-events:none;     /* This makes it not clickable */
+    opacity:0.6;    /*This grays it out to look disabled */
+
+        
+}

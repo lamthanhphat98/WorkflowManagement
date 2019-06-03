@@ -1,0 +1,108 @@
+.dashboard{
+    margin-top:55px;
+    width: 100%;
+    height: 100%;
+    float:left;
+ 
+}
+
+.sidebar
+{
+    float:left;
+    width: 330px;
+    height: 745px;
+    background-color: #F8F8F8
+}
+.sidebarright
+{
+    float:left;
+    width: 1370px;
+    height: 745px;
+  
+}
+
+div{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    
+}
+.resource-group.newtemplate
+{
+    padding-left:25px;
+    padding-top:30px;
+}
+.resource-group.item
+{
+    padding-top:15px;
+    padding-left:25px;
+ 
+}
+.maincontent
+{
+    float:right;
+
+ width: 1370px;
+
+}
+.subnavigatebar
+{
+    padding-left:20px;
+   padding-top:25px;
+}
+.homecoming{
+    font-size: 20px;
+    color:silver;
+}
+a, u {
+    text-decoration: none;
+}
+.sub-header
+{
+   
+    padding-left:10px;
+    padding-top:15px;
+}
+.notification
+{
+    padding-left:300px;
+    font-size: 30px;
+
+}
+.cards{
+    padding-left:50px;
+    padding-top:25px;
+}
+.dashboard .card-inner {
+    background-color: #2c98e3;
+    border-radius: 3px;
+    color: #fff;
+    height: 105px;
+    padding: 8px 12px;
+    position: relative;
+    width: 250px;
+}
+.dashboard .card-details-title {
+    float: left;
+    max-width: 100%;
+    overflow: hidden;
+    color:white;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 17px;
+}
+li {
+    list-style-type: none;
+}
+.dashboard .assignments {
+    display: inline-block;
+    height: 32px;
+    margin: 8px 0;
+    padding: 0;
+}
+.eachtemplate
+{
+    width: 1370px;
+    height: 150px;
+}
+
+
+

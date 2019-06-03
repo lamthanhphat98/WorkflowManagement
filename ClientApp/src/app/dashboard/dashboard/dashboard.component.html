@@ -1,0 +1,145 @@
+<div class="view">
+  <app-home></app-home>
+<div class="dashboard" >    
+        
+  <div class="sidebar">
+    
+    <div class="sidebar-scroller">
+      <div class="nano has-scollbar">
+        <div class="nano-content" style="right: -17px">
+          
+         <div class="sidebar-content">
+           
+           <div class="resource-group newtemplate"> 
+             <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
+               <a class="btn btn-success sidebar-add-btn dropdown-toggle" style="background-color: #1BC98E;width: 250px;text-align:left;font-size: 17px">
+                   <i class="fa fa-plus"></i>
+                   New...
+               </a>
+             </div>          
+          </div>
+          <div class="resource-group"> 
+            <div class="resource-group item">
+              <div class="btn-group sidebar-add-btn-group" style="position: relative;">
+                <a class="btn btn-success sidebar-add-btn movingbutton" style="background-color: white;width: 250px;text-align:left;color:black;border-color:silver;font-size: 17px">
+                    <i class="fa fa-user" style="color:black"></i>
+                    Invite members...
+                </a>
+              </div>  
+            </div>        
+           </div>
+           <div class="resource-group"> 
+              <div class="resource-group item">
+                <div class="input-search">
+                <input placeholder="Search..." class="form-control" style="width: 250px;"/>
+              </div>
+              </div>        
+             </div>
+             <div class="resource-group"> 
+              <div class="resource-group item">
+                </div>
+             </div>
+             <div class="resource-group"> 
+              <div class="resource-group item">
+                <a href="" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
+                  <i class="fa fa-home" style="color:silver"></i> <span style="color: silver;padding-left:10px">Home</span>  </a>
+              </div>        
+             </div>
+             <div class="resource-group"> 
+              <div class="resource-group item">
+                <a href="/form" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
+                  <i class="far fa-edit" style="color:silver"></i> <span style="color: silver;padding-left:10px">Form</span>  </a>
+              </div>        
+             </div>
+         </div>
+     
+        </div>
+      </div>
+    </div>
+ 
+ </div>
+ 
+ <div class="maincontent" >
+    <div class="sidebarright">
+      <div class="subnavigatebar " > <a href="" > 
+         <i  class="fa fa-home" style="font-size: 20px;color:silver" ></i><span class="homecoming"> Home</span> </a></div>
+     
+     <!-- template here -->
+     <div *ngFor="let item of listChecklist;let i : index">
+
+
+     <div class="sub-header"> <span class="text-nowrap">
+      <a (click)="item.Show=!item.Show"      
+        class="btn btn-transparent sub-header-toggle-btn"> 
+        <i style="color:#777777"
+         class="fa fa-minus">
+       </i> 
+       </a> 
+       <a href="" 
+         class="btn btn-transparent sub-header-title-btn">
+         <!-- when we have template -->
+          <span  style=" color: #777777;">Your first 'Template'. Click here to get started.
+          </span> <span 
+           class="badge sub-header-title-btn-count">2</span> </a> 
+         </span> <!-- ngIf: $ctrl.template.public -->
+            <a href="" title="Click to edit this template." 
+            class="btn btn-transparent sub-header-manage-btn"> 
+            
+             </a> 
+           </div >  
+               <div class="eachtemplate" *ngIf="item.Show==true">              
+                  <div class="cards" style="float:left">
+                <a href=""  class="card" title="Click to edit this template." >
+                    <div class="card-inner">
+                      <div class="card-detail">
+                          <span class="card-details-title">
+                              Template dau tien cua Phat
+                            </span>
+                        <ul class="assignments">
+                         
+                          <li>
+                            <img [src]="imageUrl" style="width: 35px;height: 35px;"/>
+
+                          </li>
+                        </ul>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar" role="progressbar" style="background-color: greenyellow" [style.width]="value" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>                                     
+                      </div>
+                    </div>
+                </a>
+
+              </div>   
+              <div class="cards"   style="float:left">
+                  <a href="" class="card">
+                      <div class="card-inner">
+                        <div class="card-detail">
+                            <span class="card-details-title">
+                                Template dau tien cua Phat
+                              </span>
+                          <ul class="assignments">
+                           
+                            <li>
+                              <img [src]="imageUrl" style="width: 35px;height: 35px;"/>
+  
+                            </li>
+                          </ul>
+                          <div class="progress" style="height: 10px;">
+                              <div class="progress-bar" role="progressbar" style="background-color: greenyellow" [style.width]="value" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>                                     
+                        </div>
+                      </div>
+                  </a>
+                </div>
+              </div>                 
+            </div>
+
+
+    </div>
+ 
+  </div>
+
+</div>
+
+
+</div>

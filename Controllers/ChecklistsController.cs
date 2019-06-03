@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using EntityContext;
+using WorkflowManagement.Models;
+using System.Data.SqlClient;
+using WorkflowManagement.IService;
+
+namespace WorkflowManagement.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ChecklistsController : ControllerBase
+    {
+        private readonly IChecklistService checklistService;
+
+        public ChecklistsController(IChecklistService _checklistService)
+        {
+            checklistService = _checklistService;
+        }
+
+        // GET: api/Checklists
+        [HttpGet("get/{organizationId}/{userId}")]
+        public IActionResult GetChecklist([FromRoute] int organizationId, string userId)
+        {
+            return Ok(checklistService.getAllChecklist(organizationId, userId));
+        }
+
+       
+
+        
+        [HttpGet("activity/{organizationId}/{userId}")]
+        public IActionResult getActivityLog([FromRoute] int organizationId, string userId)
+        {
+            return Ok(checklistService.getActivityLog(organizationId, userId));
+        }
+    }
+}

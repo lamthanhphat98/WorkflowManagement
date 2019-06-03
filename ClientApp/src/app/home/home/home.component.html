@@ -1,0 +1,65 @@
+<!-- background-color:#2C98E3 -->
+
+
+
+<div class="navbar navbar-default navbar-fixed-top navbar-primary mainbar topbar"
+  style="background-color:#2C98E3;float:left">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav navbar-left">
+        <li>
+            <a href="" >
+              <img class="logo" src="assets/img/logo3i.png"/>
+    
+            </a>
+    
+          </li>
+      <li>
+        <a href="/dashboard">
+          <span class="">Home</span><!-- ngIf: $ctrl.stats.inbox > 0 -->
+
+        </a>
+
+      </li>
+      <li>
+        <a href="/notification" class="comment">
+          <span>Notification <i class="fa fa-bell"></i></span><!-- ngIf: $ctrl.stats.inbox > 0 -->
+          <span class="inbox" style="text-align: right">12</span>
+          <!-- end ngIf: $ctrl.stats.inbox > 0 --> </a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a href="">
+          <span>{{name}}</span><!-- ngIf: $ctrl.stats.inbox > 0 -->
+        </a>
+      </li>
+
+      <!-- <li class="dropdown responsive">
+        <a href="">
+          <img id="imageUrl" [src]="imageUrl" /><b class="caret" style="color: #EEEEEE"></b>
+        </a>
+      </li> -->
+
+      <li class="dropdown responsive">
+        <div class="dropdown" style="margin-top: 10px">
+          <button class="btn btn-default dropdown-toggle" style="background-color: #2C98E3; border: none" type="button" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="true">
+            <img id="imageUrl" [src]="imageUrl" />
+            <b class="caret" style="color: #EEEEEE"></b>
+            <!-- <span class="caret"></span> -->
+          </button>
+          <ul class="dropdown-menu" style="width: 200px" aria-labelledby="dropdownMenu1">
+            <li><a href="#" class="disabled" id={{oragization.id}}> {{oragization.name}}</a></li>      
+            <hr/>
+            <li><a href="/organization">My organizations</a></li>
+            <li><a href="/activity">Activity</a></li>
+            <li><a href="#">Setting</a></li>
+            <li><a href="#">Log out</a></li>
+          </ul>
+        </div>
+      </li>
+
+
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<button (click)="addImage()">ADD IMAGE</button>
+<button (click)="addInput()">ADD INPUT</button>
+<label>{{UserId}}</label>
+
+<form>
+  <div *ngFor="let item of checkList">
+    <input name={{item.id}} *ngIf="item.type === 'input'" [(ngModel)]="item.text"/>
+    <img [src]="item.src" *ngIf="item.type === 'image'"  />
+  
+  </div>
+</form>
