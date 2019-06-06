@@ -15,8 +15,10 @@ import { MemberComponent } from './member/member/member.component';
 import { OrganizationComponent } from './organization/organization/organization.component';
 import { NeworganizationComponent } from './organization/neworganization/neworganization.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatDialogModule} from '@angular/material';
 import { NotificationComponent } from './notification/notification/notification.component';
+import { ChecklistComponent } from './checklist/checklist/checklist.component';
+import { EditComponent } from './checklist/edit/edit.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 const  config = new  AuthServiceConfig([
 {
@@ -57,6 +59,16 @@ const routes :Routes = [
   {
     path:"notification",component:NotificationComponent
   }
+  ,
+  {
+    path:"checklist",component:ChecklistComponent
+  } ,
+  {
+    path:"edit/:id",component:EditComponent
+  } ,
+  {
+    path:"edit",component:EditComponent
+  }
 ]
 export function providerConfig()
 {
@@ -74,7 +86,9 @@ export function providerConfig()
     MemberComponent,
     OrganizationComponent,
     NeworganizationComponent,
-    NotificationComponent
+    NotificationComponent,
+    ChecklistComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +97,8 @@ export function providerConfig()
     HttpClientModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
-    MatDialogModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
 
   ],
   entryComponents:[NeworganizationComponent],
