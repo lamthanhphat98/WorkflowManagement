@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NeworganizationComponent } from '../neworganization/neworganization.component';
-import { MatDialog } from '@angular/material';
+
 import { Organization } from 'src/app/model/organization';
 import { OrganizationService } from 'src/app/service/organization.service';
 
