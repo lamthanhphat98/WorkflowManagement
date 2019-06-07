@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   title = 'app';
   public socialUser:any = SocialUser;
-  public user:User = {id:'',email:'',name:'',type:'',phone:''};
+  public user:User = {id:'',email:'',name:'',type:'',phone:'',avatar:''};
   constructor(private service : AuthService,private userService:UserServiceService,private route:Router) { }
 
   ngOnInit() {

@@ -18,8 +18,7 @@ namespace EntityContext
 
         public virtual DbSet<Checklist> Checklist { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
-        public virtual DbSet<Form> Form { get; set; }
-        public virtual DbSet<FormCategory> FormCategory { get; set; }
+        public virtual DbSet<ContentDetail> ContentDetail { get; set; }
         public virtual DbSet<Organization> Organization { get; set; }
         public virtual DbSet<TaskItem> TaskItem { get; set; }
         public virtual DbSet<TaskMember> TaskMember { get; set; }
@@ -80,23 +79,16 @@ namespace EntityContext
                     .HasConstraintName("FK_Comment_User");
             });
 
-            modelBuilder.Entity<Form>(entity =>
+            modelBuilder.Entity<ContentDetail>(entity =>
             {
-                entity.HasIndex(e => e.CategoryId)
-                    .HasName("IX_Form")
-                    .IsUnique();
-
-                entity.HasOne(d => d.Category)
-                    .WithOne(p => p.Form)
-                    .HasForeignKey<Form>(d => d.CategoryId)
-                    .HasConstraintName("FK_Form_FormCategory1");
-            });
-
-            modelBuilder.Entity<FormCategory>(entity =>
-            {
-                entity.Property(e => e.Title).HasMaxLength(250);
+                entity.Property(e => e.ImageSrc).HasMaxLength(250);
 
                 entity.Property(e => e.Type).HasMaxLength(50);
+
+                entity.HasOne(d => d.TaskItem)
+                    .WithMany(p => p.ContentDetail)
+                    .HasForeignKey(d => d.TaskItemId)
+                    .HasConstraintName("FK_ContentDetail_TaskItem");
             });
 
             modelBuilder.Entity<Organization>(entity =>
@@ -121,11 +113,6 @@ namespace EntityContext
                     .WithMany(p => p.TaskItem)
                     .HasForeignKey(d => d.ChecklistId)
                     .HasConstraintName("FK_Task_Checklist");
-
-                entity.HasOne(d => d.Form)
-                    .WithMany(p => p.TaskItem)
-                    .HasForeignKey(d => d.FormId)
-                    .HasConstraintName("FK_Task_Form");
             });
 
             modelBuilder.Entity<TaskMember>(entity =>

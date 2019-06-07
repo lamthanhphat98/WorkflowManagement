@@ -71,8 +71,7 @@ namespace WorkflowManagement
             });
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IFormCategoryRepository, FormCategoryRepository>();
-            services.AddTransient<IFormCategoryService, FormCategoryService>();
+   
             services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IUserOrganizationRepository, UserOrganizationRepository>();

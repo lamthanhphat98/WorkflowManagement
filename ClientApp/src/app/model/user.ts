@@ -5,4 +5,5 @@ export class User
     email:string;
     type:string;
     phone:string;
+    avatar:string;
 }

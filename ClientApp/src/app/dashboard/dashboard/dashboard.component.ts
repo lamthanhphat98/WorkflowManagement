@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChecklistDashboard } from 'src/app/model/checklistdashboard';
 import { DashboardService } from 'src/app/service/dashboard.service';
+import { Checklist } from 'src/app/model/activity';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,8 @@ export class DashboardComponent implements OnInit {
   show=false;
   organizationId:number;
   userId:string;
+  allList:ChecklistDashboard[]=[];
+  listTemplate:ChecklistDashboard[]=[];
   listChecklist : ChecklistDashboard[] = [];
   constructor(private dashboardSerivce : DashboardService) { }
 
@@ -22,19 +25,46 @@ export class DashboardComponent implements OnInit {
     this.userId = JSON.parse(localStorage.getItem("UserId"));
     this.imageUrl=JSON.parse(localStorage.getItem("ImageUrl"));
     this.value="50%";
-    this.getChecklists(this.organizationId,this.userId);
+    this.loadAllChecklists(this.organizationId,this.userId);
+
+    setTimeout(() => {
+      this.getTemplates();
+    }, 300);
+    setTimeout(() => {
+      this.getChecklists();
+      
+    }, 300);
+    //console.log(this.listTemplate);
+    
+
   }
   minus()
   {
    this.show=!this.show;
   }
-  getChecklists(organizationId,userId)
+  loadAllChecklists(organizationId,userId)
   {
     this.dashboardSerivce.getChecklist(organizationId,userId).subscribe(res=>{
-      this.listChecklist=res as ChecklistDashboard[];
-      console.log(res);
-    })
-
+      this.allList=res as ChecklistDashboard[];  });
   }
+  getChecklists()
+  {
+  
+    this.listChecklist = this.allList.filter((res: any)=>{
+      return res.templateId !==null ;
+    });
+  
+ 
+  }
+
+  getTemplates()
+  {
+    this.listTemplate = this.allList.filter((res: any)=>{
+      return res.templateId === null;
+    });
+
+    console.log(this.listTemplate);
+  }
+
 
 }

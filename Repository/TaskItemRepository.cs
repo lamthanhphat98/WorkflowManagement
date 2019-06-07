@@ -22,15 +22,15 @@ namespace WorkflowManagement.Repository
         {
             var task = new TaskItem();
             task.ChecklistId = taskItem.ChecklistId;
-            task.FormId = taskItem.FormId;
+          //  task.FormId = taskItem.FormId;
             task.DueTime = DateTime.ParseExact(taskItem.DueTime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
             //task.DueTime = Convert.ToDateTime(taskItem.DueTime);
 
             task.Name = taskItem.Name;
             task.Priority = taskItem.Priority;
             task.TaskStatus = taskItem.TaskStatus;
-            task.FormSubmitted = taskItem.FormSubmitted;
-            task.FormId = taskItem.FormId;
+           // task.FormSubmitted = taskItem.FormSubmitted;
+           // task.FormId = taskItem.FormId;
             context.TaskItem.Add(task);
             context.SaveChanges();
 

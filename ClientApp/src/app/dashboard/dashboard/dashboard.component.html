@@ -21,7 +21,7 @@
           <div class="resource-group"> 
             <div class="resource-group item">
               <div class="btn-group sidebar-add-btn-group" style="position: relative;">
-                <a class="btn btn-success sidebar-add-btn movingbutton" style="background-color: white;width: 250px;text-align:left;color:black;border-color:silver;font-size: 17px">
+                <a (click)="getTemplates()" class="btn btn-success sidebar-add-btn movingbutton" style="background-color: white;width: 250px;text-align:left;color:black;border-color:silver;font-size: 17px">
                     <i class="fa fa-user" style="color:black"></i>
                     Invite members...
                 </a>
@@ -65,16 +65,19 @@
          <i  class="fa fa-home" style="font-size: 20px;color:silver" ></i><span class="homecoming"> Home</span> </a></div>
      
      <!-- template here -->
-     <div *ngFor="let item of listChecklist;let i : index">
-
-
+     <ng-container *ngFor="let template of listTemplate">     
+     <div >
      <div class="sub-header"> <span class="text-nowrap">
-      <a (click)="item.Show=!item.Show"      
+      <a (click)="template.Show=!template.Show"      
         class="btn btn-transparent sub-header-toggle-btn"> 
         <i style="color:#777777"
-         class="fa fa-minus">
+         class="fa fa-minus" *ngIf="template.Show==true">
        </i> 
+       <i style="color:#777777"
+       class="fa fa-plus" *ngIf="template.Show==false">
+     </i> 
        </a> 
+  
        <a href="" 
          class="btn btn-transparent sub-header-title-btn">
          <!-- when we have template -->
@@ -83,11 +86,12 @@
            class="badge sub-header-title-btn-count">2</span> </a> 
          </span> <!-- ngIf: $ctrl.template.public -->
             <a href="" title="Click to edit this template." 
-            class="btn btn-transparent sub-header-manage-btn"> 
-            
+            class="btn btn-transparent sub-header-manage-btn">           
              </a> 
-           </div >  
-               <div class="eachtemplate" *ngIf="item.Show==true">              
+           </div >        
+               <div  class="eachtemplate" *ngIf="template.Show==true">   
+                 <ng-container *ngFor="let item of listChecklist;let i = index">
+                  <ng-container *ngIf="template.id===item.templateId">           
                   <div class="cards" style="float:left">
                 <a href=""  class="card" title="Click to edit this template." >
                     <div class="card-inner">
@@ -110,29 +114,11 @@
                 </a>
 
               </div>   
-              <div class="cards"   style="float:left">
-                  <a href="" class="card">
-                      <div class="card-inner">
-                        <div class="card-detail">
-                            <span class="card-details-title">
-                                Template dau tien cua Phat
-                              </span>
-                          <ul class="assignments">
-                           
-                            <li>
-                              <img [src]="imageUrl" style="width: 35px;height: 35px;"/>
-  
-                            </li>
-                          </ul>
-                          <div class="progress" style="height: 10px;">
-                              <div class="progress-bar" role="progressbar" style="background-color: greenyellow" [style.width]="value" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>                                     
-                        </div>
-                      </div>
-                  </a>
-                </div>
-              </div>                 
+            </ng-container>  
+          </ng-container>         
+              </div>                     
             </div>
+       </ng-container>
 
 
     </div>
