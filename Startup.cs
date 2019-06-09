@@ -43,14 +43,13 @@ namespace WorkflowManagement
             //database azure
             //  services.AddDbContext<WorkflowContext>(options =>
             //options.UseSqlServer("Server=tcp:workflow3idbserver.database.windows.net," +
-            //"1433; Initial Catalog = WorkflowManegement; Persist Security Info = False; User ID = workflowadmin; Password = faker01@123;" +
+            //"1433; Initial Catalog = Workflow3i; Persist Security Info = False; User ID = workflowadmin; Password = faker01@123;" +
             //"MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30; "));
             // => Localhost database
-            services.AddDbContext<WorkflowContext>(options =>
+             services.AddDbContext<WorkflowContext>(options =>
              options.UseSqlServer("Server = PHATLTSE62882\\SQLEXPRESS; Database = Workflow; Trusted_Connection = True;"));
-
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -71,8 +70,7 @@ namespace WorkflowManagement
             });
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IFormCategoryRepository, FormCategoryRepository>();
-            services.AddTransient<IFormCategoryService, FormCategoryService>();
+   
             services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IUserOrganizationRepository, UserOrganizationRepository>();

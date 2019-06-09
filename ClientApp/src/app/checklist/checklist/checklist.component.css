@@ -105,20 +105,15 @@ li {
     width: 1370px;
     height: 150px;
 }
-.rightside
-{
-    padding-left:10px;
-    float:left;
-    width: 100px;
-}
+
 .rightsubnavigate
 {
-width: 100px;
+
 }
 .rightsidebar
 {
     border-left:1px solid silver;
-    margin-left:150px;
+    margin-right:150px;
     float:left;
     width: 295px;
     height: 745px;
@@ -294,4 +289,26 @@ width: 100px;
     display: inline; 
     padding: 1px;
     vertical-align: middle;
+}
+
+.widgets-scroller{
+    float:left;
+    height: 100%;
+    
+    overflow-y: scroll;
+
+}
+.maincontent
+{
+    float:left;
+
+ width: 850px;
+
+}
+.rightside
+{
+    
+    float:left;
+    width: 100px;
+   
 }

@@ -8,6 +8,7 @@ namespace WorkflowManagement.Models
         public TaskItem()
         {
             Comment = new HashSet<Comment>();
+            ContentDetail = new HashSet<ContentDetail>();
             TaskMember = new HashSet<TaskMember>();
         }
 
@@ -16,13 +17,11 @@ namespace WorkflowManagement.Models
         public string Name { get; set; }
         public DateTime? DueTime { get; set; }
         public int? Priority { get; set; }
-        public int? FormId { get; set; }
-        public string FormSubmitted { get; set; }
         public string TaskStatus { get; set; }
 
         public Checklist Checklist { get; set; }
-        public Form Form { get; set; }
         public ICollection<Comment> Comment { get; set; }
+        public ICollection<ContentDetail> ContentDetail { get; set; }
         public ICollection<TaskMember> TaskMember { get; set; }
     }
 }

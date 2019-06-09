@@ -4,8 +4,32 @@
 
 <form>
   <div *ngFor="let item of checkList">
-    <input name={{item.id}} *ngIf="item.type === 'input'" [(ngModel)]="item.text"/>
-    <img [src]="item.src" *ngIf="item.type === 'image'"  />
+	  <div *ngIf="item.type === 'input'" >
+
+	 <div>
+
+	
+    <input name={{item.id}} [(ngModel)]="item.text"/>
+
+</div>
+<div>
+	<button class="btn btn-success">OK</button>
+</div>
+</div>
+<div *ngIf="item.type === 'image'" >
+
+		<div>
+   
+	   
+	
+	   <img [src]="item.src" *ngIf="item.type === 'image'"  />
+   </div>
+   <div>
+	   <button class="btn btn-success">OK</button>
+   </div>
+   </div>
   
   </div>
 </form>
+
+

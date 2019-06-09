@@ -11,16 +11,18 @@ export class TestComponent implements OnInit {
   checkList: model[];
    UserId:string;
   constructor() { 
-    this.checkList = [
-      {id:0,src:'',text:'def',type:''}
-    ];
+  
     this.UserId = localStorage.getItem("UserId").toString();
   }
 
   ngOnInit() {
+    this.checkList = [
+      {id:0,src:'',text:'def',type:''}
+    ];
   }
 
   addImage(){
+    
     var id =this.checkList.length-1;
     var model:model = {id:id++,src:'/assets/img/default-2.jpg',type:'image',text:''};
     this.checkList.push(model);
