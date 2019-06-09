@@ -1,12 +1,14 @@
+import { Content } from './contentdetail';
+
+
 export class TaskViewModel
 {
-          Id : number;
-          ChecklistId :number;
-          Name :string;
-          DueTime :string;
-          Priority :number;
-          FormId :number;
-          FormSubmitted:string; 
-          TaskStatus :string;
-          UserId :string[];
+          id : number;
+          checklistId :number;
+          name :string;
+          dueTime :string;
+          priority :number;         
+          taskStatus :string;
+          userId :string[];
+          contentDetail:Content[];
 }

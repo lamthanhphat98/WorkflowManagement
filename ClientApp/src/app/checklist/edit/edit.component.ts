@@ -41,7 +41,7 @@ export class EditComponent implements OnInit {
   listMember:User[]=[];
   listUser:User[]=[{id:'',email:'',name:'',phone:'',type:'',avatar:''}];
   organizationId:number;
-  taskViewModel:TaskViewModel={Id:0,ChecklistId:2,DueTime:"",FormId:1,FormSubmitted:"",Name:'',Priority:1,TaskStatus:'',UserId:[]};
+  taskViewModel:TaskViewModel={id:0,checklistId:2,dueTime:"",name:'',priority:1,taskStatus:'',userId:[],contentDetail:[]};
   constructor(private router: ActivatedRoute,private taskItemService:TaskitemService,private memberService:MemberService) { }
 
   ngOnInit() {
@@ -91,8 +91,8 @@ export class EditComponent implements OnInit {
     const d = new Date(this.datetime.toString()); 
     console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
     console.log(d);
-    console.log(this.taskViewModel.DueTime);
-    this.taskViewModel.DueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss"); 
+    console.log(this.taskViewModel.dueTime);
+    this.taskViewModel.dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss"); 
         //console.log(this.listUser);
     this.taskItemService.postTask(this.taskViewModel).subscribe(res=>{
       console.log(res);

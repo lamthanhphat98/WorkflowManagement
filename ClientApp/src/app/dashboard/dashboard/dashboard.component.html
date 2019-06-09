@@ -12,7 +12,7 @@
            
            <div class="resource-group newtemplate"> 
              <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
-               <a class="btn btn-success sidebar-add-btn dropdown-toggle" style="background-color: #1BC98E;width: 250px;text-align:left;font-size: 17px">
+               <a class="btn btn-success sidebar-add-btn dropdown-toggle" data-toggle="modal" data-target="#exampleModal"  style="background-color: #1BC98E;width: 250px;text-align:left;font-size: 17px">
                    <i class="fa fa-plus"></i>
                    New...
                </a>
@@ -41,7 +41,7 @@
              </div>
              <div class="resource-group"> 
               <div class="resource-group item">
-                <a href="" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
+                <a href="/dashboard" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
                   <i class="fa fa-home" style="color:silver"></i> <span style="color: silver;padding-left:10px">Home</span>  </a>
               </div>        
              </div>
@@ -61,7 +61,7 @@
  
  <div class="maincontent" >
     <div class="sidebarright">
-      <div class="subnavigatebar " > <a href="" > 
+      <div class="subnavigatebar " > <a href="/dashboard" > 
          <i  class="fa fa-home" style="font-size: 20px;color:silver" ></i><span class="homecoming"> Home</span> </a></div>
      
      <!-- template here -->
@@ -127,5 +127,32 @@
 
 </div>
 
-
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"  id="exampleModalLabel">
+          What should this new template be called ? 
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span style="font-size: 18px;">
+            This template will be created in the folder Home.
+        </span>
+  
+        <div class="input-search">
+          <input placeholder="Blank template..." [(ngModel)]="templateName" class="form-control" style="width: 500px;"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="newTemplate()">OK</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 </div>

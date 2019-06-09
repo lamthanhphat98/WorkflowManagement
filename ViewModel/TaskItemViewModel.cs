@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WorkflowManagement.Models;
 
 namespace WorkflowManagement.ViewModel
 {
@@ -16,5 +17,7 @@ namespace WorkflowManagement.ViewModel
         public string FormSubmitted { get; set; }
         public string TaskStatus { get; set; }
         public ICollection<String> UserId { get; set; }
+        public ICollection<ContentDetail> contentDetails { get; set; }
+
     }
 }

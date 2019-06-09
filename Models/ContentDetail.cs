@@ -11,6 +11,7 @@ namespace WorkflowManagement.Models
         public string ImageSrc { get; set; }
         public int? TaskItemId { get; set; }
         public int? OrderContent { get; set; }
+        public string Label { get; set; }
 
         public TaskItem TaskItem { get; set; }
     }

@@ -29,14 +29,18 @@ namespace WorkflowManagement.Controllers
         {
             return Ok(checklistService.getAllChecklist(organizationId, userId));
         }
-
-       
-
-        
+      
         [HttpGet("activity/{organizationId}/{userId}")]
         public IActionResult getActivityLog([FromRoute] int organizationId, string userId)
         {
             return Ok(checklistService.getActivityLog(organizationId, userId));
         }
+        [HttpPost("template")]
+        public IActionResult postTemplate([FromBody] Checklist template)
+        {
+            var result = checklistService.addTemplate(template);
+            return Ok(result);
+        }
+
     }
 }

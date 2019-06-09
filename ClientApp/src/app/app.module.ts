@@ -19,6 +19,8 @@ import { NotificationComponent } from './notification/notification/notification.
 import { ChecklistComponent } from './checklist/checklist/checklist.component';
 import { EditComponent } from './checklist/edit/edit.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TemplateComponent } from './checklist/template/template.component';
+
 
 const  config = new  AuthServiceConfig([
 {
@@ -32,6 +34,9 @@ const  config = new  AuthServiceConfig([
 ],false);
 
 const routes :Routes = [
+  {
+    path:"",component:LoginComponent
+  },
   {
     path:'test',component:TestComponent
   },
@@ -68,6 +73,12 @@ const routes :Routes = [
   } ,
   {
     path:"edit",component:EditComponent
+  } ,
+  {
+    path:"template",component:TemplateComponent
+  },
+  {
+    path:"template/:id",component:TemplateComponent
   }
 ]
 export function providerConfig()
@@ -88,7 +99,9 @@ export function providerConfig()
     NeworganizationComponent,
     NotificationComponent,
     ChecklistComponent,
-    EditComponent
+    EditComponent,
+    TemplateComponent,
+
   ],
   imports: [
     BrowserModule,

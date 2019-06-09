@@ -18,6 +18,11 @@ namespace WorkflowManagement.Service
             checklistRepository = _checklistRepository;
         }
 
+        public Checklist addTemplate(Checklist template)
+        {
+            return checklistRepository.addTemplate(template);
+        }
+
         public List<Checklist> getActivityLog(int organizationId, string userId)
         {
             return checklistRepository.getActivityLog(organizationId, userId);

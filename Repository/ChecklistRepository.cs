@@ -47,5 +47,13 @@ namespace WorkflowManagement.Repository
             var activityLog = _context.Checklist.FromSql("EXECUTE dbo.getActivityLog @organizationId,@userId", id, user).ToList();
             return activityLog;
         }
+        public Checklist addTemplate(Checklist template)
+        {
+            template.TimeCreated = DateTime.Now;
+            _context.Checklist.Add(template);
+            _context.SaveChanges();
+            return _context.Checklist.Where(t => t.TimeCreated.Equals(template.TimeCreated) && t.UserId.Equals(template.UserId)).FirstOrDefault();
+
+        }
     }
 }
