@@ -16,6 +16,10 @@ namespace Service
         {
             userRepository = _userRepository;
         }
+        public bool addAdmin(User user)
+        {
+            return userRepository.addAdmin(user);
+        }
         public bool addUser(User user)
         {
             return userRepository.addUser(user);

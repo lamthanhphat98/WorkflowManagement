@@ -9,5 +9,6 @@ namespace WorkflowManagement.IRepository
     public interface ITaskItemRepository
     {
         void addNewTaskItem(TaskItemViewModel taskItem);
+        void addListTaskItem(List<TaskItemViewModel> taskItem);
     }
 }

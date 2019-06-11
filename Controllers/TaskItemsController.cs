@@ -22,10 +22,7 @@ namespace WorkflowManagement.Controllers
         {
             taskItemService = _taskItemService;
         }
-
-
-       
-       
+   
         // POST: api/TaskItems
         [HttpPost]
         public IActionResult PostTaskItem([FromBody] TaskItemViewModel taskItem)
@@ -33,6 +30,14 @@ namespace WorkflowManagement.Controllers
             taskItemService.addNewTaskItem(taskItem);
             return Ok(taskItem);
         }
+
+        [HttpPost("template")]
+        public IActionResult PostListTaskItem([FromBody] List<TaskItemViewModel> taskItem)
+        {
+            taskItemService.addListTaskItem(taskItem);
+            return Ok(taskItem);
+        }
+
 
     }
 }

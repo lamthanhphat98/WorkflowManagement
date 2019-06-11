@@ -13,6 +13,7 @@ namespace IRepository
         List<User> getListUser();
         User findUser(string UserId);
         Boolean addUser(User user);
+        Boolean addAdmin(User user);
         Boolean update(string user, User inforChange);
         Boolean delete(string user);
         string sendVerifyCode(string user);

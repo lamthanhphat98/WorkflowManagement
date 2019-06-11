@@ -27,7 +27,7 @@ namespace Workflow.Controllers
         public IActionResult getMemberByChecklist(int checklistId)
         {
             var result = taskMemberService.getMemberByChecklist(checklistId);
-            return Ok();
+            return Ok(result);
         }
     }
 }

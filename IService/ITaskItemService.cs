@@ -10,6 +10,8 @@ namespace WorkflowManagement.IService
     {
 
         void addNewTaskItem(TaskItemViewModel taskItem);
+        void addListTaskItem(List<TaskItemViewModel> taskItem);
+
 
     }
 }

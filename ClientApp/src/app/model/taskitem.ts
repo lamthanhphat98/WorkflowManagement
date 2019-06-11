@@ -1,4 +1,5 @@
 import { Content } from './contentdetail';
+import { User } from './user';
 
 
 export class TaskViewModel
@@ -9,6 +10,6 @@ export class TaskViewModel
           dueTime :string;
           priority :number;         
           taskStatus :string;
-          userId :string[];
-          contentDetail:Content[];
+          userId :User[];
+          contentDetails:Content[];
 }

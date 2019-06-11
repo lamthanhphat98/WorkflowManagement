@@ -41,7 +41,7 @@ export class EditComponent implements OnInit {
   listMember:User[]=[];
   listUser:User[]=[{id:'',email:'',name:'',phone:'',type:'',avatar:''}];
   organizationId:number;
-  taskViewModel:TaskViewModel={id:0,checklistId:2,dueTime:"",name:'',priority:1,taskStatus:'',userId:[],contentDetail:[]};
+  taskViewModel:TaskViewModel={id:0,checklistId:2,dueTime:"",name:'',priority:1,taskStatus:'',userId:[],contentDetails:[]};
   constructor(private router: ActivatedRoute,private taskItemService:TaskitemService,private memberService:MemberService) { }
 
   ngOnInit() {
@@ -101,18 +101,13 @@ export class EditComponent implements OnInit {
   }
   addMemberToTask(user:User)
   {
-   // console.log(user);
-   //array.find
-   //var user = this.listMember.find(res=>res.id===user.id);
-   //array.filter
    var userFilter = this.listMember.filter(res=>res.id===user.id)[0];
    if(user !==userFilter)
    {
     this.listMember.push(user);
-    console.log(this.listMember);
-   }
-   
     
+    console.log(this.listMember);
+   } 
   }
  
 

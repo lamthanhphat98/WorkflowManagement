@@ -19,16 +19,29 @@ namespace Repository
         {
             context = _context; 
         }
-        public bool addUser(User user)
+        public bool addAdmin(User user) // đây
         {
             
             if (context.User.Add(user)!=null)
             {
-                context.SaveChanges();
+                user.Role = "ADMIN"; // role này là của Database role của token nó khác nữa
+                context.SaveChanges();              
                 return true;
             };
             return false;
            
+        }
+        public bool addUser(User user)
+        {
+
+            if (context.User.Add(user) != null)
+            {
+                user.Role = "USER";
+                context.SaveChanges();
+                return true;
+            };
+            return false;
+
         }
 
         public bool delete(string user)

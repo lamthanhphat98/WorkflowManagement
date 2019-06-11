@@ -11,7 +11,7 @@ export class UserServiceService {
   constructor(private http:HttpClient) { }
   addUser(user:User)
   {
-    return this.http.post("https://localhost:44306/api"+"/Users/",user);
+    return this.http.post("https://localhost:44306/api"+"/Users/login/admin",user);
   }
   
 }

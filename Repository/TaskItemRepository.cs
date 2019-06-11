@@ -35,5 +35,54 @@ namespace WorkflowManagement.Repository
             context.SaveChanges();
 
         }
+        public void addListTaskItem(List<TaskItemViewModel> taskItem)
+        {
+          
+
+            foreach (var item in taskItem)
+            {
+                List<ContentDetail> contentDetails = new List<ContentDetail>();
+                List<TaskMember> taskMembers = new List<TaskMember>();
+                TaskItem task = new TaskItem();
+                task.ChecklistId = item.ChecklistId;
+                task.DueTime = DateTime.ParseExact(item.DueTime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                task.Name = item.Name;
+                task.Priority = item.Priority;
+                task.TaskStatus = item.TaskStatus;
+                context.TaskItem.Add(task);
+                context.SaveChanges();
+                var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime)).FirstOrDefault();
+                foreach (var content in item.ContentDetails)
+                {
+                    if(content.Id!=0)
+                    {
+                        ContentDetail detail = new ContentDetail();
+                        detail.ImageSrc = content.ImageSrc;
+                        detail.Label = content.Label;
+                        detail.OrderContent = content.OrderContent;
+                        detail.TaskItemId = getTask.Id;
+                        detail.Text = content.Text;
+                        detail.Type = content.Type;
+                        contentDetails.Add(detail);
+                    }
+                  
+
+                }
+                foreach (var user in item.UserId)
+                {
+                    
+                    TaskMember member = new TaskMember();
+                    member.UserId = user.Id;
+                    member.TaskId = getTask.Id;
+                    taskMembers.Add(member);                   
+                }
+                context.ContentDetail.AddRange(contentDetails);
+                context.TaskMember.AddRange(taskMembers);
+                context.SaveChanges();
+
+                //context.Task
+            }
+        }
+
     }
 }

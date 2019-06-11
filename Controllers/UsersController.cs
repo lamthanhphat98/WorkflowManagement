@@ -9,6 +9,10 @@ using IService;
 using WorkflowManagement.Models;
 using System.Net.Http;
 using EntityContext;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Controllers
 {
@@ -38,14 +42,84 @@ namespace Controllers
             var user = userService.findUser(id);
             return Ok(user);
         }
-        [HttpPost]
-        public void Post([FromBody] User user)
+
+        [HttpPost("login/admin")]
+        public IActionResult PostAdmin([FromBody] User user)
+        {
+            if (userService.findUser(user.Id) == null)
+            {
+                if (userService.addAdmin(user) == false)
+                {
+                    return BadRequest("Cannot login");
+                }
+                var claim = new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub,user.Name)
+                       //chỗ này tít chờ đăng ký role này nhưng của e chưa set vì e đang test mấy cái api kia trước
+                    };
+                var token = new JwtSecurityToken(issuer: "http://www.security.org",
+                    audience: "http://www.security.org",
+                    expires: DateTime.UtcNow.AddMinutes(60),
+
+                    signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
+                    );
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+
+            }
+            else
+            {
+                var claim = new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub,user.Name)
+                    };
+                var token = new JwtSecurityToken(issuer: "http://www.security.org",
+                    audience: "http://www.security.org",
+                    expires: DateTime.UtcNow.AddMinutes(60),
+                    signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
+                    );
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+
+            }
+
+
+        }
+        [HttpPost("login/user")]
+        public IActionResult PostUser([FromBody] User user)
         {
             if(userService.findUser(user.Id)==null)
             {
-                userService.addUser(user);
-             
-            }                    
+                if (userService.addUser(user)==false)
+                {
+                    return BadRequest("Cannot login");
+                }
+                var claim = new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub,user.Name)
+                    };
+                var token = new JwtSecurityToken(issuer: "http://www.security.org",
+                    audience: "http://www.security.org",
+                    expires: DateTime.UtcNow.AddMinutes(60),
+                    signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
+                    );
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+
+            }
+            else
+            {
+                var claim = new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub,user.Name)
+                    };
+                var token = new JwtSecurityToken(issuer: "http://www.security.org",
+                    audience: "http://www.security.org",
+                    expires: DateTime.UtcNow.AddMinutes(60),
+                    signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
+                    );
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+
+            }
+    
+
         }
         [HttpGet("getverifycode/{id}")]
         public IActionResult GetVerifyCode([FromRoute] string id)
@@ -60,14 +134,14 @@ namespace Controllers
             //"&ApiKey=623DF6834DF711DA8DB915DA94CDCB" +
             //"&SecretKey=01D9247C207CE8E2E66FE40E516136" +
             //"&SmsType=3";
-            //String url = "http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get?" +
-            //   "Phone=0932018265&Content=" + code +
-            //   "&ApiKey=623DF6834DF711DA8DB915DA94CDCB" +
-            //   "&SecretKey=01D9247C207CE8E2E66FE40E516136" +
-            //   "&SmsType=3";
+            String url = "http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get?" +
+               "Phone="+user.Phone+"&Content=" + code +
+               "&ApiKey=623DF6834DF711DA8DB915DA94CDCB" +
+               "&SecretKey=01D9247C207CE8E2E66FE40E516136" +
+               "&SmsType=3";
             ////String fakeJson = "https://jsonplaceholder.typicode.com/todos/1";
             //var result = userService.getResponse(url);
-            return Ok();
+            return Ok(code);
         }
 
         [HttpGet("verifycode/{userid}/{code}")]
