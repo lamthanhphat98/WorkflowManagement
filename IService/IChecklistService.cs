@@ -12,5 +12,7 @@ namespace WorkflowManagement.IService
         List<ChecklistViewModel> getAllChecklist(int organizationId, string userId);
         List<Checklist> getActivityLog(int organizationId, string userId);
         Checklist addTemplate(Checklist template);
+        TemplateViewModel getTemplate(int organizationId, String userId, int templateId);
+
     }
 }

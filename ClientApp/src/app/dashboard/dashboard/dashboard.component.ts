@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
     this.organizationId =JSON.parse(localStorage.getItem("OrganizationId"));
     this.userId = JSON.parse(localStorage.getItem("UserId"));
     this.imageUrl=JSON.parse(localStorage.getItem("ImageUrl"));
-    this.value="50%";
+   
     this.loadAllChecklists(this.organizationId,this.userId);
 
     setTimeout(() => {
@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
     }, 300);
     setTimeout(() => {
       this.getChecklists();
+      console.log(this.listChecklist);
       
     }, 300);
     //console.log(this.listTemplate);

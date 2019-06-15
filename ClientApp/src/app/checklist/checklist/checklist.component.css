@@ -37,13 +37,7 @@ div{
     padding-left:25px;
  
 }
-.maincontent
-{
-    float:left;
 
- width: 1000px;
-
-}
 .subnavigatebar
 {
     padding-left:0px;
@@ -106,10 +100,7 @@ li {
     height: 150px;
 }
 
-.rightsubnavigate
-{
 
-}
 .rightsidebar
 {
     border-left:1px solid silver;
@@ -184,6 +175,7 @@ li {
 .task-list-item .step-number-container {
     display: -webkit-box;
     display: -moz-box;
+   
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flexbox;
@@ -240,7 +232,7 @@ li {
 .task-list-item .step-checkbox-container {
     display: -webkit-box;
     display: -moz-box;
-   
+ 
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flexbox;
@@ -290,7 +282,23 @@ li {
     padding: 1px;
     vertical-align: middle;
 }
-
+.task-bar-container {
+    margin: 0 auto 30px;
+    max-width: 700px;
+    padding: 0 30px;
+}
+.task-bar-container .task-bar-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 5px 0;
+}
+ .task-bar-template-cell {
+    padding-right: 5px;
+}
+.template-task-assigner {
+    display: inline-flex;
+}
 .widgets-scroller{
     float:left;
     height: 100%;

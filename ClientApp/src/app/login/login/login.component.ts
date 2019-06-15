@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       this.user.phone='';
       localStorage.setItem("UserId",JSON.stringify(this.user.id));
       localStorage.setItem("Name",JSON.stringify(this.user.name));
-      localStorage.setItem("TOKEN",JSON.stringify(userData.token));
+      localStorage.setItem("Token",JSON.stringify(userData.token));
       localStorage.setItem("ImageUrl",JSON.stringify(userData.photoUrl));
       this.userService.addUser(this.user).subscribe(res=>console.log(res));
       this.route.navigateByUrl("/dashboard");

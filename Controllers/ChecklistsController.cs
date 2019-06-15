@@ -41,6 +41,11 @@ namespace WorkflowManagement.Controllers
             var result = checklistService.addTemplate(template);
             return Ok(result);
         }
+        [HttpGet("template/{organizationId}/{templateId}/{userId}")]
+        public IActionResult getActivityLog([FromRoute] int organizationId,int templateId, string userId)
+        {
+            return Ok(checklistService.getTemplate(organizationId, userId, templateId));
+        }
 
     }
 }

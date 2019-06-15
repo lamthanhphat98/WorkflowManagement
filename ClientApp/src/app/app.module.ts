@@ -20,6 +20,7 @@ import { ChecklistComponent } from './checklist/checklist/checklist.component';
 import { EditComponent } from './checklist/edit/edit.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TemplateComponent } from './checklist/template/template.component';
+import { ChecklistResolverService } from './service/checklist-resolver.service';
 
 
 const  config = new  AuthServiceConfig([
@@ -69,11 +70,21 @@ const routes :Routes = [
     path:"checklist",component:ChecklistComponent
   } ,
   {
-    path:"edit/:id",component:EditComponent
+    path:"checklist:/id",component:ChecklistComponent
+  } ,
+  {
+    path:"checklist:/id/:taskid",component:ChecklistComponent
+  } ,
+  {
+    path:"edit/:id",component:EditComponent,resolve:{template:ChecklistResolverService}
   } ,
   {
     path:"edit",component:EditComponent
-  } ,
+  },
+  {
+    path:"edit/:id/:taskid",component:EditComponent,resolve:{template:ChecklistResolverService}
+  }
+   ,
   {
     path:"template",component:TemplateComponent
   },
@@ -115,7 +126,7 @@ export function providerConfig()
 
   ],
   entryComponents:[NeworganizationComponent],
-  providers: [{provide:AuthServiceConfig,useFactory:providerConfig}],
+  providers: [{provide:AuthServiceConfig,useFactory:providerConfig},ChecklistResolverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

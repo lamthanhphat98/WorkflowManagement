@@ -17,5 +17,8 @@ namespace WorkflowManagement.ViewModel
         public int? OrganizationId { get; set; }
         public int? TemplateId { get; set; }
         public Boolean Show { get; set; }
+        public int CountChecklist { get; set; }
+        public String CountTask { get; set; }
+
     }
 }

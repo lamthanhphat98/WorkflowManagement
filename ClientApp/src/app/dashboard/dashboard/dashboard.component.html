@@ -78,12 +78,12 @@
      </i> 
        </a> 
   
-       <a href="" 
+       <a href="/edit/{{template.id}}" 
          class="btn btn-transparent sub-header-title-btn">
          <!-- when we have template -->
-          <span  style=" color: #777777;">Your first 'Template'. Click here to get started.
+          <span  style=" color: #777777;"> {{template.name}}
           </span> <span 
-           class="badge sub-header-title-btn-count">2</span> </a> 
+           class="badge sub-header-title-btn-count">{{template.countChecklist}}</span> </a> 
          </span> <!-- ngIf: $ctrl.template.public -->
             <a href="" title="Click to edit this template." 
             class="btn btn-transparent sub-header-manage-btn">           
@@ -93,21 +93,21 @@
                  <ng-container *ngFor="let item of listChecklist;let i = index">
                   <ng-container *ngIf="template.id===item.templateId">           
                   <div class="cards" style="float:left">
-                <a href=""  class="card" title="Click to edit this template." >
+                <a href="/checklist/{{item.id}}"  class="card" title="Click to view this checklist." >
                     <div class="card-inner">
                       <div class="card-detail">
-                          <span class="card-details-title">
-                              Template dau tien cua Phat
+                          <span class="card-details-title" style="width: 200px">
+                              {{item.name}}
                             </span>
                         <ul class="assignments">
                          
                           <li>
-                            <img [src]="imageUrl" style="width: 35px;height: 35px;"/>
+                            <img [src]="imageUrl" style="width: 35px;height: 35px;border-radius: 15%"/>
 
                           </li>
                         </ul>
                         <div class="progress" style="height: 10px;">
-                            <div class="progress-bar" role="progressbar" style="background-color: greenyellow" [style.width]="value" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar" role="progressbar" style="background-color: greenyellow" [style.width]="item.countTask" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>                                     
                       </div>
                     </div>

@@ -33,5 +33,9 @@ namespace WorkflowManagement.Service
             return checklistRepository.getAllChecklist(organizationId, userId);
         }
 
+        public TemplateViewModel getTemplate(int organizationId, string userId, int templateId)
+        {
+            return checklistRepository.getTemplate(organizationId, userId, templateId);
+        }
     }
 }
