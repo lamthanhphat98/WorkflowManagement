@@ -320,3 +320,7 @@ li {
     width: 100px;
    
 }
+.avatar {
+    display: inline-block;
+    position: relative;
+}

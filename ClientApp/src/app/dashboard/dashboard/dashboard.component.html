@@ -93,7 +93,7 @@
                  <ng-container *ngFor="let item of listChecklist;let i = index">
                   <ng-container *ngIf="template.id===item.templateId">           
                   <div class="cards" style="float:left">
-                <a href="/checklist/{{item.id}}"  class="card" title="Click to view this checklist." >
+                <a  href="/checklist/{{item.id}}" (click)="setStorageTemplate(template.name)"  class="card" title="Click to view this checklist." >
                     <div class="card-inner">
                       <div class="card-detail">
                           <span class="card-details-title" style="width: 200px">

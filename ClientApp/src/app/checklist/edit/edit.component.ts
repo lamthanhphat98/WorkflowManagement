@@ -62,14 +62,22 @@ export class EditComponent implements OnInit {
     private taskItemService: TaskitemService) {
       this.template=this.router.snapshot.data['template'] as Template;
       this.listTaskItem = this.router.snapshot.data['template'].taskItemViewModels;
-      if (this.currentPriority == 1) {
-       // console.log(this.isDataLoaded);
+  
+      //console.log(this.currentPriority);
+   
+      this.currentPriority=JSON.parse(localStorage.getItem("currentPriority"));
+     
+      if(isNaN(this.currentPriority))
+      {
+        this.currentPriority=1;
+      }
+      //console.log(this.isDataLoaded);
       this.listContentDetail = this.listTaskItem.find((res: any) => {
-        return res.priority == 1;
+        return res.priority == this.currentPriority;
 
       }).contentDetails as Content[];
       this.templateName = this.listTaskItem.find((res: any) => {
-        return res.priority == 1;
+        return res.priority ==  this.currentPriority;
       }).name;
 
 
@@ -77,10 +85,10 @@ export class EditComponent implements OnInit {
 
 
       this.listMember = this.listTaskItem.find((res: any) => {
-        return res.priority == 1;
+        return res.priority ==  this.currentPriority;
       }).userId;
-    }
-
+  
+  
   }
   ngOnInit() {
     this.id = parseInt(this.router.snapshot.paramMap.get("id"));
@@ -92,6 +100,7 @@ export class EditComponent implements OnInit {
     this.userId = JSON.parse(localStorage.getItem("UserId"));
 
     //resolver
+    console.log(this.currentPriority);
     console.log(this.template);
 
     // setTimeout(()=>{
@@ -233,19 +242,21 @@ export class EditComponent implements OnInit {
   }
   setList(priority: number) {
     console.log(priority);
-    var currentTaskId = localStorage.getItem("TaskId");
-    if (this.datetime !== null) {
-      const d = new Date(this.datetime.toString());
-      console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
+    localStorage.setItem("currentPriority",priority.toString());
+    //this.currentPriority=priority;
+    // var currentTaskId = localStorage.getItem("TaskId");
+    // if (this.datetime !== null) {
+    //   const d = new Date(this.datetime.toString());
+    //   console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
 
-      this.listTaskItem.find((res: any) => {
-        return res.id === parseInt(currentTaskId);
-      }).dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss");
-      this.listTaskItem.find((res: any) => {
-        return res.id === parseInt(currentTaskId);
-      }).userId = this.listMember;
-      localStorage.setItem("listTaskItem", JSON.stringify(this.listTaskItem));
-    }
+    //   this.listTaskItem.find((res: any) => {
+    //     return res.id === parseInt(currentTaskId);
+    //   }).dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss");
+    //   this.listTaskItem.find((res: any) => {
+    //     return res.id === parseInt(currentTaskId);
+    //   }).userId = this.listMember;
+    //   localStorage.setItem("listTaskItem", JSON.stringify(this.listTaskItem));
+    // }
 
 
 

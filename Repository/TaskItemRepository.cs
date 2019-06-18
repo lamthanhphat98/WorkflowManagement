@@ -8,6 +8,8 @@ using WorkflowManagement.Models;
 using WorkflowManagement.ViewModel;
 using WorkflowManagement.IRepository;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace WorkflowManagement.Repository
 {
@@ -82,6 +84,17 @@ namespace WorkflowManagement.Repository
 
                 //context.Task
             }
+        }
+        public List<TaskItem> getTaskItemByUserIdOnDay(String userId)
+        {
+            DateTime getDate = DateTime.Now;
+            DateTime fromDate = new DateTime(getDate.Year, getDate.Month, getDate.Day, 0, 0, 1);
+            DateTime toDate = new DateTime(getDate.Year, getDate.Month, getDate.Day, 23, 59, 59);
+            SqlParameter paramFromDate = new SqlParameter("@fromDate", fromDate);
+            SqlParameter paramToDate = new SqlParameter("@toDate", toDate);
+            SqlParameter paramUserId = new SqlParameter("@userId", userId);
+            var result = context.TaskItem.FromSql("EXEC getTaskItemByDate @fromDate,@toDate,@userId", paramFromDate,paramToDate, paramUserId).ToList();       
+            return result;
         }
 
     }

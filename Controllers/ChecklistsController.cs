@@ -29,7 +29,12 @@ namespace WorkflowManagement.Controllers
         {
             return Ok(checklistService.getAllChecklist(organizationId, userId));
         }
-      
+        [HttpGet("checklistprogress/{organizationId}/{userId}")]
+        public IActionResult GetChecklistProgress([FromRoute] int organizationId, string userId)
+        {
+            return Ok(checklistService.getAllChecklistProgress(organizationId, userId));
+        }
+
         [HttpGet("activity/{organizationId}/{userId}")]
         public IActionResult getActivityLog([FromRoute] int organizationId, string userId)
         {
@@ -45,6 +50,11 @@ namespace WorkflowManagement.Controllers
         public IActionResult getActivityLog([FromRoute] int organizationId,int templateId, string userId)
         {
             return Ok(checklistService.getTemplate(organizationId, userId, templateId));
+        }
+        [HttpGet("checklist/{organizationId}/{checklistId}/{userId}")]
+        public IActionResult getChecklist([FromRoute] int organizationId, string userId,int checklistId )
+        {
+            return Ok(checklistService.getChecklistDetail(organizationId, userId, checklistId));
         }
 
     }

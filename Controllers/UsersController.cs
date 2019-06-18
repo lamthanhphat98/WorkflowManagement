@@ -68,13 +68,13 @@ namespace Controllers
             }
             else
             {
-                var claim = new[]
-                    {
-                        new Claim(JwtRegisteredClaimNames.Sub,user.Name)
-                    };
+                
+                var claim = new List<Claim>();
+                claim.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Name));
                 var token = new JwtSecurityToken(issuer: "http://www.security.org",
                     audience: "http://www.security.org",
                     expires: DateTime.UtcNow.AddMinutes(60),
+                    claims : claim,
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
                     );
                 return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });

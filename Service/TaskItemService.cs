@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IService;
 using WorkflowManagement.IRepository;
 using WorkflowManagement.IService;
+using WorkflowManagement.Models;
 using WorkflowManagement.ViewModel;
 
 namespace WorkflowManagement.Service
@@ -25,6 +26,11 @@ namespace WorkflowManagement.Service
         public void addNewTaskItem(TaskItemViewModel taskItem)
         {
             taskItemRepository.addNewTaskItem(taskItem);
+        }
+
+        public List<TaskItem> getTaskItemByUserIdOnDay(string userId)
+        {
+            return taskItemRepository.getTaskItemByUserIdOnDay(userId);
         }
     }
 }

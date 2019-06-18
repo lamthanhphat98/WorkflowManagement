@@ -44,13 +44,15 @@ namespace WorkflowManagement
                 configuration.RootPath = "ClientApp/dist";
             });
             //database azure
-            //  services.AddDbContext<WorkflowContext>(options =>
-            //options.UseSqlServer("Server=tcp:workflow3idbserver.database.windows.net," +
+            // services.AddDbContext<WorkflowContext>(options =>
+            // options.UseSqlServer("Server=tcp:workflow3idbserver.database.windows.net," +
             //"1433; Initial Catalog = Workflow3i; Persist Security Info = False; User ID = workflowadmin; Password = faker01@123;" +
             //"MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30; "));
             // => Localhost database
-             services.AddDbContext<WorkflowContext>(options =>
-             options.UseSqlServer("Server = PHATLTSE62882\\SQLEXPRESS; Database = Workflow; Trusted_Connection = True;"));
+            services.AddDbContext<WorkflowContext>(options =>
+            options.UseSqlServer("Server = PHATLTSE62882\\SQLEXPRESS; Database = Workflow; Trusted_Connection = True;"));
+
+
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             var key = Encoding.UTF8.GetBytes("faker01@123456789");

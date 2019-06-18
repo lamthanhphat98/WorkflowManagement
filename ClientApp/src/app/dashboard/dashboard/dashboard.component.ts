@@ -89,6 +89,10 @@ export class DashboardComponent implements OnInit {
 
 
   }
+  setStorageTemplate(templateName:string)
+  {
+console.log(templateName);
+  }
 
 
 }

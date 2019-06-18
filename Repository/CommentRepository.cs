@@ -44,7 +44,7 @@ namespace WorkflowManagement.Repository
                 viewModel.Priority = item.Priority;
                 viewModel.IsRead = item.IsRead;
                 var getUser = _context.User.Where(u => u.Id.Equals(item.UserId)).FirstOrDefault();
-                viewModel.ImageUrl = getUser.Avatar;
+                viewModel.UserImage = getUser.Avatar;
                 commentViewModels.Add(viewModel);
             }
             return commentViewModels;

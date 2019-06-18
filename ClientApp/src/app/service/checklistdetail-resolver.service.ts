@@ -3,11 +3,12 @@ import { Template } from '../model/template';
 import {Observable} from 'rxjs/Observable';
 import { ChecklistService } from './checklist.service';
 import { Injectable } from '@angular/core';
+import { ChecklistDetailViewModel } from '../model/checklistdetail';
 
 @Injectable({
     providedIn: 'root'
   })
-export class ChecklistResolverService implements Resolve<Template>
+export class ChecklistDetailResolverService implements Resolve<ChecklistDetailViewModel>
 {
     id:number;
     userId:string;
@@ -17,11 +18,11 @@ export class ChecklistResolverService implements Resolve<Template>
 
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):Observable<Template>  {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):Observable<ChecklistDetailViewModel>  {
         this.id = parseInt(this.router.snapshot.paramMap.get("id"));       
         this.organizationId = JSON.parse(localStorage.getItem("OrganizationId"));
         this.userId = JSON.parse(localStorage.getItem("UserId"));
-        return this.checklistService.getTemplate(this.organizationId,route.params.id,this.userId);
+        return this.checklistService.getChecklistDetail(this.organizationId,route.params.id,this.userId);
     }
     
 }
