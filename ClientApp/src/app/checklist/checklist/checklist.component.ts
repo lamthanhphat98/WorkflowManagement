@@ -22,6 +22,7 @@ import { CommentViewModel } from 'src/app/model/commentviewmodel';
 })
 export class ChecklistComponent implements OnInit {
 
+  commentDetail:CommentViewModel;
   templateName: string;
   listTaskItem: TaskItemDetailViewModel[] = [];
   listComment:CommentViewModel[]=[];
@@ -41,7 +42,8 @@ export class ChecklistComponent implements OnInit {
   taskId: number = 1;
   isDataLoaded=false;
   imageUrl:string;
-  isDone:true
+  isDone:true;
+  commentPriority=0;
   constructor(private checklistService: ChecklistService,
     private router: ActivatedRoute,
     private memberService: MemberService,
@@ -102,6 +104,13 @@ export class ChecklistComponent implements OnInit {
   setList(priority:number)
   {
     localStorage.setItem("currentPriorityChecklist",priority.toString());
+  }
+  comment()
+  {
+    this.commentPriority  = this.listComment.length +1;
+    this.commentDetail = {Id:this.commentPriority,Comment1:'',IsRead:false,Priority:this.commentPriority,TaskId:this.taskId,UserId:'',UserImage:'',UserName:''}
+    this.listComment.push(this.commentDetail);
+    console.log(this.listComment);
   }
 
 }

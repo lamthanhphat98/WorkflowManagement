@@ -96,8 +96,7 @@ namespace WorkflowManagement
                 x.SwaggerDoc("v1", new Info { Title = "Workflow API", Version = "v1" });
             });
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>();
-   
+            services.AddTransient<IUserService, UserService>(); 
             services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IUserOrganizationRepository, UserOrganizationRepository>();

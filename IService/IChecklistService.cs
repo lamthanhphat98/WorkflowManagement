@@ -7,7 +7,7 @@ using WorkflowManagement.ViewModel;
 
 namespace WorkflowManagement.IService
 {
-    public interface IChecklistService
+    public interface IChecklistService 
     {
         List<ChecklistViewModel> getAllChecklist(int organizationId, string userId);
         List<Checklist> getActivityLog(int organizationId, string userId);

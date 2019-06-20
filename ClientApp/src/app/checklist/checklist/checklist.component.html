@@ -194,28 +194,8 @@
              
                         </div>
                         <div>
-                          <div class="template-task-assigner" style="width: 600px;">
-                            <div class="resource-group"> 
-                                <div class="resource-group item">
-                                  <div class="input-search" style="width: 600px;height: 50px;">
-                                    <span class="avatar" >
-                                      <img src="https://aang.s3.amazonaws.com/vqj9WyHd565o3pRPLmZN2w-64.jpg" style="width: 35px;border-radius: 15%"/>
-                                      
-                                    </span>
-                          <label style="padding-left:15px;">asdasdadasasdasd</label>
-                          <span>
-                              tui da comment
-                            </span>
-                              
-                                   
-                                </div>
-                            <div>
-                              <a>Delete</a>
-                            </div>
-                                
-                              </div>        
-                               </div>  
-                            </div>
+                         
+                            <ng-container *ngFor="let comment of listComment">
                             <div class="template-task-assigner" style="width: 600px;">
                                 <div class="resource-group"> 
                                     <div class="resource-group item">
@@ -238,6 +218,7 @@
                                   </div>        
                                    </div>  
                                 </div>
+                              </ng-container>
                         </div>
                         <div>
                           <div class="template-task-assigner" >
@@ -248,7 +229,7 @@
                                 </div>
                   
                                 <div style="margin-top:5px">
-                                 <button class="btn btn-default"  (click)="removeComponent(content.Id)" >Comment</button>
+                                 <button class="btn btn-default"  (click)="comment()" >Comment</button>
                                 </div>
                                 </div>        
                                </div>  
