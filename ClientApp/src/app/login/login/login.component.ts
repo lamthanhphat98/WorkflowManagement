@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       this.user.phone='';
       localStorage.setItem("UserId",JSON.stringify(this.user.id));
       localStorage.setItem("Name",JSON.stringify(this.user.name));
-      localStorage.setItem("TOKEN",JSON.stringify(userData.token));
+      localStorage.setItem("Token",JSON.stringify(userData.token));
       localStorage.setItem("ImageUrl",JSON.stringify(userData.photoUrl));
       this.userService.addUser(this.user).subscribe(res=>console.log(res));
       this.route.navigateByUrl("/dashboard"); 
@@ -43,24 +43,21 @@ export class LoginComponent implements OnInit {
 
   }
   googleLogin()
-  {
- 
-    this.service.signIn(GoogleLoginProvider.PROVIDER_ID).then(userData=>{
+  { 
+      this.service.signIn(GoogleLoginProvider.PROVIDER_ID).then(userData=>{
       this.socialUser=userData;
       this.user.id=userData.id;
       this.user.name=userData.name;
       this.user.email=userData.email;
       this.user.type="Google";
       this.user.phone='';
-
       localStorage.setItem("UserId",JSON.stringify(this.user.id));
       localStorage.setItem("Name",JSON.stringify(this.user.name));
-      localStorage.setItem("TOKEN",JSON.stringify(userData.token));
+      localStorage.setItem("Token",JSON.stringify(userData.token));
       localStorage.setItem("ImageUrl",JSON.stringify(userData.photoUrl));
-   //   this.userService.addUser(this.user).subscribe(res=>console.log(res));
+      this.userService.addUser(this.user).subscribe(res=>console.log(res));
       this.route.navigateByUrl("/dashboard");
       console.log(userData);
-      
       // id facebook : 2434567826771765
     });
   

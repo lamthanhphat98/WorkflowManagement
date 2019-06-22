@@ -1,6 +1,7 @@
 using EntityContext;
 using IRepository;
 using IService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,11 +10,13 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Repository;
 using Service;
 using Swagger;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Text;
 using WorkflowManagement.IRepository;
 using WorkflowManagement.IService;
 using WorkflowManagement.Repository;
@@ -41,15 +44,39 @@ namespace WorkflowManagement
                 configuration.RootPath = "ClientApp/dist";
             });
             //database azure
-            //  services.AddDbContext<WorkflowContext>(options =>
-            //options.UseSqlServer("Server=tcp:workflow3idbserver.database.windows.net," +
+            // services.AddDbContext<WorkflowContext>(options =>
+            // options.UseSqlServer("Server=tcp:workflow3idbserver.database.windows.net," +
             //"1433; Initial Catalog = Workflow3i; Persist Security Info = False; User ID = workflowadmin; Password = faker01@123;" +
             //"MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30; "));
             // => Localhost database
-             services.AddDbContext<WorkflowContext>(options =>
-             options.UseSqlServer("Server = PHATLTSE62882\\SQLEXPRESS; Database = Workflow; Trusted_Connection = True;"));
+            services.AddDbContext<WorkflowContext>(options =>
+            options.UseSqlServer("Server = PHATLTSE62882\\SQLEXPRESS; Database = Workflow; Trusted_Connection = True;"));
+
+
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+
+            var key = Encoding.UTF8.GetBytes("faker01@123456789");
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x => {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    //ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = "http://www.security.org",
+                    ValidIssuer = "http://www.security.org",
+                    // ClockSkew = TimeSpan.Zero
+
+                };
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -69,8 +96,7 @@ namespace WorkflowManagement
                 x.SwaggerDoc("v1", new Info { Title = "Workflow API", Version = "v1" });
             });
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>();
-   
+            services.AddTransient<IUserService, UserService>(); 
             services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IUserOrganizationRepository, UserOrganizationRepository>();
@@ -116,14 +142,14 @@ namespace WorkflowManagement
             app.UseCors(options => options.WithOrigins("http://localhost:4200")
             .AllowAnyMethod()
             .AllowAnyHeader());
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-
+            
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,

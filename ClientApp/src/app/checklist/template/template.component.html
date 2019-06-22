@@ -75,7 +75,7 @@
       <div class="sidebarright" >
         <div class="widgets-header-container">
            <h3  class="widgets-header"  >
-             <strong>sdasdasd  {{id}} {{this.first[0]}}</strong>
+             <strong>sdasdasd</strong>
             </h3>
         
           </div>
@@ -153,7 +153,7 @@
                         </div>
                  
                         <div style="margin-top:5px">
-                         <button class="btn btn-success">X</button>
+                         <button class="btn btn-success" (click)="removeComponent(content.Id)">X</button>
                         </div>
                         </div>        
                        </div>  
@@ -168,7 +168,7 @@
                             </div>
                       
                             <div style="margin-top:5px">
-                             <button class="btn btn-success">X</button>
+                             <button class="btn btn-success" (click)="removeComponent(content.Id)">X</button>
                             </div>
                             </div>        
                            </div>  
@@ -177,13 +177,13 @@
                             <div class="resource-group"> 
                                 <div class="resource-group item">
                                   <div class="input-search">
-                                  <input name={{content.OrderContent}} type="checkbox" placeholder="Text..." class="form-controlx"  style="width: 35px;"/>
+                                 <input name={{content.OrderContent}} type="checkbox" placeholder="Text..." class="form-controlx"  style="width: 35px;"/>   sdasd
                                   
                                   
                                 </div>
                   
                                 <div style="margin-top:5px">
-                                 <button class="btn btn-success">X</button>
+                                 <button class="btn btn-success"(click)="removeComponent(content.Id)" >X</button>
                                 </div>
                                 </div>        
                                </div>  
@@ -287,7 +287,7 @@
                          <div class="resource-group newtemplate"> 
                             <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
                               <a class="btn btn-success sidebar-add-btn dropdown-toggle" (click)="addText()" style="width: 250px;text-align:left;font-size: 17px">
-                                 <i class="fa fa-tasks"></i>
+                                <i class="fa fa-font"></i>
                                   Add Text
                               </a>
                             </div>          
@@ -295,7 +295,7 @@
                          <div class="resource-group newtemplate"> 
                             <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
                               <a class="btn btn-success sidebar-add-btn dropdown-toggle" (click)="addImage()" style="width: 250px;text-align:left;font-size: 17px">
-                                 <i class="fa fa-tasks"></i>
+                                <i class="far fa-image"></i>
                                   Add Image
                               </a>
                             </div>          
@@ -303,7 +303,7 @@
                          <div class="resource-group newtemplate"> 
                             <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
                               <a class="btn btn-success sidebar-add-btn dropdown-toggle" (click)="addCheckbox()" style="width: 250px;text-align:left;font-size: 17px">
-                                 <i class="fa fa-tasks"></i>
+                                <i class="far fa-check-square"></i>
                                   Add checkbox
                               </a>
                             </div>          

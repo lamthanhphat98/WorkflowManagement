@@ -165,7 +165,7 @@ li {
 .task-list-item .step-grip {
   
     bottom: 2px;
-    display: none;
+    /* display: none; */
     left: 2px;
     position: absolute;
     right: 2px;

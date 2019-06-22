@@ -8,5 +8,7 @@ export class ChecklistDashboard
    TemplateStatus :string
    OrganizationId:number;
    TemplateId :number;
-   Show :Boolean
+   Show :Boolean;
+   CountChecklist:number;
+   CountTask:string;
 }

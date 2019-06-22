@@ -1,5 +1,6 @@
 <div class="view">
   <app-home></app-home>
+ 
 <div class="dashboard" >    
         
   <div class="sidebar">
@@ -12,59 +13,56 @@
            <div class="steps">
 
         
-                 <div class="editor-breadcrumb" > 
+            <div class="editor-breadcrumb" > 
+              <span  >
+                 <a href="/home"
+                  
+                  class="btn btn-transparent btn-sm editor-breadcrumb-segment">
+                   <i class="fa fa-home" >
+
+                 </i> <span data-ng-bind="segment.model.name" style="font-size:15px;" > Home</span> </a>
+                 <span  class="editor-breadcrumb-segment-delimiter"> <i class="fa fa-chevron-right"></i> </span>
+              </span>
                    <span  >
-                      <a href="/home"
-                       
-                       class="btn btn-transparent btn-sm editor-breadcrumb-segment">
-                        <i class="fa fa-home" >
+                 <a href="/checklist"
+                  
+                  class="btn btn-transparent btn-sm editor-breadcrumb-segment">
+                  <i class="fa fa-copy fa-fw"></i>
 
-                      </i> <span data-ng-bind="segment.model.name" style="font-size:15px;" > Home</span> </a>
-                      <span  class="editor-breadcrumb-segment-delimiter"> <i class="fa fa-chevron-right"></i> </span>
-                   </span>
-                        <span  >
-                      <a href="/checklist"
-                       
-                       class="btn btn-transparent btn-sm editor-breadcrumb-segment">
-                       <i class="fa fa-copy fa-fw"></i>
-
-                    <span data-ng-bind="segment.model.name" style="font-size:15px;" > Checklist</span> </a>
-                     
-                   </span>
-             
-                </div>
+               <span data-ng-bind="segment.model.name" style="font-size:15px;" > Checklist</span> </a>
+                
+              </span>
+        
+           </div>
                 <div class="steps-header"> 
                   <h3 style="color:#777777">
-                  <Strong>Checklist Name</Strong>  
+                  <Strong>{{templateName}}</Strong>  
                   </h3>
 
                  
                 </div>
                 <div class="listchecklist">
                   <div class="steps-list checklist-steps-list">
-                    <ul class="list-group">
-                      <li class="list-group-item step checkable " style="height: 50px;">
+                    <ul class="list-group"> <!-- loop here -->
+                      <li *ngFor="let task of listTaskItem;let i = index" class="list-group-item step checkable " style="height: 50px;">
                         <div class="task-list-item" >
-                            <span class="step-number-container"> <span  class="step-number">1</span> 
-                            <span class="step-grip"></span>  </span>
-                       
-                            <span>
-                                <span  class="step-checkbox-container">
-                                   <span  class="step-checkbox" > <i class="fa fa-check step-checkbox-checkmark"  ></i> </span>
-                                  
-                                  </span>
-                                 
-                                  <span tabindex="-1" style="padding-bottom: 10px;" class="viewable-step-name step-name">sdasdasd</span>
+                          <a href="/checklist/{{id}}/{{task.id}}" (click)="setList(task.priority)">
 
-                            </span>
-                            <!-- <textarea rows="1" class="form-control"></textarea> -->
-                            
+                     
+                            <span class="step-number-container"> <span  class="step-number">{{i+1}}</span> 
+                            <span class="step-grip"></span>  </span>
+                          </a>               
+                          
+                                <textarea name={{task.priority}} [(ngModel)]="task.name" style="padding-left:50px;" rows="1" class="form-control">{{task.name}}</textarea>                           
                         </div>
 
                       </li>
+              
+                      
                       
 
                     </ul>
+                    
 
                   </div>             
                 </div>
@@ -77,120 +75,273 @@
     </div>
  
  </div>
- 
+
  <div class="maincontent  widgets-scroller" >
-    <div class="sidebarright">
+  
+
+
+    <div class="sidebarright" >
       <div class="widgets-header-container">
          <h3  class="widgets-header"  >
-           <strong>sdasdasd</strong>
+           <strong>{{templateName}}</strong>
           </h3>
       
         </div>
+        
     
         <hr style="width: 90%;margin-left:120px;color:1px solid black">
      <!-- template here -->
+
+     
+     <div class="task-bar-container">
+       <div class="task-bar-inner" style="margin-left:100px">
+         <div class="task-bar-template-cell">
+            <div class="template-task-assigner">
+              <div class="dropdown">
+                  <button type="button" class="btn btn-transparent" data-toggle="dropdown"> 
+                    <i class="far fa-user fa-fw" style="font-size: 19px"></i> <span style="font-size: 18px" class="hidden-sm hidden-xs"> Assign</span>
+                  
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-header" style="border-bottom: 1px solid silver"> <i class="far fa-user fa-fw"></i> USERS</li>
+                   
+                    <li *ngFor="let user of listUser;let i = index"><a id={{user.id}} name={{user.name}} (click)="addMemberToTask(user)"><img src={{user.avatar}} style="width: 25px;height: 25px;border-radius: 15%"/> {{user.name}}</a></li>
+                                     
+                  </ul>
+              </div>
+              <div>
+                  <button type="button" class="btn btn-transparent" (click)="showTime=!showTime"> 
+                    <i class="far fa-clock fa-fw" style="font-size: 19px"></i> <span style="font-size: 18px" class="hidden-sm hidden-xs"> Due</span> </button>
+                 
+              </div>
+
+              <div *ngIf="showTime==true">                    
+                  <div class="row" style="width: 150px;">
+                      <div class='col-sm-6'>
+                          <div class="form-group">
+                              <div class='input-group date' id='datetimepicker1' style="width: 200px;margin-top:2px;">
+                                  <input type='text' id="valueOfdate" class="form-control" [owlDateTime]="dt" name="datetime" [(ngModel)]="datetime" />
+                                  <span class="input-group-addon" >
+                                      <span class="glyphicon glyphicon-calendar"  [owlDateTimeTrigger]="dt"></span>
+                                  </span>
+                                  <owl-date-time #dt ></owl-date-time>                             
+                              </div>
+                          </div>
+                      </div>
+                
+                  </div>
+              </div>
+              
+   
+         
+
+
+
+              </div>
+           <div style="margin-top:50px">
+
+           </div>
+           <div *ngFor="let content of listContentDetail">
+                  
+              <div class="template-task-assigner" *ngIf="content.Type==='text'">
+                  <div class="resource-group"> 
+                      <div class="resource-group item">
+                        <div class="input-search">
+                        <input id={{content.OrderContent}} name={{content.OrderContent}}  placeholder="Text..." class="form-control" style="width: 550px;"/>
+                        
+                      </div>
+               
+                      <div style="margin-top:5px">
+                       <button class="btn btn-success" (click)="removeComponent(content.Id)">X</button>
+                      </div>
+                      </div>        
+                     </div>  
+                  </div>
+                  <div class="template-task-assigner" *ngIf="content.Type === 'img' ">
+                      <div class="resource-group"> 
+                          <div class="resource-group item">
+                            <div class="input-search">
+                                <img src="assets/img/default-2.jpg" name={{content.OrderContent}} *ngIf="content.Type==='img'" style="width: 550px;height: 300px;"/>
+
+                            
+                          </div>
+                    
+                          <div style="margin-top:5px">
+                           <button class="btn btn-success" (click)="removeComponent(content.Id)">X</button>
+                          </div>
+                          </div>        
+                         </div>  
+                      </div>
+                      <div class="template-task-assigner" *ngIf="content.Type === 'checkbox-label' ">
+                          <div class="resource-group"> 
+                              <div class="resource-group item">
+                                <div class="input-search">
+                                <input name={{content.OrderContent}} type="checkbox" placeholder="Text..." class="form-controlx"  style="width: 35px;"/>
+                                
+                                
+                              </div>
+                
+                              <div style="margin-top:5px">
+                               <button class="btn btn-success"(click)="removeComponent(content.Id)" >X</button>
+                              </div>
+                              </div>        
+                             </div>  
+                          </div>
+
+                          
+            
+          
+             
+                        </div>
+                        <div>
+                         
+                            <ng-container *ngFor="let comment of listComment">
+                            <div class="template-task-assigner" style="width: 600px;">
+                                <div class="resource-group"> 
+                                    <div class="resource-group item">
+                                      <div class="input-search" style="width: 600px;height: 50px;">
+                                        <span class="avatar" >
+                                          <img src="https://aang.s3.amazonaws.com/vqj9WyHd565o3pRPLmZN2w-64.jpg" style="width: 35px;border-radius: 15%"/>
+                                          
+                                        </span>
+                              <label style="padding-left:15px;">asdasdadasasdasd</label>
+                              <span>
+                                  tui da comment
+                                </span>
+                                  
+                                       
+                                    </div>
+                                <div>
+                                  <a>Delete</a>
+                                </div>
+                                    
+                                  </div>        
+                                   </div>  
+                                </div>
+                              </ng-container>
+                        </div>
+                        <div>
+                          <div class="template-task-assigner" >
+                            <div class="resource-group"> 
+                                <div class="resource-group item">
+                                  <div class="input-search">
+                                    <textarea  style="padding-left:50px;width: 600px;height: 50px" rows="1" class="form-control"></textarea>                                                        
+                                </div>
+                  
+                                <div style="margin-top:5px">
+                                 <button class="btn btn-default"  (click)="comment()" >Comment</button>
+                                </div>
+                                </div>        
+                               </div>  
+                            </div>
+                        </div>
+         </div>
+       </div>
+     </div>
     </div>
-    
-  
- 
+  </div>
+  <div>
   </div>
   <div class="rightside">
-      <div class="rightsubnavigate">
-          <div class="rightsidebar shadow p-3 mb-5 bg-white rounded">
-    
-              <div class="sidebar-scroller">
-                <div class="nano has-scollbar">
-                  <div class="nano-content" style="right: -17px">
-                    
-                   <div class="sidebar-content">
-                     <div class="header">
-                       <h2>
-                         <strong> Blank Template</strong>
-                        
-                       </h2>
+    <div class="rightsubnavigate">
+        <div class="rightsidebar shadow p-3 mb-5 bg-white rounded">
+  
+            <div class="sidebar-scroller">
+              <div class="nano has-scollbar">
+                <div class="nano-content" style="right: -17px">
+                  
+                 <div class="sidebar-content">
+                   <div class="header">
+                     <h2>
+                       <strong> Blank Template</strong>
+                      
+                     </h2>
 
-                     </div>
-                     
-                     <div class="resource-group newtemplate"> 
-                       <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
-                         <a class="btn btn-success sidebar-add-btn dropdown-toggle" style="background-color: #1BC98E;width: 250px;text-align:left;font-size: 17px">
-                            <i class="fa fa-play fa-fw"></i>
-                             Run checklist...
-                         </a>
-                       </div>          
-                    </div>
-                    <div class="resource-group"> 
-                      <div class="resource-group item">
-                        <div class="btn-group sidebar-add-btn-group" style="position: relative;">
-                          <a href="/edit" class="btn btn-success sidebar-add-btn movingbutton" style="background-color: white;width: 250px;text-align:left;color:black;border-color:silver;font-size: 17px">
-                              <i class="fa fa-pencil fa-fw" style="color: black"></i>
-                              Edit template...
-                          </a>
-                        </div>  
-                      </div>        
-                     </div>
-                     <div class="resource-group" > 
-                        <div class="resource-group item">
-                          <div class="btn-group sidebar-add-btn-group" style="position: relative;">
-                            <a class="btn btn-success sidebar-add-btn movingbutton" data-toggle="modal" data-target="#exampleModal" style="background-color: white;width: 250px;text-align:left;color:black;border-color:silver;font-size: 17px">
-                                <i class="fa fa-pencil fa-fw" style="color: black"></i>
-                                More...
-                            </a>
-                          </div>
-                        </div>        
-                       </div>
-                       <div class="resource-group"style="border-bottom:1px solid silver" > 
-                        <div class="resource-group item">
-                          </div>
-                       </div>
-                       <div class="resource-group"> 
-                        <div class="resource-group item">
-                          <a href="" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
-                            <i class="fas fa-folder-open"></i> <span style="color: silver;padding-left:10px">Overview</span>  </a>
-                        </div>        
-                       </div>
-                       <div class="resource-group" style="border-bottom:1px solid silver"> 
-                        <div class="resource-group item">
-                          <a href="/form" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
-                            <i class="far fa-edit" style="color:silver"></i> <span style="color: silver;padding-left:10px">Template</span>  </a>
-                        </div>        
-                       </div>
-                       <div class="resource-group" > 
-                        <div class="resource-group item">
-                          <ul class="memberships">
-                            <li class="membership">
-                                <a href="" class="btn btn-transparent sidebar-home-btn"> 
-                                    <img id="imageUrl" [src]="imageUrl" style="width: 36.5px;height: 36.5px;border-radius: 15%" />  </a>
-                            </li>
-                            <li class="membership">
-                                <a href="" class="btn btn-transparent sidebar-home-btn" > 
-                                    <img id="imageUrl" [src]="imageUrl" style="width: 36.5px;height: 36.5px;border-radius: 15%" />  </a>
-                            </li>
-                            
-                          </ul>
-                         
-                 
-                        </div>        
-                       </div>
-                       <div class="resource-group" style="border-bottom:1px solid silver"> 
-                        <div class="resource-group item">
-                          <a href="/form" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
-                            <i class="far fa-edit" style="color:silver"></i> <span style="color: silver;padding-left:10px">Template</span>  </a>
-                        </div>        
-                       </div>
-                       
-                       
-                       
                    </div>
                    
-               
+                   <div class="resource-group newtemplate"> 
+                     <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
+                       <a class="btn btn-success sidebar-add-btn dropdown-toggle" data-toggle="modal" data-target="#exampleModal2" style="background-color: #1BC98E;width: 250px;text-align:left;font-size: 17px">
+                          <i class="fa fa-check fa-fw"></i>
+                           Completed checklist...
+                       </a>
+                     </div>          
                   </div>
+           
+                   <div class="resource-group" > 
+                      <div class="resource-group item">
+                        <div class="btn-group sidebar-add-btn-group" style="position: relative;">
+                          <div class="dropdown">
+                            
+                     
+                          <a class="btn btn-success sidebar-add-btn movingbutton"  data-toggle="dropdown" style="background-color: white;width: 250px;text-align:left;color:black;border-color:silver;font-size: 17px">
+                              <i class="fa fa-pencil fa-fw" style="color: black"></i>
+                              More...
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li class="dropdown-header" style="width: 250px;"> <i class="far fa-user fa-fw"></i> Edit checklist</li>
+                              <li class="dropdown-header" style="width: 250px;"> <i class="far fa-user fa-fw"></i> Delete checklist</li>
+                          
+                                               
+                            </ul>
+                          </div>
+                        </div>
+                      </div>        
+                     </div>
+                     <div class="resource-group"style="border-bottom:1px solid silver" > 
+                      <div class="resource-group item">
+                        </div>
+                     </div>
+                     <div class="resource-group"> 
+                      <div class="resource-group item">
+                        <a href="" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
+                          <i class="fas fa-folder-open"></i> <span style="color: silver;padding-left:10px">Overview</span>  </a>
+                      </div>        
+                     </div>
+                     <div class="resource-group" style="border-bottom:1px solid silver"> 
+                      <div class="resource-group item">
+                        <a href="/form" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
+                          <i class="far fa-edit" style="color:silver"></i> <span style="color: silver;padding-left:10px">Template</span>  </a>
+                      </div>        
+                     </div>
+                     <div class="resource-group" style="border-bottom:1px solid silver" > 
+                      <div class="resource-group item">
+                        <h4 style="color:#777777;padding-left:10px">Who's working on this ?</h4>
+                        <ul class="memberships">
+                          <li class="membership">
+                              <a href="" class="btn btn-transparent sidebar-home-btn"> 
+                                  <img id="imageUrl" [src]="imageUrl" style="width: 36.5px;height: 36.5px;border-radius: 15%" />  </a>
+                          </li>
+                          <li class="membership">
+                              <a href="" class="btn btn-transparent sidebar-home-btn" > 
+                                  <img id="imageUrl" [src]="imageUrl" style="width: 36.5px;height: 36.5px;border-radius: 15%" />  </a>
+                          </li>
+                          
+                        </ul>
+                       
+               
+                      </div>        
+                     </div>
+                     <div class="resource-group" style="border-bottom:1px solid silver"> 
+                      <div class="resource-group item">
+                        <a href="/form" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
+                          <i class="far fa-clock" style="color:#777777"></i> <span style="color: #777777;padding-left:10px">Due date:</span> <span style="color:black;font:bolder"> 11/11/2011 55:55:55</span>  </a>
+                         
+                      </div>        
+                     </div>
+                     
+                     
+                     
+                 </div>
+                 
+             
                 </div>
               </div>
-           
-           </div>
-      </div>
+            </div>
+         
+         </div>
     </div>
+  </div>
 
 </div>
 <!-- Button trigger modal -->
@@ -216,5 +367,35 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title"  id="exampleModalLabel">
+            What should this new template be called ? 
+          </h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span style="font-size: 18px;">
+              This template will be created in the folder Home.
+          </span>
+    
+          <div class="input-search">
+            <input placeholder="Blank template..." [(ngModel)]="templateName" class="form-control" style="width: 500px;"/>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal" (click)="newTemplate()">OK</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
 </div>

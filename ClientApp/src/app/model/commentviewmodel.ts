@@ -4,6 +4,7 @@ export class CommentViewModel {
           UserId:string;
           Comment1 :string;
           Priority : number;
-         IsRead  : boolean;
-          ImageUrl:string;
+          IsRead  : boolean;
+          UserName:string;
+          UserImage:string;
 }

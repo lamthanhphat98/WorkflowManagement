@@ -16,6 +16,8 @@ namespace WorkflowManagement.ViewModel
         public string TemplateStatus { get; set; }
         public int? OrganizationId { get; set; }
         public int? TemplateId { get; set; }
+        public List<TaskItemViewModel> taskItemViewModels { get; set; }
+        
        
 
     }

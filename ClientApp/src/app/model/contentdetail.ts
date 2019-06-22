@@ -6,4 +6,5 @@ export class Content
       ImageSrc :string;
       TaskItemId :number;
       OrderContent :number;
+      Label:string;
 }

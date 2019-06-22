@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace WorkflowManagement.ViewModel
 {
-    public class ChecklistViewModel
+    public class ChecklistProgressViewModel
     {
-
         public int Id { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
@@ -16,9 +15,8 @@ namespace WorkflowManagement.ViewModel
         public string TemplateStatus { get; set; }
         public int? OrganizationId { get; set; }
         public int? TemplateId { get; set; }
-        public Boolean Show { get; set; }
-        public int CountChecklist { get; set; }
-        public String CountTask { get; set; }
+        public int CountAllTask { get; set; }
+        public int CountDoneTask { get; set; }
 
     }
 }

@@ -12,6 +12,7 @@ namespace IService
         
         List<User> getListUser();
         User findUser(string UserId);
+        Boolean addAdmin(User user);
         Boolean addUser(User user);
         Boolean update(string user, User inforChange);
         Boolean delete(string user);

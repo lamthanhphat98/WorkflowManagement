@@ -21,8 +21,6 @@ export class HomeComponent implements OnInit {
     this.imageUrl=JSON.parse(localStorage.getItem("ImageUrl"));
     this.oragization = {id:0,adminId:'',currentOrganization:false,name:''};
     this.getCurrentOrganization(this.userId);
-   
- 
   }
   getCurrentOrganization(userId:string)
   {
@@ -33,6 +31,10 @@ export class HomeComponent implements OnInit {
      localStorage.setItem("OrganizationId",JSON.stringify(this.oragization.id));
      
     });  
+  }
+  logout()
+  {
+    localStorage.clear();
   }
 
 }

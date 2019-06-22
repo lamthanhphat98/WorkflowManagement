@@ -1,8 +1,9 @@
 import { Content } from './contentdetail';
 import { User } from './user';
+import { CommentViewModel } from './commentviewmodel';
 
 
-export class TaskViewModel
+export class TaskItemDetailViewModel
 {
           id : number;
           checklistId :number;
@@ -12,4 +13,5 @@ export class TaskViewModel
           taskStatus :string;
           userId :User[];
           contentDetails:Content[];
+          comments:CommentViewModel[];
 }
