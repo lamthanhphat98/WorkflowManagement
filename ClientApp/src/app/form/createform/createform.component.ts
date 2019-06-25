@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import { FormCategory } from 'src/app/model/formcategory';
 import { HttpClient } from '@angular/common/http';
 import { FormcategoryService } from 'src/app/service/formcategory.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-createform',
@@ -13,12 +14,15 @@ export class CreateformComponent implements OnInit {
 
   imageUpload:File;
   imageName:string;
-  imageUrl:"/assets/img/baotrung.jpg";
+  imageUrl:string = "/assets/img/baotrung.jpg";
   base64url:string;
-  constructor(private formService:FormcategoryService) { }
+  
+  getImage:any [] = [];
+  constructor(private formService:FormcategoryService,private domSanitizer :DomSanitizer ) { }
 
   formcategory:FormCategory;
   ngOnInit() {
+    
     this.formcategory={
       id:0,
       title:'',
@@ -26,20 +30,32 @@ export class CreateformComponent implements OnInit {
       url:'',
       type:''
     }
+    this.loadImage();
+    
   
+  }
+  loadImage()
+  {
+    this.formService.getImage().then((res:any)=>{
+      this.getImage = res;
+     // console.log(this.getImage);
+      this.imageUrl = 'data:image/*;base64,'+this.getImage;
+    })
   }
   chooseImage(file:FileList)
   {
+    
    this.imageUpload=file.item(0);
+   
    var reader = new FileReader();
    reader.onload=(event:any)=>
    {
      this.imageUrl=event.target.result;
      
    };
+ 
    reader.readAsDataURL(this.imageUpload);
  
-
   }
   onSubmit(form:NgForm)
   {

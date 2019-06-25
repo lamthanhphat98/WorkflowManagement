@@ -13,4 +13,8 @@ export class FormcategoryService {
   {
     return this.http.post("https://localhost:44306/api/FormCategories", formData);
   }
+  getImage()
+  {
+    return this.http.get("https://localhost:44306/api/Values").toPromise();
+  }
 }

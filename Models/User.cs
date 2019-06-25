@@ -18,7 +18,7 @@ namespace WorkflowManagement.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Type { get; set; }
-        public string Role { get; set; } // sau khi đã nhập code => role = USER
+        public string Role { get; set; }
         public string VerifyCode { get; set; }
         public string Phone { get; set; }
         public string Avatar { get; set; }

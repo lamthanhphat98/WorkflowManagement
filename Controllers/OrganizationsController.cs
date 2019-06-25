@@ -25,7 +25,7 @@ namespace Controllers
         // GET: api/Organizations
        
         [HttpPost]
-        public IActionResult GetCurrentOrganization([FromBody] Organization organization)
+        public IActionResult AddOrganization([FromBody] Organization organization)
         {
             organizationService.addOrganization(organization);
             return Ok(organization);           

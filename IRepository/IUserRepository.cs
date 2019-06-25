@@ -17,7 +17,7 @@ namespace IRepository
         Boolean update(string user, User inforChange);
         Boolean delete(string user);
         string sendVerifyCode(string user);
-        Task<FakeJson> getResponse(string url);
+        Task<String> getResponse(string url);
         string verifyCode(string user, string code);
         string updatePhone(string user, string phone);
 

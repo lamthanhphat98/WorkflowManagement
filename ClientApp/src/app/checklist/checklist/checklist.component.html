@@ -143,46 +143,48 @@
            </div>
            <div *ngFor="let content of listContentDetail">
                   
-              <div class="template-task-assigner" *ngIf="content.Type==='text'">
+              <div class="template-task-assigner" *ngIf="content.type==='text'">
                   <div class="resource-group"> 
                       <div class="resource-group item">
                         <div class="input-search">
-                        <input id={{content.OrderContent}} name={{content.OrderContent}}  placeholder="Text..." class="form-control" style="width: 550px;"/>
+                        <input id={{content.orderContent}} name={{content.orderContent}}  placeholder="Text..." class="form-control" style="width: 550px;"/>
                         
                       </div>
                
                       <div style="margin-top:5px">
-                       <button class="btn btn-success" (click)="removeComponent(content.Id)">X</button>
+                       <button class="btn btn-success" (click)="removeComponent(content.id)">X</button>
                       </div>
                       </div>        
                      </div>  
                   </div>
-                  <div class="template-task-assigner" *ngIf="content.Type === 'img' ">
+                  <div class="template-task-assigner" *ngIf="content.type === 'img' ">
                       <div class="resource-group"> 
                           <div class="resource-group item">
                             <div class="input-search">
-                                <img src="assets/img/default-2.jpg" name={{content.OrderContent}} *ngIf="content.Type==='img'" style="width: 550px;height: 300px;"/>
+                                <img [src]=content.imageSrc name={{content.orderContent}} *ngIf="content.imageSrc!=''" style="width: 550px;height: 300px;"/>
+
+                                <img src="assets/img/default-2.jpg" name={{content.orderContent}} *ngIf="content.imageSrc===''" style="width: 550px;height: 300px;"/>
 
                             
                           </div>
                     
                           <div style="margin-top:5px">
-                           <button class="btn btn-success" (click)="removeComponent(content.Id)">X</button>
+                           <button class="btn btn-success" (click)="removeComponent(content.id)">X</button>
                           </div>
                           </div>        
                          </div>  
                       </div>
-                      <div class="template-task-assigner" *ngIf="content.Type === 'checkbox-label' ">
+                      <div class="template-task-assigner" *ngIf="content.type === 'checkbox-label' ">
                           <div class="resource-group"> 
                               <div class="resource-group item">
                                 <div class="input-search">
-                                <input name={{content.OrderContent}} type="checkbox" placeholder="Text..." class="form-controlx"  style="width: 35px;"/>
+                                <input name={{content.orderContent}} type="checkbox" placeholder="Text..." class="form-controlx"  style="width: 35px;"/>
                                 
                                 
                               </div>
                 
                               <div style="margin-top:5px">
-                               <button class="btn btn-success"(click)="removeComponent(content.Id)" >X</button>
+                               <button class="btn btn-success"(click)="removeComponent(content.id)" >X</button>
                               </div>
                               </div>        
                              </div>  

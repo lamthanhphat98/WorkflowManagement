@@ -45,7 +45,7 @@
 
               <div class="form-group div2" style="padding-top:40px;">
                 <label class="col-sm-3 control-label createform" style="padding-top:5px;">Preview Image</label>
-                <div class="col-sm-8"> <img name="ImageUrl" [src]="imageUrl" #Image accept="image/*" width="600"
+                <div class="col-sm-8"> <img name="ImageUrl" [src]="this.domSanitizer.bypassSecurityTrustResourceUrl(imageUrl)" #Image accept="image/*" width="600"
                     height="450" />
                 </div>
               </div>

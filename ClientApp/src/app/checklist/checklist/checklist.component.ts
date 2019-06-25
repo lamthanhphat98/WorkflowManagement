@@ -14,6 +14,10 @@ import { Template } from 'src/app/model/template';
 import {  TaskItemDetailViewModel } from 'src/app/model/taskitemdetail';
 import { ChecklistDetailViewModel } from 'src/app/model/checklistdetail';
 import { CommentViewModel } from 'src/app/model/commentviewmodel';
+import { isNumber } from 'util';
+import { DomSanitizer } from '@angular/platform-browser';
+
+
 
 @Component({
   selector: 'app-checklist',
@@ -47,25 +51,32 @@ export class ChecklistComponent implements OnInit {
   constructor(private checklistService: ChecklistService,
     private router: ActivatedRoute,
     private memberService: MemberService,
-    private taskItemService: TaskitemService) {
+    private taskItemService: TaskitemService,
+    private domSanitizer :DomSanitizer ) {
       this.template=this.router.snapshot.data['checklist'] as ChecklistDetailViewModel;
       this.listTaskItem = this.router.snapshot.data['checklist'].taskItemViewModels;
       console.log(this.template);
-  
+      
       //console.log(this.currentPriority);
    
-      this.currentPriority=JSON.parse(localStorage.getItem("currentPriorityChecklist"));
+      this.currentPriority=parseInt(JSON.parse(localStorage.getItem("currentPriorityChecklist")).toString());
      
      
-      if(isNaN(this.currentPriority))
+      if(Number.isNaN(this.currentPriority))
       {
+        //console.log("null");
         this.currentPriority=1;
       }
-      //console.log(this.isDataLoaded);
+      console.log(this.listTaskItem);
+      console.log(this.currentPriority);
       this.listContentDetail = this.listTaskItem.find((res: any) => {
         return res.priority == this.currentPriority;
 
       }).contentDetails as Content[];
+      this.listContentDetail.map((res:any)=>{
+           res.imageSrc=this.domSanitizer.bypassSecurityTrustUrl(res.imageSrc);
+      })
+      console.log(this.listContentDetail);
       this.listComment = this.listTaskItem.find((res: any) => {
         return res.priority == this.currentPriority;
 
@@ -87,7 +98,7 @@ export class ChecklistComponent implements OnInit {
     this.id = parseInt(this.router.snapshot.paramMap.get("id"));
     this.taskId = parseInt(this.router.snapshot.paramMap.get("taskid"));
     localStorage.setItem("currentEditTask", this.taskId.toString());
-    console.log(this.taskId);
+    //console.log(this.taskId);
     this.templateId = JSON.parse(localStorage.getItem("templateId"));
     this.organizationId = JSON.parse(localStorage.getItem("OrganizationId"));
     this.userId = JSON.parse(localStorage.getItem("UserId"));

@@ -31,6 +31,28 @@ namespace Controllers
             
             return Ok(result);
         }
-      
+        [HttpGet("user/{userId}")]
+        public IActionResult getUser(string userId)
+        {
+            var result = userOrganizationService.getMemberByUserId(userId);
+
+            return Ok(result);
+        }
+
+        [HttpGet("organization/{userId}")]
+        public IActionResult getOrganization(string userId)
+        {
+            var result = userOrganizationService.getCurrentOrganizationByUserId(userId);
+
+            return Ok(result);
+        }
+        [HttpPost("invite/{organizationId}/{email}")]
+        public IActionResult inviteMember([FromRoute]int organizationId,string email)
+        {
+            userOrganizationService.inviteMember(organizationId, email);
+
+            return Ok(email);
+        }
+
     }
 }

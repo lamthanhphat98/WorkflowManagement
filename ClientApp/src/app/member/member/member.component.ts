@@ -10,20 +10,32 @@ import { User } from 'src/app/model/user';
 export class MemberComponent implements OnInit {
 
   listMember: User[];
-  memberId : number;
+  organizationId : number;
+  organizationName:string;
+  email:string;
+  
+
   constructor(private memberService:MemberService) { }
 
   ngOnInit() {
   
-    this.memberId=JSON.parse(localStorage.getItem("OrganizationId"));
-    this.getMember(this.memberId)
+    this.organizationId=JSON.parse(localStorage.getItem("OrganizationId"));
+    this.organizationName=JSON.parse(localStorage.getItem("OrganizationName"));
+    this.getMember(this.organizationId)
   }
 
-  getMember(memberId:number)
+  getMember(organizationId:number)
   {
-    this.memberService.getMember(memberId).subscribe(res=>{
+    this.memberService.getMember(organizationId).subscribe(res=>{
            this.listMember=res as User[];
            console.log(this.listMember);
     });
+  }
+  inviteMember()
+  {
+    //console.log(this.email);
+    this.memberService.inviteMember(this.organizationId,this.email).subscribe(res=>{
+      console.log(res);
+    })
   }
 }

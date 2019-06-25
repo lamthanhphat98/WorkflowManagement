@@ -43,7 +43,7 @@ namespace Service
 
         }
 
-        public Task<FakeJson> getResponse(string url)
+        public Task<String> getResponse(string url)
         {
             return userRepository.getResponse(url);
         }

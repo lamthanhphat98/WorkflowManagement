@@ -17,6 +17,9 @@ namespace WorkflowManagement.ViewModel
         public int? TemplateId { get; set; }
         public int CountAllTask { get; set; }
         public int CountDoneTask { get; set; }
+        public string TemplateName { get; set; }
+        public string Category { get; set; }
+
 
     }
 }

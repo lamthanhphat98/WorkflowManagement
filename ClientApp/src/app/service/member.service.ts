@@ -14,4 +14,9 @@ export class MemberService {
   {
     return this.http.get<User[]>("https://localhost:44306/api"+"/UserOrganizations/member/"+organizationId);
   }
+  inviteMember(organizationId:number,email:string)
+  {
+    return this.http.post("https://localhost:44306/api"+"/UserOrganizations/invite/"+organizationId+"/"+email,null);
+
+  }
 }
