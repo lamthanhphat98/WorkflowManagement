@@ -55,6 +55,7 @@ namespace Controllers
                 var claim = new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Sub,user.Name)
+                      
                        //chỗ này tít chờ đăng ký role này nhưng của e chưa set vì e đang test mấy cái api kia trước
                     };
                 var token = new JwtSecurityToken(issuer: "http://www.security.org",
@@ -63,7 +64,7 @@ namespace Controllers
                     claims: claim,
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
                     );
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token),role="" });
 
             }
             else
@@ -77,7 +78,7 @@ namespace Controllers
                     claims : claim,
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
                     );
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token),role="admin" });
 
             }
 
@@ -102,7 +103,7 @@ namespace Controllers
                     claims: claim,
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
                     );
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token),role="" });
 
             }
             else
@@ -117,7 +118,7 @@ namespace Controllers
                     claims: claim,
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
                     );
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token),role = "user" });
 
             }
     
@@ -142,18 +143,18 @@ namespace Controllers
                "&SecretKey=01D9247C207CE8E2E66FE40E516136" +
                "&SmsType=3";
             ////String fakeJson = "https://jsonplaceholder.typicode.com/todos/1";
-            //var result = userService.getResponse(url);
+            var result = userService.getResponse(url);
             return Ok(code);
         }
 
-        [HttpGet("verifycode/{userid}/{code}")]
+        [HttpPost("verifycode/{userid}/{code}")]
         public IActionResult VerifyCode([FromRoute] string userid,string code)
         {
 
            var result = userService.verifyCode(userid, code);
             return Ok(result);
         }
-        [HttpGet("updatephone/{userid}/{phone}")]
+        [HttpPost("updatephone/{userid}/{phone}")]
         public IActionResult UpdatePhone([FromRoute] string userid, string phone)
         {
 

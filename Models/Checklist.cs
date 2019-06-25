@@ -19,6 +19,7 @@ namespace WorkflowManagement.Models
         public string TemplateStatus { get; set; }
         public int? OrganizationId { get; set; }
         public int? TemplateId { get; set; }
+        public string Category { get; set; }
 
         public Organization Organization { get; set; }
         public Checklist Template { get; set; }

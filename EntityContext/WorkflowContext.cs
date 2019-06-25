@@ -38,6 +38,8 @@ namespace EntityContext
         {
             modelBuilder.Entity<Checklist>(entity =>
             {
+                entity.Property(e => e.Category).HasMaxLength(50);
+
                 entity.Property(e => e.Name).HasMaxLength(250);
 
                 entity.Property(e => e.TemplateStatus).HasMaxLength(50);
@@ -88,7 +90,7 @@ namespace EntityContext
                 entity.HasOne(d => d.TaskItem)
                     .WithMany(p => p.ContentDetail)
                     .HasForeignKey(d => d.TaskItemId)
-                    .HasConstraintName("FK_ContentDetail_TaskItem");
+                    .HasConstraintName("FK_ContentDetail_TaskItem1");
             });
 
             modelBuilder.Entity<Organization>(entity =>

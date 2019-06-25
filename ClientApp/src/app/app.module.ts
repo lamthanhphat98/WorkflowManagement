@@ -24,6 +24,7 @@ import { ChecklistResolverService } from './service/checklist-resolver.service';
 import { ChecklistDetailResolverService } from './service/checklistdetail-resolver.service';
 
 
+
 const  config = new  AuthServiceConfig([
 {
   id:FacebookLoginProvider.PROVIDER_ID,

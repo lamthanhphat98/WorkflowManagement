@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using EntityContext;
@@ -126,8 +127,8 @@ namespace WorkflowManagement.Repository
         public List<ChecklistProgressViewModel> getAllChecklistProgress(int organizationId, string userId)
         {
             int checkNumber = 0;
-            var getOrganization = _context.Organization.Where(u => u.AdminId.Equals(userId) && u.Id == organizationId).FirstOrDefault();
-            var result = _context.Checklist.Where(u => u.OrganizationId == getOrganization.Id && u.TemplateId!=null).ToList();
+            var getOrganization = _context.Organization.Where(u =>  u.Id == organizationId).FirstOrDefault();
+            var result = _context.Checklist.Where(u => u.OrganizationId == getOrganization.Id && u.TemplateId!=null && u.UserId.Equals(userId)).ToList();
             List<ChecklistProgressViewModel> checklistViewModels = new List<ChecklistProgressViewModel>();
             foreach (var item in result)
             {
@@ -136,10 +137,12 @@ namespace WorkflowManagement.Repository
                 checklist.Name = item.Name;
                 checklist.OrganizationId = item.OrganizationId;         
                 checklist.TemplateId = item.TemplateId;
+                checklist.TemplateName = _context.Checklist.Where(i => i.Id == checklist.TemplateId).FirstOrDefault().Name;
                 checklist.TemplateStatus = item.TemplateStatus;
                 checklist.TimeCreated = item.TimeCreated;
                 checklist.UserId = item.UserId;
-                checklist.Description = item.Description;                        
+                checklist.Description = item.Description;
+                checklist.Category = item.Category;
                 int countAllTaskItem = _context.TaskItem.Where(t => t.ChecklistId == checklist.Id).ToList().Count();
                 int countDoneTask = _context.TaskItem.Where(t => t.ChecklistId == checklist.Id && t.TaskStatus.Equals("1")).ToList().Count();
                 checklist.CountAllTask = countAllTaskItem;
@@ -179,6 +182,11 @@ namespace WorkflowManagement.Repository
                 taskItemVM.TaskStatus = item.TaskStatus;
                 taskItemVM.ChecklistId = item.ChecklistId;
                 var listContent = _context.ContentDetail.Where(c => c.TaskItemId == item.Id).OrderBy(c => c.OrderContent).ToList();
+                foreach (var contentdetail in listContent)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img",contentdetail.ImageSrc);
+                    contentdetail.ImageSrc = path;
+                }
                 taskItemVM.ContentDetails = listContent;
                 var listUser = _context.User.FromSql("getUserByTaskId @TaskId", new SqlParameter("@TaskId", item.Id)).ToList();
                 taskItemVM.UserId = listUser;
@@ -194,6 +202,7 @@ namespace WorkflowManagement.Repository
                     commentDetail.UserId = comment.UserId;
                     commentDetail.Comment1 = comment.Comment1;
                     var user = _context.User.Where(u => u.Id.Equals(comment.UserId)).FirstOrDefault();
+                    
                     commentDetail.UserImage = user.Avatar;
                     commentDetail.Username = user.Name;
 

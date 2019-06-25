@@ -98,39 +98,40 @@ namespace Repository
                 context.Entry(inforChange).State = EntityState.Modified;
                 context.SaveChanges();                             
         }
-        public async Task<FakeJson> getResponse(string url)
+        public async Task<String> getResponse(string url)
         {
-            FakeJson msg = new FakeJson();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(url);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage message = await client.GetAsync("");
-                if (message.IsSuccessStatusCode)
-                {
-                    msg = await message.Content.ReadAsAsync<FakeJson>();
-                    //Console.WriteLine(person.Name);
-
-                }
-            }
-            return msg;
-
-
-
-
-            //using (HttpClient client = new HttpClient())
+            //FakeJson msg = new FakeJson();
+            //using (var client = new HttpClient())
             //{
-            //    using (HttpResponseMessage response = await client.GetAsync(url))
+            //    client.BaseAddress = new Uri(url);
+            //    client.DefaultRequestHeaders.Accept.Clear();
+            //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //    HttpResponseMessage message = await client.GetAsync("");
+            //    if (message.IsSuccessStatusCode)
             //    {
+            //        msg = await message.Content.ReadAsAsync<FakeJson>();
+            //        Console.WriteLine(person.Name);
 
-            //        using (HttpContent content = response.Content)
-            //        {
-            //            string responseContent = await content.ReadAsStringAsync();
-            //            return responseContent;
-            //        }
             //    }
             //}
+            //return msg;
+
+
+            string responseContent = "";
+
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.GetAsync(url))
+                {
+
+                    using (HttpContent content = response.Content)
+                    {
+                         responseContent = await content.ReadAsStringAsync();
+                       
+                    }
+                }
+            }
+            return responseContent;
 
         }
 

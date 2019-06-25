@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,16 +9,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class ValuesController : ControllerBase
     {
         // GET api/values
         [HttpGet]
        
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<Byte[]> Get()
         {
-            return new string[] { "value1", "value2" };
+            var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img", "baotrung.jpg");
+            byte[] image = System.IO.File.ReadAllBytes(path);
+
+           // var file = File()
+           //           MemoryStream ms = new MemoryStream()
+            return  image;
         }
 
         // GET api/values/5

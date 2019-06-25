@@ -75,13 +75,14 @@ export class EditComponent implements OnInit {
       this.listContentDetail = this.listTaskItem.find((res: any) => {
         return res.priority == this.currentPriority;
 
-      }).contentDetails as Content[];
+      }).contentDetails ;
+      this.listContentDetail= this.listContentDetail as Content[];
       this.templateName = this.listTaskItem.find((res: any) => {
         return res.priority ==  this.currentPriority;
       }).name;
 
 
-      console.log(this.templateName);
+      console.log(this.listContentDetail);
 
 
       this.listMember = this.listTaskItem.find((res: any) => {
@@ -205,21 +206,25 @@ export class EditComponent implements OnInit {
 
   }
   addText() {
-    this.contentId = this.contentId + 1;
-    var currentTaskId = localStorage.getItem("TaskId");
+    
+    var currentTaskId = localStorage.getItem("currentEditTask");
     console.log(currentTaskId);
-    var content: Content = { Id: this.contentId, Type: 'text', Text: '', TaskItemId: this.id, OrderContent: this.contentId, ImageSrc: '', Label: '' };
+    this.contentId=this.contentId+1;
+    var content: Content = { id: this.contentId, type: 'text', text: '', taskItemId: parseInt(currentTaskId), orderContent: this.listContentDetail.length+1, imageSrc: '', label: '' };
     this.listContentDetail.push(content);
     // currentTask.contentDetail=this.listContentDetail;
+    console.log(this.listTaskItem);
+    console.log( this.listContentDetail);
+
     this.listTaskItem.find((res: any) => {
       return res.id === parseInt(currentTaskId);
     }).contentDetails = this.listContentDetail;
     console.log(this.listTaskItem);
   }
   addImage() {
-    var currentTaskId = localStorage.getItem("TaskId");
+    var currentTaskId = localStorage.getItem("currentEditTask");
     this.contentId = this.contentId + 1;
-    var content: Content = { Id: this.contentId, Type: 'img', Text: '', TaskItemId: this.id, OrderContent: this.contentId, ImageSrc: '', Label: '' };
+    var content: Content = { id: this.contentId, type: 'img', text: '', taskItemId: parseInt(currentTaskId), orderContent: this.listContentDetail.length+1, imageSrc: '', label: '' };
     this.listContentDetail.push(content);
     this.listTaskItem.find((res: any) => {
       return res.id === parseInt(currentTaskId);
@@ -229,7 +234,7 @@ export class EditComponent implements OnInit {
   addCheckbox() {
     var currentTaskId = localStorage.getItem("TaskId");
     this.contentId = this.contentId + 1;
-    var content: Content = { Id: this.contentId, Type: 'checkbox-label', Text: '', TaskItemId: this.id, OrderContent: this.contentId, ImageSrc: '', Label: '' };
+    var content: Content = { id: this.contentId, type: 'checkbox-label', text: '', taskItemId: parseInt(currentTaskId), orderContent: this.listContentDetail.length+1, imageSrc: '', label: '' };
     this.listContentDetail.push(content);
     // var currentTask = this.listTaskItem.find((res:any)=>{
     //   return res.id===parseInt(currentTaskId);

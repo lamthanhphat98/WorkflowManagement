@@ -16,6 +16,7 @@ using Repository;
 using Service;
 using Swagger;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.Text;
 using WorkflowManagement.IRepository;
 using WorkflowManagement.IService;
@@ -71,8 +72,8 @@ namespace WorkflowManagement
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidAudience = "http://www.security.org",
-                    ValidIssuer = "http://www.security.org",
-                    // ClockSkew = TimeSpan.Zero
+                    ValidIssuer = "http://www.security.org",                  
+                    ClockSkew = TimeSpan.Zero
 
                 };
             });
@@ -143,6 +144,8 @@ namespace WorkflowManagement
             .AllowAnyMethod()
             .AllowAnyHeader());
             app.UseAuthentication();
+
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

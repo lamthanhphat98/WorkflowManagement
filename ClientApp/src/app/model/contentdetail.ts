@@ -1,10 +1,10 @@
 export class Content
 {
-      Id:number
-      Type :string;
-      Text :string;
-      ImageSrc :string;
-      TaskItemId :number;
-      OrderContent :number;
-      Label:string;
+      id:number
+      type :string;
+      text :string;
+      imageSrc :string;
+      taskItemId :number;
+      orderContent :number;
+      label:string;
 }
