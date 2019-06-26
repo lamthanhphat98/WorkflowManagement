@@ -110,6 +110,8 @@ namespace WorkflowManagement
             services.AddTransient<IChecklistRepository, ChecklistRepository>();
             services.AddTransient<ITaskItemRepository, TaskItemRepository>();
             services.AddTransient<ITaskItemService, TaskItemService>();
+            services.AddTransient<IContentService, ContentService>();
+            services.AddTransient<IContentRepository, ContentRepository>();
             services.AddCors();
         }
 

@@ -8,4 +8,5 @@ export class TemplateViewmodel
     templateId:number;
     templateStatus:string;
     organizationId:number;
+    category:string;
 }

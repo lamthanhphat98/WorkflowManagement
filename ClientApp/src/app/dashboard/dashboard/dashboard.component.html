@@ -93,7 +93,7 @@
                  <ng-container *ngFor="let item of listChecklist;let i = index">
                   <ng-container *ngIf="template.id===item.templateId">           
                   <div class="cards" style="float:left">
-                <a  href="/checklist/{{item.id}}" (click)="setStorageTemplate(template.name)"  class="card" title="Click to view this checklist." >
+                <a  href="/checklist/{{item.id}}" (click)="setStorageTemplate(template.name,template.id)"  class="card" title="Click to view this checklist." >
                     <div class="card-inner">
                       <div class="card-detail">
                           <span class="card-details-title" style="width: 200px">
@@ -144,8 +144,14 @@
         </span>
   
         <div class="input-search">
-          <input placeholder="Blank template..." [(ngModel)]="templateName" class="form-control" style="width: 500px;"/>
+          <input placeholder="Blank template..." required="true" [(ngModel)]="templateName" class="form-control" style="width: 400px;float:left"/>
+      
         </div>
+        <div class="input-search" >
+        
+          <input placeholder="Category..." required="true" [(ngModel)]="categoryName" class="form-control" style="width: 150px;"/>
+        </div>
+     
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-success" data-dismiss="modal" (click)="newTemplate()">OK</button>

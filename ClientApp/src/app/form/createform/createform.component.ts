@@ -38,8 +38,9 @@ export class CreateformComponent implements OnInit {
   {
     this.formService.getImage().then((res:any)=>{
       this.getImage = res;
-     // console.log(this.getImage);
-      this.imageUrl = 'data:image/*;base64,'+this.getImage;
+      console.log(this.getImage);
+      this.imageUrl=res as string;
+     // this.imageUrl = 'data:image/*;base64,'+this.getImage;
     })
   }
   chooseImage(file:FileList)

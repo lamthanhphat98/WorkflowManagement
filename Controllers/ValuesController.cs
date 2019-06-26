@@ -15,14 +15,17 @@ namespace Controllers
         // GET api/values
         [HttpGet]
        
-        public ActionResult<Byte[]> Get()
+        public ActionResult<string> Get()
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img", "baotrung.jpg");
-            byte[] image = System.IO.File.ReadAllBytes(path);
+           // var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img", "baotrung.jpg");
+           var path = "https://workflow3i.azurewebsites.net/";
+            var imagePath = "img/" + "baotrung.jpg";
+
+            //byte[] image = System.IO.File.ReadAllBytes(path);
 
            // var file = File()
            //           MemoryStream ms = new MemoryStream()
-            return  image;
+            return  Ok(new String(path+imagePath));
         }
 
         // GET api/values/5

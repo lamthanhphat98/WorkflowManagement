@@ -32,5 +32,10 @@ namespace WorkflowManagement.Service
         {
             return taskItemRepository.getTaskItemByUserIdOnDay(userId);
         }
+
+        public List<TaskItem> GetTaskItems(int checklistId)
+        {
+            return taskItemRepository.GetTaskItems(checklistId);
+        }
     }
 }

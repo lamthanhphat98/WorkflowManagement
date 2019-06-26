@@ -42,14 +42,14 @@
                         style="height: 50px;">
                    
                         <div class="task-list-item">
-                          <a href="/edit/{{id}}/{{task.id}}" (click)="setList(task.priority)">
+                          <a href="/edit/{{id}}/{{task.priority}}" (click)="setList(task.priority)">
 
 
                             <span class="step-number-container"> <span class="step-number">{{i+1}}</span>
                               <span class="step-grip"></span> </span>
                           </a>
 
-                          <textarea name={{task.priority}} [(ngModel)]="task.name" style="padding-left:50px;" rows="1"
+                          <textarea (keyup)="changeTaskName($event)" name={{task.priority}} [(ngModel)]="task.name" style="padding-left:50px;" rows="1"
                             class="form-control">{{task.name}}</textarea>
                         </div>
 
@@ -234,6 +234,15 @@
 
                   </div>
 
+                  <div class="resource-group newtemplate">
+                    <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
+                      <a class="btn btn-success sidebar-add-btn dropdown-toggle" (click)="save()"
+                        style="background-color: #1BC98E;width: 250px;text-align:left;font-size: 17px">
+                        <i class="far fa-save"></i>
+                        Run checklist...
+                      </a>
+                    </div>
+                  </div>
                   <div class="resource-group newtemplate">
                     <div class="btn-group sidebar-add-btn-group dropdown" style="position: relative;">
                       <a class="btn btn-success sidebar-add-btn dropdown-toggle" (click)="save()"

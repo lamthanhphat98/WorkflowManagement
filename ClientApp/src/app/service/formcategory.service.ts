@@ -15,6 +15,6 @@ export class FormcategoryService {
   }
   getImage()
   {
-    return this.http.get("https://localhost:44306/api/Values").toPromise();
+    return this.http.get("https://localhost:44306/api/Values",{responseType:'text'}).toPromise();
   }
 }

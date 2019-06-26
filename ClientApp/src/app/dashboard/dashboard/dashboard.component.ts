@@ -13,6 +13,7 @@ import { TemplateViewmodel } from 'src/app/model/templateViewModel';
 })
 export class DashboardComponent implements OnInit {
 
+  categoryName:string;
   imageUrl:string;
   value:string;
   show=false;
@@ -28,6 +29,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.organizationId =JSON.parse(localStorage.getItem("OrganizationId"));
     this.userId = JSON.parse(localStorage.getItem("UserId"));
+    setTimeout(()=>{
+      if(this.userId.length==0)
+      {
+        this.router.navigateByUrl("");
+      }
+    },300);
     this.imageUrl=JSON.parse(localStorage.getItem("ImageUrl"));
    
     this.loadAllChecklists(this.organizationId,this.userId);
@@ -74,7 +81,7 @@ export class DashboardComponent implements OnInit {
   newTemplate()
   {
     console.log(this.templateName);
-    this.template={id:0,userId:this.userId,name:this.templateName,description:'',organizationId:this.organizationId,templateId:null,templateStatus:'Template',timeCreated:null}
+    this.template={id:0,userId:this.userId,name:this.templateName,description:'',organizationId:this.organizationId,templateId:null,templateStatus:'Template',timeCreated:null,category:this.categoryName}
     localStorage.setItem("nametemplate",this.templateName);
     this.checklistService.postTemplate(this.template).subscribe(res=>{
       console.log(res);
@@ -82,15 +89,19 @@ export class DashboardComponent implements OnInit {
       localStorage.setItem("templateId",id.id.toString());;
     })
     
-    // setTimeout(()=>{
-    //   this.router.navigateByUrl("/template");
+    setTimeout(()=>{
+      this.router.navigateByUrl("/template");
   
-    // },300);
+    },300);
 
 
   }
-  setStorageTemplate(templateName:string)
+  setStorageTemplate(templateName:string,templateId:number)
   {
+    localStorage.setItem("CurrentTemplateId",templateId.toString());
+    localStorage.setItem("CurrentTemplateName",templateName.toString());
+
+    console.log(templateId);
 console.log(templateName);
   }
 
