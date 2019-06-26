@@ -51,6 +51,7 @@ namespace WorkflowManagement.Repository
                 task.Name = item.Name;
                 task.Priority = item.Priority;
                 task.TaskStatus = item.TaskStatus;
+                task.TaskStatus = "Running";
                 context.TaskItem.Add(task);
                 context.SaveChanges();
                 var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime)).FirstOrDefault();
@@ -95,6 +96,10 @@ namespace WorkflowManagement.Repository
             SqlParameter paramUserId = new SqlParameter("@userId", userId);
             var result = context.TaskItem.FromSql("EXEC getTaskItemByDate @fromDate,@toDate,@userId", paramFromDate,paramToDate, paramUserId).ToList();       
             return result;
+        }
+        public List<TaskItem> GetTaskItems(int checklistId)
+        {
+            return context.TaskItem.Where(t => t.ChecklistId == checklistId).ToList();
         }
 
     }

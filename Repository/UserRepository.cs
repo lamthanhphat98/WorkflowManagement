@@ -145,8 +145,7 @@ namespace Repository
                     getUser.Role = "USER";
                     getUser.VerifyCode = "";
                     update(getUser);
-                    return getUser.Role;
-                   
+                    return getUser.Role;                 
                 }
                 return null;
             }

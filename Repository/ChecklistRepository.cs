@@ -15,6 +15,7 @@ namespace WorkflowManagement.Repository
 {
     public class ChecklistRepository : IChecklistRepository
     {
+        private readonly String serverName = "https://workflow3i.azurewebsites.net/";
         private readonly WorkflowContext _context;
         public ChecklistRepository(WorkflowContext context)
         {
@@ -113,6 +114,7 @@ namespace WorkflowManagement.Repository
                 taskItemVM.Priority = item.Priority;
                 taskItemVM.TaskStatus = item.TaskStatus;
                 taskItemVM.ChecklistId = item.ChecklistId;
+                taskItemVM.DueTime = item.DueTime.ToString();
                 var listContent = _context.ContentDetail.Where(c => c.TaskItemId == item.Id).OrderBy(c => c.OrderContent).ToList();
                 taskItemVM.ContentDetails = listContent;
                 var listUser = _context.User.FromSql("getUserByTaskId @TaskId", new SqlParameter("@TaskId", item.Id)).ToList();
@@ -181,10 +183,12 @@ namespace WorkflowManagement.Repository
                 taskItemVM.Priority = item.Priority;
                 taskItemVM.TaskStatus = item.TaskStatus;
                 taskItemVM.ChecklistId = item.ChecklistId;
+                taskItemVM.DueTime = item.DueTime.ToString();
                 var listContent = _context.ContentDetail.Where(c => c.TaskItemId == item.Id).OrderBy(c => c.OrderContent).ToList();
                 foreach (var contentdetail in listContent)
                 {
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img",contentdetail.ImageSrc);
+                    // var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\img",contentdetail.ImageSrc);
+                    var path = serverName + "img/" + contentdetail.ImageSrc;
                     contentdetail.ImageSrc = path;
                 }
                 taskItemVM.ContentDetails = listContent;

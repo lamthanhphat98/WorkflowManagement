@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TaskViewModel } from 'src/app/model/taskitem';
 import { Content } from 'src/app/model/contentdetail';
 import { ChecklistService } from 'src/app/service/checklist.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DateTimeAdapter, OWL_DATE_TIME_LOCALE, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
 import { User } from 'src/app/model/user';
@@ -41,8 +41,10 @@ export class TemplateComponent implements OnInit {
   listMember:User[]=[];
   organizationId:number;
   templateId:number;
+  taskName:string;
   constructor(private checklistService:ChecklistService,
     private router: ActivatedRoute,
+    private route:Router,
     private memberService:MemberService,
     private taskItemService:TaskitemService) { 
 
@@ -126,7 +128,7 @@ export class TemplateComponent implements OnInit {
   save()
   {
     console.log(this.listTaskItem);
-    if(this.datetime!==null)
+    if(this.datetime!=null)
     {
       const d = new Date(this.datetime.toString()); 
       console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
@@ -142,6 +144,9 @@ export class TemplateComponent implements OnInit {
         console.log(res);
       });
     }
+    setTimeout(()=>{
+        this.route.navigateByUrl("/dashboard");
+    },500);
 
   }
   addText()
@@ -210,5 +215,14 @@ export class TemplateComponent implements OnInit {
     console.log(id);
     this.listContentDetail.splice(id,1);
   }
-
+  changeTaskName(event:any)
+  {
+     this.taskName=event.target.value;
+  }
+  setTargetTextarea(taskPriority:number)
+  {
+    console.log(taskPriority);
+    console.log(this.listTaskItem);
+    localStorage.setItem("currentTargetTextarea",taskPriority.toString());
+  }
 }

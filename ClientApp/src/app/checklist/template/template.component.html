@@ -45,7 +45,7 @@
                               <span class="step-grip"></span>  </span>
                             </a>               
                             
-                                  <textarea name={{task.priority}} [(ngModel)]="task.name" style="padding-left:50px;" rows="1" class="form-control"></textarea>                           
+                                  <textarea name={{task.priority}} (click)="setTargetTextarea(task.priority)" (keyup)="changeTaskName($event)" [(ngModel)]="task.name" style="padding-left:50px;" rows="1" class="form-control"></textarea>                           
                           </div>
   
                         </li>
@@ -75,7 +75,7 @@
       <div class="sidebarright" >
         <div class="widgets-header-container">
            <h3  class="widgets-header"  >
-             <strong>sdasdasd</strong>
+             <strong>{{this.taskName}}</strong>
             </h3>
         
           </div>
@@ -280,8 +280,8 @@
                          </div>
                          <div class="resource-group"> 
                             <div class="resource-group item">
-                              <a href="" class="btn btn-transparent sidebar-home-btn" style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
-                                <span style="color: #777777;padding-left:10px">Form Content</span>  </a>
+                              <a  style="width: 250px;height: 38px;text-align: left;font-size: 17px;"> 
+                                <span style="color: #777777;padding-left:13px"> <i class="fab fa-wpforms"></i> Form Content</span>  </a>
                             </div>        
                            </div>
                          <div class="resource-group newtemplate"> 

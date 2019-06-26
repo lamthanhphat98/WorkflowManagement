@@ -43,6 +43,12 @@ namespace WorkflowManagement.Controllers
             return Ok(taskItemService.getTaskItemByUserIdOnDay( userId));
         }
 
+        [HttpGet("taskitems/{checklistId}")]
+        public IActionResult GetTaskItems([FromRoute]  int checklistId)
+        {
+            return Ok(taskItemService.GetTaskItems(checklistId));
+        }
+
 
     }
 }

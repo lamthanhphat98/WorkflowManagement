@@ -47,7 +47,9 @@ export class ChecklistComponent implements OnInit {
   isDataLoaded=false;
   imageUrl:string;
   isDone:true;
-  commentPriority=0;
+  commentPriority:number;
+  dueTime:string;
+  currentTemplateId:number =0;
   constructor(private checklistService: ChecklistService,
     private router: ActivatedRoute,
     private memberService: MemberService,
@@ -59,13 +61,17 @@ export class ChecklistComponent implements OnInit {
       
       //console.log(this.currentPriority);
    
-      this.currentPriority=parseInt(JSON.parse(localStorage.getItem("currentPriorityChecklist")).toString());
      
      
-      if(Number.isNaN(this.currentPriority))
+     
+      if(isNaN(this.currentPriority))
       {
         //console.log("null");
-        this.currentPriority=1;
+        localStorage.setItem("currentPriorityChecklist",'1');
+      }
+      else
+      {
+        this.currentPriority=JSON.parse(localStorage.getItem("currentPriorityChecklist"));
       }
       console.log(this.listTaskItem);
       console.log(this.currentPriority);
@@ -76,6 +82,14 @@ export class ChecklistComponent implements OnInit {
       this.listContentDetail.map((res:any)=>{
            res.imageSrc=this.domSanitizer.bypassSecurityTrustUrl(res.imageSrc);
       })
+      this.dueTime = this.listTaskItem.find((res: any) => {
+        return res.priority == this.currentPriority;
+
+      }).dueTime as string;
+      this.listMember = this.listTaskItem.find((res: any) => {
+        return res.priority == this.currentPriority;
+
+      }).userId as User[];
       console.log(this.listContentDetail);
       this.listComment = this.listTaskItem.find((res: any) => {
         return res.priority == this.currentPriority;
@@ -95,6 +109,7 @@ export class ChecklistComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.currentTemplateId = parseInt(JSON.parse(localStorage.getItem("CurrentTemplateId")));
     this.id = parseInt(this.router.snapshot.paramMap.get("id"));
     this.taskId = parseInt(this.router.snapshot.paramMap.get("taskid"));
     localStorage.setItem("currentEditTask", this.taskId.toString());
