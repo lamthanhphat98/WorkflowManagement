@@ -15,6 +15,10 @@ export class ChecklistService {
   
     return this.http.get<Checklist[]>("https://localhost:44306/api/checklists/activity/"+organizationId+"/"+userId);
   }
+  runChecklist(checklist:any)
+  {
+    return this.http.post("https://localhost:44306/api/checklists/checklist",checklist);
+  }
   postTemplate(template:any)
   {
     return this.http.post("https://localhost:44306/api/checklists/template",template);

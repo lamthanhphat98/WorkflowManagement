@@ -1,6 +1,8 @@
+import { TaskItemDetailViewModel } from './taskitemdetail';
 import { TaskViewModel } from './taskitem';
 
-export class Template{
+export  class ChecklistViewModel
+{
     id : number;
     userId: string;
     name: string;
@@ -8,8 +10,7 @@ export class Template{
     timeCreated:Date;
     templateId:number;
     templateStatus:string;
-    category:string;
     organizationId:number;
+    category:string;
     taskItem:TaskViewModel[];
-
 }

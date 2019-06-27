@@ -27,6 +27,8 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardSerivce : DashboardService,private router:Router,private checklistService:ChecklistService) { }
 
   ngOnInit() {
+    localStorage.removeItem("listTaskItem");
+    localStorage.removeItem("currentPriorityEdit");
     this.organizationId =JSON.parse(localStorage.getItem("OrganizationId"));
     this.userId = JSON.parse(localStorage.getItem("UserId"));
     setTimeout(()=>{

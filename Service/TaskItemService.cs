@@ -28,6 +28,11 @@ namespace WorkflowManagement.Service
             taskItemRepository.addNewTaskItem(taskItem);
         }
 
+        public void addPostListTask(List<TaskItemViewModel> taskItem,int checklistId)
+        {
+            taskItemRepository.addPostListTask(taskItem, checklistId);
+        }
+
         public List<TaskItem> getTaskItemByUserIdOnDay(string userId)
         {
             return taskItemRepository.getTaskItemByUserIdOnDay(userId);
@@ -36,6 +41,11 @@ namespace WorkflowManagement.Service
         public List<TaskItem> GetTaskItems(int checklistId)
         {
             return taskItemRepository.GetTaskItems(checklistId);
+        }
+
+        public void updateTaskItems(List<TaskItemViewModel> taskItem)
+        {
+            taskItemRepository.updateTaskItems(taskItem);
         }
     }
 }

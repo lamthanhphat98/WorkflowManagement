@@ -51,7 +51,7 @@ namespace WorkflowManagement.Repository
                 if(checklist.TemplateId!=null)
                 {
                     int countAllTaskItem = _context.TaskItem.Where(t => t.ChecklistId == checklist.Id).ToList().Count();
-                    int countDoneTask = _context.TaskItem.Where(t => t.ChecklistId == checklist.Id && t.TaskStatus.Equals("1")).ToList().Count();
+                    int countDoneTask = _context.TaskItem.Where(t => t.ChecklistId == checklist.Id && t.TaskStatus.Equals("Done")).ToList().Count();
                     if(countAllTaskItem==0 && countDoneTask==0)
                     {
                         checklist.CountTask = "0%";
@@ -88,7 +88,7 @@ namespace WorkflowManagement.Repository
         public TemplateViewModel getTemplate(int organizationId,String userId,int templateId)
         {
             
-           var template = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.Id == templateId && c.UserId.Equals(userId) && c.TemplateId == null).FirstOrDefault();
+           var template = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.Id == templateId && c.UserId.Equals(userId)).FirstOrDefault();
             var templateVM = new TemplateViewModel()
             {
                 Id = template.Id,
@@ -99,7 +99,9 @@ namespace WorkflowManagement.Repository
                 TemplateId = template.TemplateId,
                 TemplateStatus = template.TemplateStatus,
                 TimeCreated = template.TimeCreated,
-                UserId = template.UserId
+                UserId = template.UserId,
+                Category=template.Category
+                
             };
               
         
@@ -146,7 +148,7 @@ namespace WorkflowManagement.Repository
                 checklist.Description = item.Description;
                 checklist.Category = item.Category;
                 int countAllTaskItem = _context.TaskItem.Where(t => t.ChecklistId == checklist.Id).ToList().Count();
-                int countDoneTask = _context.TaskItem.Where(t => t.ChecklistId == checklist.Id && t.TaskStatus.Equals("1")).ToList().Count();
+                int countDoneTask = _context.TaskItem.Where(t => t.ChecklistId == checklist.Id && t.TaskStatus.Equals("Done")).ToList().Count();
                 checklist.CountAllTask = countAllTaskItem;
                 checklist.CountDoneTask = countDoneTask;
                 checklistViewModels.Add(checklist);
@@ -164,11 +166,12 @@ namespace WorkflowManagement.Repository
                 Description = template.Description,
                 Name = template.Name,
                 OrganizationId = template.OrganizationId,
-                taskItemViewModels = null,
+                taskItem = null,
                 TemplateId = template.TemplateId,
                 TemplateStatus = template.TemplateStatus,
                 TimeCreated = template.TimeCreated,
-                UserId = template.UserId
+                UserId = template.UserId,
+                Category = template.Category
             };
 
 
@@ -215,7 +218,7 @@ namespace WorkflowManagement.Repository
                 taskItemVM.Comments = listCommentViewModel;
                 listTaskItemVM.Add(taskItemVM);
             }
-            checklistVM.taskItemViewModels = listTaskItemVM;
+            checklistVM.taskItem = listTaskItemVM;
             return checklistVM;
 
         }

@@ -13,8 +13,6 @@ namespace WorkflowManagement.ViewModel
         public string Name { get; set; }
         public string DueTime { get; set; }
         public int? Priority { get; set; }
-      //  public int? FormId { get; set; }
-       // public string FormSubmitted { get; set; }
         public string TaskStatus { get; set; }
         public ICollection<User> UserId { get; set; }
         public ICollection<ContentDetail> ContentDetails { get; set; }
