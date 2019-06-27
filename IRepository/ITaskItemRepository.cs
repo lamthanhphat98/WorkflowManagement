@@ -13,6 +13,9 @@ namespace WorkflowManagement.IRepository
         void addListTaskItem(List<TaskItemViewModel> taskItem);
         List<TaskItem> getTaskItemByUserIdOnDay(String userId);
         List<TaskItem> GetTaskItems(int checklistId);
+        void updateTaskItems(List<TaskItemViewModel> taskItem);
+        void addPostListTask(List<TaskItemViewModel> taskItem, int checklistId);
+
 
     }
 }

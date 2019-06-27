@@ -18,4 +18,9 @@ export class TaskitemService {
     return this.http.post("https://localhost:44306/api/Taskitems/template",taskViewModel);
 
   }
+  pathListTask(taskViewModel:any) 
+  {
+    return this.http.put("https://localhost:44306/api/Taskitems/taskitem",taskViewModel);
+
+  }
 }

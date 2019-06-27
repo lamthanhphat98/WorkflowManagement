@@ -48,6 +48,14 @@ namespace WorkflowManagement.Controllers
         {
             return Ok(taskItemService.GetTaskItems(checklistId));
         }
+        [HttpPut("taskitem")]
+        public IActionResult saveChecklist([FromBody] List<TaskItemViewModel> tasktitem)
+        {
+            //var result = checklistService.addTemplate(template);
+            taskItemService.updateTaskItems(tasktitem);
+            return Ok();
+            // return Ok(result);
+        }
 
 
     }

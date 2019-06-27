@@ -9,6 +9,7 @@ using EntityContext;
 using WorkflowManagement.Models;
 using System.Data.SqlClient;
 using WorkflowManagement.IService;
+using WorkflowManagement.ViewModel;
 
 namespace WorkflowManagement.Controllers
 {
@@ -17,10 +18,12 @@ namespace WorkflowManagement.Controllers
     public class ChecklistsController : ControllerBase
     {
         private readonly IChecklistService checklistService;
+        private readonly ITaskItemService taskItemService;
 
-        public ChecklistsController(IChecklistService _checklistService)
+        public ChecklistsController(IChecklistService _checklistService, ITaskItemService _taskItemService)
         {
             checklistService = _checklistService;
+            taskItemService = _taskItemService;
         }
 
         // GET: api/Checklists
@@ -55,6 +58,24 @@ namespace WorkflowManagement.Controllers
         public IActionResult getChecklist([FromRoute] int organizationId, string userId,int checklistId )
         {
             return Ok(checklistService.getChecklistDetail(organizationId, userId, checklistId));
+        }
+        [HttpPost("checklist")]
+        public IActionResult runChecklist([FromBody] ChecklistPostViewModel checklistViewmodel)
+        {
+            var checklist = new Checklist();
+            checklist.Category = checklistViewmodel.Category;
+            checklist.TemplateId = checklistViewmodel.Id;
+            checklist.Description = checklistViewmodel.Description;
+            checklist.Name = checklistViewmodel.Name;
+            checklist.TemplateStatus = checklistViewmodel.TemplateStatus;
+            checklist.UserId = checklistViewmodel.UserId;
+            checklist.OrganizationId = checklistViewmodel.OrganizationId;
+            var result = checklistService.addTemplate(checklist);
+            //var result = checklistService.addTemplate(template);
+
+            taskItemService.addPostListTask(checklistViewmodel.TaskItem.ToList(),result.Id);
+            return Ok();
+           // return Ok(result);
         }
 
     }

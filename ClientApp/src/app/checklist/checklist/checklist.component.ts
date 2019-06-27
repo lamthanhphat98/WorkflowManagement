@@ -43,20 +43,34 @@ export class ChecklistComponent implements OnInit {
   template: ChecklistDetailViewModel;
   currentPriority = 1;
   listAllContentDetail: Content[] = [];
-  taskId: number = 1;
+  taskId: number;
   isDataLoaded=false;
   imageUrl:string;
   isDone:true;
   commentPriority:number;
   dueTime:string;
   currentTemplateId:number =0;
+  currentTaskId:number;
   constructor(private checklistService: ChecklistService,
     private router: ActivatedRoute,
     private memberService: MemberService,
     private taskItemService: TaskitemService,
     private domSanitizer :DomSanitizer ) {
+      this.id = parseInt(this.router.snapshot.paramMap.get("id"));
+      this.taskId = parseInt(this.router.snapshot.paramMap.get("taskid"));
+     
+      if(this.taskId===NaN)
+      {
+        //console.log("null");
+        this.currentPriority=1;
+        //localStorage.setItem("currentPriorityChecklist",'1');
+      }
+      else
+      {
+        this.currentPriority=JSON.parse(localStorage.getItem("currentPriorityChecklist"));
+      }
       this.template=this.router.snapshot.data['checklist'] as ChecklistDetailViewModel;
-      this.listTaskItem = this.router.snapshot.data['checklist'].taskItemViewModels;
+      this.listTaskItem = this.router.snapshot.data['checklist'].taskItem;
       console.log(this.template);
       
       //console.log(this.currentPriority);
@@ -64,55 +78,55 @@ export class ChecklistComponent implements OnInit {
      
      
      
-      if(isNaN(this.currentPriority))
+      console.log(this.listTaskItem);
+      console.log(this.currentPriority);
+      if(this.listTaskItem===null || this.listTaskItem === undefined || this.listTaskItem.length===0)
       {
-        //console.log("null");
-        localStorage.setItem("currentPriorityChecklist",'1');
+        this.listTaskItem=[];
       }
       else
       {
-        this.currentPriority=JSON.parse(localStorage.getItem("currentPriorityChecklist"));
+        this.currentTaskId=this.listTaskItem[this.currentPriority-1].id;
+        console.log(this.currentTaskId);
+        this.listContentDetail = this.listTaskItem.find((res: any) => {
+          return res.priority == this.currentPriority;
+  
+        }).contentDetails as Content[];
+        this.listContentDetail.map((res:any)=>{
+             res.imageSrc=this.domSanitizer.bypassSecurityTrustUrl(res.imageSrc);
+        })
+        this.dueTime = this.listTaskItem.find((res: any) => {
+          return res.priority == this.currentPriority;
+  
+        }).dueTime as string;
+        this.listMember = this.listTaskItem.find((res: any) => {
+          return res.priority == this.currentPriority;
+  
+        }).userId as User[];
+        console.log(this.listContentDetail);
+        this.listComment = this.listTaskItem.find((res: any) => {
+          return res.priority == this.currentPriority;
+  
+        }).comments as CommentViewModel[];
+        this.templateName = this.listTaskItem.find((res: any) => {
+          return res.priority ==  this.currentPriority;
+        }).name;
+  
+  
+        console.log(this.templateName);
+  
+  
+        this.listMember = this.listTaskItem.find((res: any) => {
+          return res.priority ==  this.currentPriority;
+        }).userId;
+       
       }
-      console.log(this.listTaskItem);
-      console.log(this.currentPriority);
-      this.listContentDetail = this.listTaskItem.find((res: any) => {
-        return res.priority == this.currentPriority;
-
-      }).contentDetails as Content[];
-      this.listContentDetail.map((res:any)=>{
-           res.imageSrc=this.domSanitizer.bypassSecurityTrustUrl(res.imageSrc);
-      })
-      this.dueTime = this.listTaskItem.find((res: any) => {
-        return res.priority == this.currentPriority;
-
-      }).dueTime as string;
-      this.listMember = this.listTaskItem.find((res: any) => {
-        return res.priority == this.currentPriority;
-
-      }).userId as User[];
-      console.log(this.listContentDetail);
-      this.listComment = this.listTaskItem.find((res: any) => {
-        return res.priority == this.currentPriority;
-
-      }).comments as CommentViewModel[];
-      this.templateName = this.listTaskItem.find((res: any) => {
-        return res.priority ==  this.currentPriority;
-      }).name;
-
-
-      console.log(this.templateName);
-
-
-      this.listMember = this.listTaskItem.find((res: any) => {
-        return res.priority ==  this.currentPriority;
-      }).userId;
-     }
+    }
 
   ngOnInit() {
     this.currentTemplateId = parseInt(JSON.parse(localStorage.getItem("CurrentTemplateId")));
-    this.id = parseInt(this.router.snapshot.paramMap.get("id"));
-    this.taskId = parseInt(this.router.snapshot.paramMap.get("taskid"));
-    localStorage.setItem("currentEditTask", this.taskId.toString());
+  
+   // localStorage.setItem("currentEditTask", this.taskId.toString());
     //console.log(this.taskId);
     this.templateId = JSON.parse(localStorage.getItem("templateId"));
     this.organizationId = JSON.parse(localStorage.getItem("OrganizationId"));
@@ -134,7 +148,7 @@ export class ChecklistComponent implements OnInit {
   comment()
   {
     this.commentPriority  = this.listComment.length +1;
-    this.commentDetail = {Id:this.commentPriority,Comment1:'',IsRead:false,Priority:this.commentPriority,TaskId:this.taskId,UserId:'',UserImage:'',UserName:''}
+    this.commentDetail = {Id:this.commentPriority,Comment1:'',IsRead:false,Priority:this.commentPriority,TaskId:this.currentTaskId,UserId:'',UserImage:'',UserName:''}
     this.listComment.push(this.commentDetail);
     console.log(this.listComment);
   }

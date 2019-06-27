@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WorkflowManagement.ViewModel
 {
-    public class ChecklistDetailViewModel
+    public class ChecklistPostViewModel
     {
         public int Id { get; set; }
         public string UserId { get; set; }
@@ -16,6 +16,6 @@ namespace WorkflowManagement.ViewModel
         public int? OrganizationId { get; set; }
         public int? TemplateId { get; set; }
         public string Category { get; set; }
-        public List<TaskItemDetailViewModel> taskItem { get; set; }
+        public ICollection<TaskItemViewModel> TaskItem { get; set; }
     }
 }

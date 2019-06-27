@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Route } from '@angular/router';
 import { DateTimeAdapter, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
 import * as _moment from 'moment';
@@ -11,6 +11,8 @@ import { TemplateViewmodel } from 'src/app/model/templateViewModel';
 import { ChecklistService } from 'src/app/service/checklist.service';
 import { Content } from 'src/app/model/contentdetail';
 import { Template } from 'src/app/model/template';
+import { ChecklistDetailViewModel } from 'src/app/model/checklistdetail';
+import { ChecklistViewModel } from 'src/app/model/checklistviewmodel';
 
 // const moment = (_moment as any).default ? (_moment as any).default : _moment;
 
@@ -38,6 +40,7 @@ export const MY_CUSTOM_FORMATS = {
 export class EditComponent implements OnInit {
 
 
+  checklistName:string;
   templateName: string;
   listTaskItem: TaskViewModel[] = [];
   listContentDetail: Content[] = [];
@@ -57,9 +60,11 @@ export class EditComponent implements OnInit {
   isDataLoaded = false;
   taskName: string;
   currentDuetime: string;
+  checklistDetail:ChecklistViewModel;
 
   constructor(private checklistService: ChecklistService,
     private router: ActivatedRoute,
+    private route:Router,
     private memberService: MemberService,
     private taskItemService: TaskitemService) {
     this.id = parseInt(this.router.snapshot.paramMap.get("id"));
@@ -67,22 +72,22 @@ export class EditComponent implements OnInit {
 
     if (isNaN(this.currentPriority)) {
       //this.currentPriority=1;
+      console.log("asdads");
       localStorage.setItem("currentPriorityEdit", '1');
     } else {
-      this.currentPriority = JSON.parse(localStorage.getItem("currentPriorityEdit"));
+      localStorage.setItem("currentPriorityEdit", this.currentPriority.toString());  
     }
+    this.currentPriority = JSON.parse(localStorage.getItem("currentPriorityEdit"));
 
+    
     this.listTaskItem = JSON.parse(localStorage.getItem("listTaskItem"));
-    if (this.listTaskItem === undefined) {
+
+    if (this.listTaskItem === undefined || this.listTaskItem===null) {
       this.template = this.router.snapshot.data['template'] as Template;
       this.listTaskItem = this.router.snapshot.data['template'].taskItemViewModels;
+      console.log(this.listTaskItem);
     }
-
-
     console.log(this.router.snapshot.data['template']);
-
-
-
     console.log("priority : ");
     console.log(this.currentPriority);
     // mẹ lủng OOP rồi list = 1 nhưng index = 0 =,=
@@ -92,7 +97,8 @@ export class EditComponent implements OnInit {
         return res.priority == this.currentPriority;
       }).contentDetails;
 
-      if (typeof this.listTaskItem[this.currentPriority-1].dueTime == 'string' && this.listTaskItem[this.currentPriority-1].dueTime.length == 0) {
+      if (typeof this.listTaskItem[this.currentPriority-1].dueTime == 'string'
+       && this.listTaskItem[this.currentPriority-1].dueTime.length == 0) {
         // var d = new Date();
         // var tommorow = d.getDate() + 1;
 
@@ -103,8 +109,10 @@ export class EditComponent implements OnInit {
         tomorrow.setDate(today.getDate() + 1);
         console.log(tomorrow);
         console.log(typeof tomorrow);
-        console.log(tomorrow.toLocaleDateString() +' ' + tomorrow.toLocaleTimeString());
-        this.currentDuetime=tomorrow.toLocaleDateString() +' ' + tomorrow.toLocaleTimeString();
+        console.log(tomorrow.toLocaleDateString('en-US',{year:"2-digit",month:"2-digit", day:"2-digit"}) +' ' 
+        + tomorrow.toLocaleTimeString('en-US',{hour:"2-digit",minute:"2-digit", second:"2-digit"}));
+        this.currentDuetime=tomorrow.toLocaleDateString('en-US',{year:"2-digit",month:"2-digit", day:"2-digit"}) +' ' 
+        + tomorrow.toLocaleTimeString('en-US',{hour:"2-digit",minute:"2-digit", second:"2-digit"});
         console.log(tomorrow.toLocaleString()); 
  
       } else {
@@ -127,7 +135,6 @@ export class EditComponent implements OnInit {
       }).name;
 
       // mở mic lên ông
-      console.log(this.listContentDetail);
 
       this.taskId = this.listTaskItem.find((res: any) => {
         return res.priority == this.currentPriority;
@@ -136,13 +143,18 @@ export class EditComponent implements OnInit {
       this.listMember = this.listTaskItem.find((res: any) => {
         return res.priority == this.currentPriority;
       }).userId;
+      console.log(this.listMember);
+
     }
     else {
-      var d = new Date();
-      var tommorow = d.getDate() + 1;
-      console.log(tommorow);
-      // tui muốn lấy ngày mai của ngày hôm nay
-      //new Date() luc nao cung tra ve ngay hom nay
+      var today = new Date();
+      var tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      console.log(tomorrow);
+      console.log(typeof tomorrow);
+      console.log(tomorrow.toLocaleDateString() +' ' + tomorrow.toLocaleTimeString());
+      this.currentDuetime=tomorrow.toLocaleDateString() +' ' + tomorrow.toLocaleTimeString();
+      console.log(tomorrow.toLocaleString());
 
 
     }
@@ -160,6 +172,7 @@ export class EditComponent implements OnInit {
     this.templateId = JSON.parse(localStorage.getItem("templateId"));
     this.organizationId = JSON.parse(localStorage.getItem("OrganizationId"));
     this.userId = JSON.parse(localStorage.getItem("UserId"));
+    this.getMember(this.organizationId);
 
     //resolver
     console.log(this.currentPriority);
@@ -226,7 +239,7 @@ export class EditComponent implements OnInit {
   }
   addMemberToTask(user: User) {
     var userFilter = this.listMember.filter(res => res.id === user.id)[0];
-    var currentTaskId = localStorage.getItem("TaskId");
+    var currentTaskId = JSON.parse(localStorage.getItem("TaskId"));
 
     if (user !== userFilter) {
       this.listMember.push(user);
@@ -241,29 +254,46 @@ export class EditComponent implements OnInit {
 
     //console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
     // this.id = this.id + 1;
+    var currentTaskId = JSON.parse(localStorage.getItem("TaskId"));
     console.log(this.id);
-    var task: TaskViewModel = { id: this.id, dueTime: '', name: '', checklistId: this.templateId, contentDetails: [], priority: this.listTaskItem.length + 1, taskStatus: '', userId: [] };
+    var task: TaskViewModel = { id: this.id, dueTime: '', name: '', checklistId: currentTaskId, contentDetails: [], priority: this.listTaskItem.length + 1, taskStatus: '', userId: [] };
     this.listTaskItem.push(task);
     console.log(this.listTaskItem);
 
   }
   save() {
     console.log(this.listTaskItem);
-    if (this.datetime !== null) {
+    if ( this.datetime !== undefined) {
       const d = new Date(this.datetime.toString());
       console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
       var currentTaskId = localStorage.getItem("TaskId");
 
       this.listTaskItem.find((res: any) => {
-        return res.id === parseInt(currentTaskId);
+        return res.id === parseInt(this.currentPriority.toString());
       }).dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss");
       this.listTaskItem.find((res: any) => {
-        return res.id === parseInt(currentTaskId);
+        return res.id === parseInt(this.currentPriority.toString());
       }).userId = this.listMember;
-      this.taskItemService.postListTask(this.listTaskItem).subscribe(res => {
+      this.taskItemService.pathListTask(this.listTaskItem).subscribe(res => {
         console.log(res);
+        this.route.navigateByUrl('/dashboard');
       });
     }
+    else
+    {
+      console.log(this.listTaskItem[this.currentPriority-1]);
+      console.log("a");
+      console.log(this.currentPriority);
+      this.listTaskItem[this.currentPriority-1].dueTime = this.currentDuetime;
+      this.listTaskItem[this.currentPriority-1].userId = this.listMember;
+      this.taskItemService.pathListTask(this.listTaskItem).subscribe(res => {
+        console.log(res);
+        this.route.navigateByUrl('/dashboard');
+      });
+    }
+
+
+    
 
   }
   addText() {
@@ -315,17 +345,18 @@ export class EditComponent implements OnInit {
     console.log(priority);
     localStorage.setItem("currentPriorityEdit", priority.toString());
     //this.currentPriority = priority;
-    console.log(this.listTaskItem);
+   // console.log(this.listTaskItem);
     var currentTaskId = localStorage.getItem("TaskId");
  
       if (this.datetime !== undefined) {
         const d = new Date(this.datetime.toString());
         console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
+        console.log(this.listTaskItem);
         this.listTaskItem.find((res: any) => {
-          return res.id === parseInt(this.currentPriority.toString());
+          return res.priority === parseInt(this.currentPriority.toString());
         }).dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss");
         this.listTaskItem.find((res: any) => {
-          return res.id === parseInt(this.currentPriority.toString());
+          return res.priority === parseInt(this.currentPriority.toString());
         }).userId = this.listMember;
         localStorage.setItem("listTaskItem", JSON.stringify(this.listTaskItem));
       }
@@ -348,5 +379,21 @@ export class EditComponent implements OnInit {
     this.templateName = event.target.value;
   }
 
-
+  runChecklist()
+  {
+    if(this.currentPriority===NaN || this.currentPriority===undefined)
+    {
+      this.listTaskItem = this.router.snapshot.data['template'].taskItemViewModels;
+    }else
+    {
+      this.listTaskItem = this.router.snapshot.data['template'].taskItemViewModels;
+      //this.listTaskItem=JSON.parse(localStorage.getItem("listTaskItem"));
+    }
+    console.log(this.listTaskItem);
+    this.template = this.router.snapshot.data['template'] as Template;
+    this.checklistDetail={id:this.template.id,name:this.checklistName,timeCreated:null,userId:this.template.userId,description:this.template.description,organizationId:this.template.organizationId,taskItem:this.listTaskItem,templateId:this.template.templateId,templateStatus:this.template.templateStatus,category:this.template.category}
+    this.checklistService.runChecklist(this.checklistDetail).subscribe(res=>{
+      console.log(res);
+    });
+  }
 }

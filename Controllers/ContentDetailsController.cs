@@ -22,10 +22,10 @@ namespace WorkflowManagement.Controllers
             contentService = _contentService;
         }
 
-        [HttpGet("contentdetail/{checklistId}")]
-        public IActionResult GetContentDetail([FromRoute] int checklistId)
+        [HttpGet("contentdetail/{taskid}")]
+        public IActionResult GetContentDetail([FromRoute] int taskid)
         {
-            return  Ok(contentService.getContentByTaskId(checklistId));
+            return  Ok(contentService.getContentByTaskId(taskid));
         }
 
 
