@@ -256,7 +256,7 @@ export class EditComponent implements OnInit {
     // this.id = this.id + 1;
     var currentTaskId = JSON.parse(localStorage.getItem("TaskId"));
     console.log(this.id);
-    var task: TaskViewModel = { id: this.id, dueTime: '', name: '', checklistId: currentTaskId, contentDetails: [], priority: this.listTaskItem.length + 1, taskStatus: '', userId: [] };
+    var task: TaskViewModel = { id: this.id, dueTime: '', name: '', checklistId: this.template.id, contentDetails: [], priority: this.listTaskItem.length + 1, taskStatus: '', userId: [] };
     this.listTaskItem.push(task);
     console.log(this.listTaskItem);
 
@@ -264,16 +264,18 @@ export class EditComponent implements OnInit {
   save() {
     console.log(this.listTaskItem);
     if ( this.datetime !== undefined) {
-      const d = new Date(this.datetime.toString());
+      //const d = new Date(this.datetime.toString());
       console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
       var currentTaskId = localStorage.getItem("TaskId");
-
+      console.log(this.currentPriority);
       this.listTaskItem.find((res: any) => {
-        return res.id === parseInt(this.currentPriority.toString());
+        return res.priority === parseInt(this.currentPriority.toString());
       }).dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss");
       this.listTaskItem.find((res: any) => {
-        return res.id === parseInt(this.currentPriority.toString());
+        return res.priority === parseInt(this.currentPriority.toString());
       }).userId = this.listMember;
+      localStorage.setItem("listTaskItem", JSON.stringify(this.listTaskItem));
+      this.listTaskItem = JSON.parse(localStorage.getItem("listTaskItem"));
       this.taskItemService.pathListTask(this.listTaskItem).subscribe(res => {
         console.log(res);
         this.route.navigateByUrl('/dashboard');
@@ -286,6 +288,8 @@ export class EditComponent implements OnInit {
       console.log(this.currentPriority);
       this.listTaskItem[this.currentPriority-1].dueTime = this.currentDuetime;
       this.listTaskItem[this.currentPriority-1].userId = this.listMember;
+      localStorage.setItem("listTaskItem", JSON.stringify(this.listTaskItem));
+      this.listTaskItem = JSON.parse(localStorage.getItem("listTaskItem"));
       this.taskItemService.pathListTask(this.listTaskItem).subscribe(res => {
         console.log(res);
         this.route.navigateByUrl('/dashboard');
@@ -308,7 +312,7 @@ export class EditComponent implements OnInit {
     console.log(this.listContentDetail);
 
     this.listTaskItem.find((res: any) => {
-      return res.id === parseInt(currentTaskId);
+      return res.priority ===this.currentPriority;
     }).contentDetails = this.listContentDetail;
     console.log(this.listTaskItem);
   }
@@ -318,7 +322,7 @@ export class EditComponent implements OnInit {
     var content: Content = { id: this.contentId, type: 'img', text: '', taskItemId: parseInt(currentTaskId), orderContent: this.listContentDetail.length + 1, imageSrc: '', label: '' };
     this.listContentDetail.push(content);
     this.listTaskItem.find((res: any) => {
-      return res.id === parseInt(currentTaskId);
+      return res.priority ===this.currentPriority;
     }).contentDetails = this.listContentDetail;
     console.log(this.listTaskItem);
   }
@@ -331,7 +335,7 @@ export class EditComponent implements OnInit {
     //   return res.id===parseInt(currentTaskId);
     //  });
     this.listTaskItem.find((res: any) => {
-      return res.id === parseInt(currentTaskId);
+      return res.priority ===this.currentPriority;
     }).contentDetails = this.listContentDetail;
     console.log(this.listTaskItem);
 

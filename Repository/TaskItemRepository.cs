@@ -157,18 +157,19 @@ namespace WorkflowManagement.Repository
             return context.TaskItem.Where(t => t.ChecklistId == checklistId).ToList();
         }
 
-
+        // update template
         public void updateTaskItems(List<TaskItemViewModel> taskItem)
         {
 
-
+            int? checklistId = 0;
             foreach (var item in taskItem)
             {
-                if(item.TaskStatus.Equals("Running"))
+                if(item.TaskStatus.Equals("Template"))
                 {
                     var currentTask = new TaskItem();
                     currentTask.Id = item.Id;
                     currentTask.ChecklistId = item.ChecklistId;
+                    checklistId = item.ChecklistId;
                     currentTask.DueTime = DateTime.Parse(item.DueTime);
                     currentTask.Name = item.Name;
                     currentTask.Priority = item.Priority;
@@ -192,11 +193,11 @@ namespace WorkflowManagement.Repository
                 List<ContentDetail> contentDetails = new List<ContentDetail>();
                 List<TaskMember> taskMembers = new List<TaskMember>();
                 TaskItem task = new TaskItem();
-                task.ChecklistId = item.ChecklistId;
-                task.DueTime = DateTime.Parse(item.DueTime);
+                    task.ChecklistId = checklistId;
+                    task.DueTime = DateTime.ParseExact(item.DueTime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                     task.Name = item.Name;
                 task.Priority = item.Priority;
-                task.TaskStatus = item.TaskStatus;
+                //task.TaskStatus = item.TaskStatus;
                 task.TaskStatus = "Running";
                 context.TaskItem.Add(task);
                 context.SaveChanges();

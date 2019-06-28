@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
     })
     
     setTimeout(()=>{
-      this.router.navigateByUrl("/template");
+      this.router.navigateByUrl("/template/1");
   
     },300);
 

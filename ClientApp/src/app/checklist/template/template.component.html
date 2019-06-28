@@ -38,7 +38,7 @@
                       <ul class="list-group"> <!-- loop here -->
                         <li *ngFor="let task of listTaskItem;let i = index" class="list-group-item step checkable " style="height: 50px;">
                           <div class="task-list-item" >
-                            <a href="/template/{{task.id}}" (click)="setList()">
+                            <a href="/template/{{task.id}}" (click)="setList(task.priority)">
 
                        
                               <span class="step-number-container"> <span  class="step-number">{{i+1}}</span> 

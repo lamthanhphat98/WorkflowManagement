@@ -77,6 +77,12 @@ namespace WorkflowManagement.Controllers
             return Ok();
            // return Ok(result);
         }
+        [HttpGet("listtemplate/{organizationId}/{userId}")]
+        public IActionResult getTemplateByUserId([FromRoute] int organizationId,string userId)
+        {
+            return Ok(checklistService.getTemplateByUserId(organizationId, userId));
+        }
+
 
     }
 }

@@ -224,5 +224,50 @@ namespace WorkflowManagement.Repository
         }
 
 
+        public List<Checklist> getTemplateByUserId(int organizationId, String userId)
+        {
+
+            var template = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.UserId.Equals(userId)).ToList();
+            return template;
+            //var templateVM = new TemplateViewModel()
+            //{
+            //    Id = template.Id,
+            //    Description = template.Description,
+            //    Name = template.Name,
+            //    OrganizationId = template.OrganizationId,
+            //    taskItemViewModels = null,
+            //    TemplateId = template.TemplateId,
+            //    TemplateStatus = template.TemplateStatus,
+            //    TimeCreated = template.TimeCreated,
+            //    UserId = template.UserId,
+            //    Category = template.Category
+            //};
+
+
+
+            //var listTaskItem = _context.TaskItem.Where(t => t.ChecklistId == template.Id).OrderBy(t => t.Priority).ToList();
+            //var listTaskItemVM = new List<TaskItemViewModel>();
+            //foreach (var item in listTaskItem)
+            //{
+            //    var taskItemVM = new TaskItemViewModel();
+            //    taskItemVM.Id = item.Id;
+            //    taskItemVM.Name = item.Name;
+            //    taskItemVM.Priority = item.Priority;
+            //    taskItemVM.TaskStatus = item.TaskStatus;
+            //    taskItemVM.ChecklistId = item.ChecklistId;
+            //    taskItemVM.DueTime = item.DueTime.ToString();
+            //    var listContent = _context.ContentDetail.Where(c => c.TaskItemId == item.Id).OrderBy(c => c.OrderContent).ToList();
+            //    taskItemVM.ContentDetails = listContent;
+            //    var listUser = _context.User.FromSql("getUserByTaskId @TaskId", new SqlParameter("@TaskId", item.Id)).ToList();
+            //    taskItemVM.UserId = listUser;
+            //    listTaskItemVM.Add(taskItemVM);
+            //}
+            //templateVM.taskItemViewModels = listTaskItemVM;
+            //return templateVM;
+
+        }
+
+
+
     }
 }
