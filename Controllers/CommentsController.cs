@@ -9,6 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using EntityContext;
 using WorkflowManagement.Models;
 using WorkflowManagement.IService;
+using WorkflowManagement.ViewModel;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
 namespace Controllers
 {
@@ -16,6 +20,8 @@ namespace Controllers
     [ApiController]
     public class CommentsController : ControllerBase
     {
+     
+           
         private readonly ICommentService commentService;
 
         public CommentsController(ICommentService _commentService)
@@ -41,6 +47,7 @@ namespace Controllers
             var result = commentService.getCommentByOrganization(organizationId, userId);
             return Ok(result);;
         }
+  
 
     }
 }

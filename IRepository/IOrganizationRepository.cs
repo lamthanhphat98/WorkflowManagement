@@ -10,5 +10,6 @@ namespace WorkflowManagement.IRepository
     {
         Organization GetCurrentOrganization(String userId);
         void addOrganization(Organization organization);
+        List<Organization> GetAllOrganization(String userId);
     }
 }

@@ -22,6 +22,7 @@ namespace WorkflowManagement.Models
         public string VerifyCode { get; set; }
         public string Phone { get; set; }
         public string Avatar { get; set; }
+        public string DeviceToken { get; set; }
 
         public ICollection<Checklist> Checklist { get; set; }
         public ICollection<Comment> Comment { get; set; }
