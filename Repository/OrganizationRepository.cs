@@ -33,5 +33,11 @@ namespace WorkflowManagement.Repository
 
             return organization;
         }
+        public List<Organization> GetAllOrganization(String userId)
+        {
+            var organizations = context.Organization.Where(o => o.AdminId.Equals(userId)).ToList();
+
+            return organizations;
+        }
     }
 }

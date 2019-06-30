@@ -36,5 +36,11 @@ namespace Controllers
             var organization = organizationService.GetCurrentOrganization(userId);
             return Ok(organization);
         }
+        [HttpGet("organizations/{userId}")]
+        public IActionResult GetAllOrganization([FromRoute] String userId)
+        {
+            var organization = organizationService.GetAllOrganization(userId);
+            return Ok(organization);
+        }
     }
 }

@@ -22,6 +22,11 @@ namespace WorkflowManagement.Service
             organizationRepository.addOrganization(organization);
         }
 
+        public List<Organization> GetAllOrganization(string userId)
+        {
+            return organizationRepository.GetAllOrganization(userId);
+        }
+
         public Organization GetCurrentOrganization(string userId)
         {
             return organizationRepository.GetCurrentOrganization(userId);

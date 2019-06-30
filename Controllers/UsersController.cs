@@ -87,7 +87,8 @@ namespace Controllers
         [HttpPost("login/user")]
         public IActionResult PostUser([FromBody] User user)
         {
-            if(userService.findUser(user.Id)==null)
+            var getUser = userService.findUser(user.Id);
+            if (getUser==null)
             {
                 if (userService.addUser(user)==false)
                 {
@@ -118,7 +119,7 @@ namespace Controllers
                     claims: claim,
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("faker01@123456789")), SecurityAlgorithms.HmacSha256Signature)
                     );
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token),role = "user" });
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token),role = getUser.Role });
 
             }
     

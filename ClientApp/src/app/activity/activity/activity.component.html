@@ -17,11 +17,11 @@
               <div class="groupform2">
                 <div class="form-group" style="padding-top:20px;">
                   <img class="col-sm-3 control-label createform" [src]="imageUrl" style="height: 30px;width: 70px;padding-top:0px;"/>
-                  <div class="col-sm-8 inputform"> <label name="Title" *ngIf="activity.templateStatus==='1'"
+                  <div class="col-sm-8 inputform"> <label name="Title" *ngIf="activity.templateId.length===0"
                       style="width:80%">
                      {{name}} created template {{activity.name}} at {{activity.timeCreated}}
                       </label>
-                      <label name="Title" *ngIf="activity.templateStatus==='0'"
+                      <label name="Title" *ngIf="activity.templateId.length!==0"
                       style="width:80%">
                      {{name}} created checklist {{activity.name}} at {{activity.timeCreated}}
                       </label>

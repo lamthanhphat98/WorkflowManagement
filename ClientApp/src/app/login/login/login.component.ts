@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
       this.user.phone='';
       localStorage.setItem("UserId",JSON.stringify(this.user.id));
       localStorage.setItem("Name",JSON.stringify(this.user.name));
-    
       localStorage.setItem("ImageUrl",JSON.stringify(userData.photoUrl));
       this.userService.addUser(this.user).subscribe((res:any)=>{
         localStorage.setItem("Token",JSON.stringify(res.token));
@@ -55,9 +54,11 @@ export class LoginComponent implements OnInit {
       this.user.phone='';
       localStorage.setItem("UserId",JSON.stringify(this.user.id));
       localStorage.setItem("Name",JSON.stringify(this.user.name));
-      localStorage.setItem("Token",JSON.stringify(userData.token));
+    
       localStorage.setItem("ImageUrl",JSON.stringify(userData.photoUrl));
-      this.userService.addUser(this.user).subscribe(res=>console.log(res));
+      this.userService.addUser(this.user).subscribe((res:any)=>{
+        localStorage.setItem("Token",JSON.stringify(res.token));
+      });
       this.route.navigateByUrl("/dashboard");
       console.log(userData);
       // id facebook : 2434567826771765
