@@ -42,6 +42,7 @@ export class TemplateComponent implements OnInit {
   organizationId:number;
   templateId:number;
   taskName:string;
+  currentPriorityTemplate:number;
   constructor(private checklistService:ChecklistService,
     private router: ActivatedRoute,
     private route:Router,
@@ -53,6 +54,7 @@ export class TemplateComponent implements OnInit {
   ngOnInit() {
     //localStorage.removeItem("listTaskItem");
     this.id = parseInt(this.router.snapshot.paramMap.get("id"));
+      localStorage.setItem("currentPriorityTemplate",this.id.toString());
     this.templateId = JSON.parse(localStorage.getItem("templateId")); 
     this.organizationId = JSON.parse(localStorage.getItem("OrganizationId")); 
     if (!isNaN(this.id)) { 
@@ -128,18 +130,22 @@ export class TemplateComponent implements OnInit {
   save()
   {
     console.log(this.listTaskItem);
+    var currentpriority = JSON.parse(localStorage.getItem("currentPriorityTemplate"));
     if(this.datetime!=null)
     {
-      const d = new Date(this.datetime.toString()); 
+     // const d = new Date(this.datetime.toString()); 
       console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
-      var currentTaskId = localStorage.getItem("TaskId");
+      //var currentTaskId = localStorage.getItem("TaskId");
        
+      
       this.listTaskItem.find((res:any)=>{
-        return res.id===parseInt(currentTaskId);
+        return res.priority===currentpriority;
        }).dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss");      
        this.listTaskItem.find((res:any)=>{
-        return res.id===parseInt(currentTaskId);
+        return res.priority===currentpriority;
        }).userId=this.listMember;
+       localStorage.setItem("listTaskItem", JSON.stringify(this.listTaskItem));
+       this.listTaskItem = JSON.parse(localStorage.getItem("listTaskItem"));
       this.taskItemService.postListTask(this.listTaskItem).subscribe(res=>{
         console.log(res);
       });
@@ -157,9 +163,9 @@ export class TemplateComponent implements OnInit {
     var content:Content = {id:this.contentId,type:'text',text:'',taskItemId:this.id,orderContent:this.contentId,imageSrc:'',label:''};
     this.listContentDetail.push(content);
    // currentTask.contentDetail=this.listContentDetail;
-    this.listTaskItem.find((res:any)=>{
-      return res.id===parseInt(currentTaskId);
-     }).contentDetails=this.listContentDetail;
+   this.listTaskItem.find((res:any)=>{
+    return res.priority===this.id;
+   }).contentDetails=this.listContentDetail;
     console.log(this.listTaskItem);
   }
   addImage()
@@ -170,7 +176,7 @@ export class TemplateComponent implements OnInit {
    // var content:Content = {Id:this.contentId,Type:'img',Text:'',TaskItemId:this.id,OrderContent:this.contentId,ImageSrc:'',Label:''};
     this.listContentDetail.push(content);
     this.listTaskItem.find((res:any)=>{
-      return res.id===parseInt(currentTaskId);
+      return res.priority===this.id;
      }).contentDetails=this.listContentDetail;
     console.log(this.listTaskItem);
   }
@@ -185,25 +191,29 @@ export class TemplateComponent implements OnInit {
     //   return res.id===parseInt(currentTaskId);
     //  });
      this.listTaskItem.find((res:any)=>{
-      return res.id===parseInt(currentTaskId);
+      return res.priority===this.id;
      }).contentDetails=this.listContentDetail;
     console.log(this.listTaskItem);
 
   }
-  setList()
+  setList(priority:number)
   {
-    var currentTaskId = localStorage.getItem("TaskId");
+    console.log(priority);
+    var currentpriority = JSON.parse(localStorage.getItem("currentPriorityTemplate"));
+    console.log(currentpriority);
+
     if(this.datetime!==null)
     {   
-      const d = new Date(this.datetime.toString()); 
+     // const d = new Date(this.datetime.toString()); 
       console.log(this.datetime.format("DD/MM/YYYY hh:mm:ss"));
        
       this.listTaskItem.find((res:any)=>{
-        return res.id===parseInt(currentTaskId);
+        return res.priority===currentpriority;
        }).dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss");      
        this.listTaskItem.find((res:any)=>{
-        return res.id===parseInt(currentTaskId);
+        return res.priority===currentpriority;
        }).userId=this.listMember;
+       
       localStorage.setItem("listTaskItem",JSON.stringify(this.listTaskItem));
     }
  

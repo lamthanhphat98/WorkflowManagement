@@ -36,7 +36,7 @@ namespace Repository
 
             if (context.User.Add(user) != null)
             {
-                user.Role = "USER";
+                user.Role = null;
                 context.SaveChanges();
                 return true;
             };
