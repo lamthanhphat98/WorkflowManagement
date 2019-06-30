@@ -224,11 +224,29 @@ namespace WorkflowManagement.Repository
         }
 
 
-        public List<Checklist> getTemplateByUserId(int organizationId, String userId)
+        public List<TemplateMobileViewModel> getTemplateByUserId(int organizationId, String userId)
         {
+            var listTemplate = new List<TemplateMobileViewModel>();
 
-            var template = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.UserId.Equals(userId)).ToList();
-            return template;
+            var getAllTemplate = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.UserId.Equals(userId)).ToList();
+            foreach (var template in getAllTemplate)
+            {
+                var templateViewmodel = new TemplateMobileViewModel() {
+                    Id = template.Id,
+                    Description = template.Description,
+                    Name = template.Name,
+                    OrganizationId = template.OrganizationId,
+                    TemplateId = template.TemplateId,
+                    TemplateStatus = template.TemplateStatus,
+                    TimeCreated = template.TimeCreated,
+                    UserId = template.UserId,
+                    Category = template.Category
+                };
+                listTemplate.Add(templateViewmodel);
+              
+            }
+
+            return listTemplate;
             //var templateVM = new TemplateViewModel()
             //{
             //    Id = template.Id,

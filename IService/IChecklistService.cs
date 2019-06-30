@@ -15,7 +15,7 @@ namespace WorkflowManagement.IService
         TemplateViewModel getTemplate(int organizationId, String userId, int templateId);
         List<ChecklistProgressViewModel> getAllChecklistProgress(int organizationId, string userId);
         ChecklistDetailViewModel getChecklistDetail(int organizationId, String userId, int checklistId);
-        List<Checklist> getTemplateByUserId(int organizationId, String userId);
+        List<TemplateMobileViewModel> getTemplateByUserId(int organizationId, String userId);
 
 
 
