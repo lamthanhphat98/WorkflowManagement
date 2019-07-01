@@ -33,9 +33,14 @@ namespace WorkflowManagement.Service
             taskItemRepository.addPostListTask(taskItem, checklistId);
         }
 
-        public List<TaskItem> getTaskItemByUserIdOnDay(string userId)
+        public List<TaskItem> getAllChecklistUpcoming(int organizationId, string userId)
         {
-            return taskItemRepository.getTaskItemByUserIdOnDay(userId);
+            return taskItemRepository.getAllChecklistUpcoming(organizationId, userId);
+        }
+
+        public List<TaskItem> getTaskItemByUserIdOnDay(int organizationId,string userId)
+        {
+            return taskItemRepository.getTaskItemByUserIdOnDay(organizationId,userId);
         }
 
         public List<TaskItem> GetTaskItems(int checklistId)

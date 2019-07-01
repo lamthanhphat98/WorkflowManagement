@@ -141,7 +141,7 @@ namespace WorkflowManagement.Repository
                 //context.Task
             }
         }
-        public List<TaskItem> getTaskItemByUserIdOnDay(String userId)
+        public List<TaskItem> getTaskItemByUserIdOnDay(int organizationId ,String userId)
         {
             DateTime getDate = DateTime.Now;
             DateTime fromDate = new DateTime(getDate.Year, getDate.Month, getDate.Day, 0, 0, 1);
@@ -149,8 +149,17 @@ namespace WorkflowManagement.Repository
             SqlParameter paramFromDate = new SqlParameter("@fromDate", fromDate);
             SqlParameter paramToDate = new SqlParameter("@toDate", toDate);
             SqlParameter paramUserId = new SqlParameter("@userId", userId);
-            var result = context.TaskItem.FromSql("EXEC getTaskItemByDate @fromDate,@toDate,@userId", paramFromDate,paramToDate, paramUserId).ToList();       
+            SqlParameter paramOrganizationId = new SqlParameter("@organizationId", organizationId);
+            var result = context.TaskItem.FromSql("EXEC getTaskItemByDate @fromDate,@toDate,@userId,@organizationId", paramFromDate,paramToDate, paramUserId, paramOrganizationId).ToList();       
             return result;
+        }
+        public List<TaskItem> getAllChecklistUpcoming(int organizationId,string userId)
+        {
+            SqlParameter paramUserId = new SqlParameter("@userId", userId);
+            SqlParameter paramsOrganizationId = new SqlParameter("@organizationId", organizationId);
+            var result = context.TaskItem.FromSql("EXEC getAllChecklistUpcoming @organizationId,@userId", paramsOrganizationId, paramUserId).ToList();
+            return result;
+
         }
         public List<TaskItem> GetTaskItems(int checklistId)
         {

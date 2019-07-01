@@ -228,7 +228,7 @@ namespace WorkflowManagement.Repository
         {
             var listTemplate = new List<TemplateMobileViewModel>();
 
-            var getAllTemplate = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.UserId.Equals(userId)).ToList();
+            var getAllTemplate = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.UserId.Equals(userId) && c.TemplateId==null).ToList();
             foreach (var template in getAllTemplate)
             {
                 var templateViewmodel = new TemplateMobileViewModel() {
