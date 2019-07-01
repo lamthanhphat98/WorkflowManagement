@@ -43,8 +43,8 @@ namespace WorkflowManagement.Repository
             List<CommentViewModel> commentViewModels = new List<CommentViewModel>();
             var viewModel = new CommentViewModel();
             var organization = new SqlParameter("@OrganizationId", organizationId);
-            var user = new SqlParameter("@UserId", userId);
-            var getComment = _context.Comment.FromSql("EXECUTE dbo.getCommentByOrganization @OrganizationId,@UserId", organization, user).Where(c=>!c.UserId.Equals(userId)).ToList();
+           // var user = new SqlParameter("@UserId", userId);
+            var getComment = _context.Comment.FromSql("EXECUTE dbo.getCommentByOrganization @OrganizationId", organization).Where(c=>!c.UserId.Equals(userId)).ToList();
             foreach (var item in getComment)
             {
                 viewModel.Id = item.Id;
@@ -66,7 +66,7 @@ namespace WorkflowManagement.Repository
             {
                 notification = new Notification()
                 {
-                    title = "Comment",
+                    title = "Workflow Notification",
                     text = text,
                 },
                 data = null,
