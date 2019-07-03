@@ -31,10 +31,10 @@ namespace WorkflowManagement.Controllers
             return Ok(taskItem);
         }
 
-        [HttpPost("template")]
-        public IActionResult PostListTaskItem([FromBody] List<TaskItemViewModel> taskItem)
+        [HttpPost("template/{templateId}")]
+        public IActionResult PostListTaskItem([FromRoute]int templateId,[FromBody] List<TaskItemViewModel> taskItem)
         {
-            taskItemService.addListTaskItem(taskItem);
+            taskItemService.addListTaskItem(taskItem, templateId);
             return Ok(taskItem);
         }
         [HttpGet("taskoverdue/{organizationId}/{userId}")]

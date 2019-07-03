@@ -43,15 +43,19 @@ export class OrganizationComponent implements OnInit {
       console.log(this.listOrganization);
     });
   }
-  switchOrganization(id:number)
+  switchOrganization(userId:string,id:number,oldId:number)
   {
-    console.log(id);
+    this.organizationService.switchOrganization(userId,id,oldId).subscribe(res=>{
+      console.log(res);
+    });
+   // location.reload();
   }
   onSubmit()
   {
     this.organization.adminId=JSON.parse(localStorage.getItem("UserId"));
     console.log(this.organization);
     this.organizationService.postOrganization(this.organization).toPromise().then(res=>console.log(res));
+    location.reload();
   }
 
 }

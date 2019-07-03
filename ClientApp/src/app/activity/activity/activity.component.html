@@ -14,19 +14,29 @@
          
          
             <div class="groupform" *ngFor="let activity of this.listActivity" >
-              <div class="groupform2">
-                <div class="form-group" style="padding-top:20px;">
+              <div class="groupform2" >
+                <div class="form-group" style="padding-top:20px;" *ngIf="activity.templateId===null">
                   <img class="col-sm-3 control-label createform" [src]="imageUrl" style="height: 30px;width: 70px;padding-top:0px;"/>
-                  <div class="col-sm-8 inputform"> <label name="Title" *ngIf="activity.templateId.length===0"
+                  <div class="col-sm-8 inputform" > 
+                    <label name="Title" 
                       style="width:80%">
                      {{name}} created template {{activity.name}} at {{activity.timeCreated}}
                       </label>
-                      <label name="Title" *ngIf="activity.templateId.length!==0"
-                      style="width:80%">
-                     {{name}} created checklist {{activity.name}} at {{activity.timeCreated}}
-                      </label>
+                    
                   </div>
+                
                 </div>   
+                <div class="form-group" style="padding-top:20px;" *ngIf="activity.templateId!==null">
+                    <img class="col-sm-3 control-label createform" [src]="imageUrl" style="height: 30px;width: 70px;padding-top:0px;"/>
+                 
+                    <div class="col-sm-8 inputform" *ngIf="activity.templateId!==null"> 
+                  
+                          <label name="Title" *ngIf="activity.templateId!==null"
+                          style="width:80%">
+                         {{name}} created checklist {{activity.name}} at {{activity.timeCreated}}
+                          </label>
+                      </div>
+                  </div> 
                 <div class="form-group" style="padding-top:20px;">
                 </div>
                 

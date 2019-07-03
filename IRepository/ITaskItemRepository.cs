@@ -10,7 +10,7 @@ namespace WorkflowManagement.IRepository
     public interface ITaskItemRepository
     {
         void addNewTaskItem(TaskItemViewModel taskItem);
-        void addListTaskItem(List<TaskItemViewModel> taskItem);
+        void addListTaskItem(List<TaskItemViewModel> taskItem, int checklistId);
         List<TaskItem> getTaskItemByUserIdOnDay(int organizationId,String userId);
         List<TaskItem> GetTaskItems(int checklistId);
         void updateTaskItems(List<TaskItemViewModel> taskItem);

@@ -38,16 +38,16 @@ namespace WorkflowManagement.Repository
 
         }
         //add list task of template
-        public void addListTaskItem(List<TaskItemViewModel> taskItem)
+        public void addListTaskItem(List<TaskItemViewModel> taskItem,int checklistId)
         {
-          
 
+       
             foreach (var item in taskItem)
             {
                 List<ContentDetail> contentDetails = new List<ContentDetail>();
                 List<TaskMember> taskMembers = new List<TaskMember>();
                 TaskItem task = new TaskItem();
-                task.ChecklistId = item.ChecklistId;
+                task.ChecklistId = checklistId;
                 task.DueTime = DateTime.ParseExact(item.DueTime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                 task.Name = item.Name;
                 task.Priority = item.Priority;
@@ -55,7 +55,8 @@ namespace WorkflowManagement.Repository
                 task.TaskStatus = "Template";
                 context.TaskItem.Add(task);
                 context.SaveChanges();
-                var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime)).FirstOrDefault();
+                var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime) && t.TaskStatus.Equals("Template")).FirstOrDefault();
+                var i = 1;
                 foreach (var content in item.ContentDetails)
                 {
                     if(content.Id!=0)
@@ -63,12 +64,13 @@ namespace WorkflowManagement.Repository
                         ContentDetail detail = new ContentDetail();
                         detail.ImageSrc = content.ImageSrc;
                         detail.Label = content.Label;
-                        detail.OrderContent = content.OrderContent;
+                        detail.OrderContent = i;
                         detail.TaskItemId = getTask.Id;
                         detail.Text = content.Text;
                         detail.Type = content.Type;
                         contentDetails.Add(detail);
                     }
+                    i++;
                   
 
                 }
@@ -93,7 +95,7 @@ namespace WorkflowManagement.Repository
         public void addPostListTask(List<TaskItemViewModel> taskItem,int checklistId)
         {
 
-
+           
             foreach (var item in taskItem)
             {
                 List<ContentDetail> contentDetails = new List<ContentDetail>();
@@ -108,9 +110,10 @@ namespace WorkflowManagement.Repository
                 context.TaskItem.Add(task);
                 context.SaveChanges();
                 var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime) && t.TaskStatus.Equals("Running") && t.ChecklistId==checklistId).FirstOrDefault();
+                int order = 1;
                 foreach (var content in item.ContentDetails)
                 {
-                    int order = 1;
+                   
                     if (content.Id != 0)
                     {
                         ContentDetail detail = new ContentDetail();
@@ -207,10 +210,11 @@ namespace WorkflowManagement.Repository
                     task.Name = item.Name;
                 task.Priority = item.Priority;
                 //task.TaskStatus = item.TaskStatus;
-                task.TaskStatus = "Running";
+                task.TaskStatus = "Template";
                 context.TaskItem.Add(task);
                 context.SaveChanges();
-                var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime)).FirstOrDefault();
+                var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime) && t.TaskStatus.Equals("Template")).FirstOrDefault();
+                var i = 1;
                 foreach (var content in item.ContentDetails)
                 {
                     if (content.Id != 0)
@@ -218,12 +222,13 @@ namespace WorkflowManagement.Repository
                         ContentDetail detail = new ContentDetail();
                         detail.ImageSrc = content.ImageSrc;
                         detail.Label = content.Label;
-                        detail.OrderContent = content.OrderContent;
+                        detail.OrderContent = i;
                         detail.TaskItemId = getTask.Id;
                         detail.Text = content.Text;
                         detail.Type = content.Type;
                         contentDetails.Add(detail);
                     }
+                        i++;
 
 
                 }

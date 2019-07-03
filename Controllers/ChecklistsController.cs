@@ -32,10 +32,10 @@ namespace WorkflowManagement.Controllers
         {
             return Ok(checklistService.getAllChecklist(organizationId, userId));
         }
-        [HttpGet("checklistprogress/{organizationId}/{userId}")]
-        public IActionResult GetChecklistProgress([FromRoute] int organizationId, string userId)
+        [HttpGet("checklistprogress/{organizationId}")]
+        public IActionResult GetChecklistProgress([FromRoute] int organizationId)
         {
-            return Ok(checklistService.getAllChecklistProgress(organizationId, userId));
+            return Ok(checklistService.getAllChecklistProgress(organizationId));
         }
 
         [HttpGet("activity/{organizationId}/{userId}")]

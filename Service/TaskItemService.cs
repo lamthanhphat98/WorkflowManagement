@@ -18,9 +18,9 @@ namespace WorkflowManagement.Service
             taskItemRepository = _taskItemRepository;
         }
 
-        public void addListTaskItem(List<TaskItemViewModel> taskItem)
+        public void addListTaskItem(List<TaskItemViewModel> taskItem,int checklistId)
         {
-            taskItemRepository.addListTaskItem(taskItem);
+            taskItemRepository.addListTaskItem(taskItem,checklistId);
         }
 
         public void addNewTaskItem(TaskItemViewModel taskItem)

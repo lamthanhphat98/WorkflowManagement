@@ -33,9 +33,9 @@ namespace WorkflowManagement.Service
             return checklistRepository.getAllChecklist(organizationId, userId);
         }
 
-        public List<ChecklistProgressViewModel> getAllChecklistProgress(int organizationId, string userId)
+        public List<ChecklistProgressViewModel> getAllChecklistProgress(int organizationId)
         {
-            return checklistRepository.getAllChecklistProgress(organizationId, userId);
+            return checklistRepository.getAllChecklistProgress(organizationId);
         }
 
         public ChecklistDetailViewModel getChecklistDetail(int organizationId, string userId, int checklistId)

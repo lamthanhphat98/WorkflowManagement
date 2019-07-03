@@ -63,7 +63,7 @@
     <div class="sidebarright">
       <div class="subnavigatebar " > <a href="/dashboard" > 
          <i  class="fa fa-home" style="font-size: 20px;color:silver" ></i><span class="homecoming"> Home</span> </a></div>
-     
+        <h2 *ngIf="this.notification.length!==0" style="margin-left:20px">{{this.notification}}</h2>
      <!-- template here -->
      <ng-container *ngFor="let template of listTemplate">     
      <div >

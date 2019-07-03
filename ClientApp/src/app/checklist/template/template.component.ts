@@ -32,7 +32,7 @@ export class TemplateComponent implements OnInit {
 
   templateName:string;
   listTaskItem : TaskViewModel[]=[];
-  listContentDetail:Content[];
+  listContentDetail:Content[]=[];
   id:number=1;
   contentId:number=0;
   datetime: any;
@@ -55,43 +55,57 @@ export class TemplateComponent implements OnInit {
     //localStorage.removeItem("listTaskItem");
     this.id = parseInt(this.router.snapshot.paramMap.get("id"));
       localStorage.setItem("currentPriorityTemplate",this.id.toString());
-    this.templateId = JSON.parse(localStorage.getItem("templateId")); 
+      var currentpriority = JSON.parse(localStorage.getItem("currentPriorityTemplate"));
+
+   // console.log(this.templateId);
     this.organizationId = JSON.parse(localStorage.getItem("OrganizationId")); 
+    // var getList = JSON.parse(localStorage.getItem("listTaskItem"));
+    setTimeout(()=>{
+      this.getMember(this.organizationId);
+    //  console.log(this.listUser);
+      this.templateId = JSON.parse(localStorage.getItem("templateId")); 
+  
+  },300);
+
+    // console.log(getList);
     if (!isNaN(this.id)) { 
       console.log(this.id);
       var getList = JSON.parse(localStorage.getItem("listTaskItem"));
       //console.log(getList);
       localStorage.setItem("TaskId",this.id.toString());
-      if(getList===null)
+     
+      if(getList===null || getList===undefined)
       {
         
         this.listContentDetail=[{id:0,imageSrc:'',type:'',text:'',orderContent:0,taskItemId:this.id,label:''}];
         console.log(this.listContentDetail);
         var task:TaskViewModel = {id:this.id,dueTime:'',name:'',checklistId:this.templateId,contentDetails:[],priority:this.id,taskStatus:'',userId:[]};
+       console.log(this.templateId);
         this.listTaskItem.push(task);
       }
       else{
         //this.listMember=[{id:'',email:'',name:'',phone:'',type:'',avatar:''}];
-        this.listContentDetail=[{id:0,imageSrc:'',type:'',text:'',orderContent:0,taskItemId:this.id,label:''}];
+      //  this.listContentDetail=[{id:0,imageSrc:'',type:'',text:'',orderContent:0,taskItemId:this.id,label:''}];
+      
 //        this.listContentDetail=[{Id:0,ImageSrc:'',Type:'',Text:'',OrderContent:0,TaskItemId:this.id,Label:''}];
         this.listTaskItem=getList;
-       
+        this.listContentDetail=this.listTaskItem[this.id-1].contentDetails;
+        this.templateName=this.listTaskItem[this.id-1].name;      
         console.log(this.listTaskItem);
       }
      
     }else{
-      this.id=1;
+     // this.id=1;
       localStorage.setItem("TaskId",this.id.toString());
       this.listContentDetail=[{id:0,imageSrc:'',type:'',text:'',orderContent:0,taskItemId:1,label:''}];
-      console.log(this.listContentDetail);
+    //  console.log(this.listContentDetail);
       var task:TaskViewModel = {id:1,dueTime:'',name:'',checklistId:this.templateId,contentDetails:[],priority:this.id,taskStatus:'',userId:[]};
+    //  console.log(this.templateId);
+      
       this.listTaskItem.push(task);    
     }
     
-  setTimeout(()=>{
-      this.getMember(this.organizationId);
-  },300);
-    this.templateName=localStorage.getItem("nametemplate");
+
   }
 
   getMember(organizationId:number) 
@@ -131,6 +145,19 @@ export class TemplateComponent implements OnInit {
   {
     console.log(this.listTaskItem);
     var currentpriority = JSON.parse(localStorage.getItem("currentPriorityTemplate"));
+    if(this.listTaskItem[this.id-1].dueTime.length!=0)
+    {
+       
+       this.listTaskItem.find((res:any)=>{
+        return res.priority===currentpriority;
+       }).userId=this.listMember;
+    
+       localStorage.setItem("listTaskItem", JSON.stringify(this.listTaskItem));
+       this.listTaskItem = JSON.parse(localStorage.getItem("listTaskItem"));
+      this.taskItemService.postListTask(this.templateId,this.listTaskItem).subscribe(res=>{
+        console.log(res);
+      });
+    }
     if(this.datetime!=null)
     {
      // const d = new Date(this.datetime.toString()); 
@@ -144,9 +171,10 @@ export class TemplateComponent implements OnInit {
        this.listTaskItem.find((res:any)=>{
         return res.priority===currentpriority;
        }).userId=this.listMember;
+    
        localStorage.setItem("listTaskItem", JSON.stringify(this.listTaskItem));
        this.listTaskItem = JSON.parse(localStorage.getItem("listTaskItem"));
-      this.taskItemService.postListTask(this.listTaskItem).subscribe(res=>{
+      this.taskItemService.postListTask(this.templateId,this.listTaskItem).subscribe(res=>{
         console.log(res);
       });
     }
@@ -157,6 +185,7 @@ export class TemplateComponent implements OnInit {
   }
   addText()
   {
+    var currentpriority = JSON.parse(localStorage.getItem("currentPriorityTemplate"));
     this.contentId=this.contentId+1;
     var currentTaskId = localStorage.getItem("TaskId");  
     console.log(currentTaskId);
@@ -164,24 +193,26 @@ export class TemplateComponent implements OnInit {
     this.listContentDetail.push(content);
    // currentTask.contentDetail=this.listContentDetail;
    this.listTaskItem.find((res:any)=>{
-    return res.priority===this.id;
+    return res.priority===currentpriority;
    }).contentDetails=this.listContentDetail;
     console.log(this.listTaskItem);
   }
   addImage()
   {
+    var currentpriority = JSON.parse(localStorage.getItem("currentPriorityTemplate"));
     var currentTaskId = localStorage.getItem("TaskId");
     this.contentId=this.contentId+1;
     var content:Content = {id:this.contentId,type:'img',text:'',taskItemId:this.id,orderContent:this.contentId,imageSrc:'',label:''};
    // var content:Content = {Id:this.contentId,Type:'img',Text:'',TaskItemId:this.id,OrderContent:this.contentId,ImageSrc:'',Label:''};
     this.listContentDetail.push(content);
     this.listTaskItem.find((res:any)=>{
-      return res.priority===this.id;
+      return res.priority===currentpriority;
      }).contentDetails=this.listContentDetail;
     console.log(this.listTaskItem);
   }
   addCheckbox()
   {
+    var currentpriority = JSON.parse(localStorage.getItem("currentPriorityTemplate"));    
     var currentTaskId = localStorage.getItem("TaskId");
     this.contentId=this.contentId+1;
     var content:Content = {id:this.contentId,type:'checkbox-label',text:'',taskItemId:this.id,orderContent:this.contentId,imageSrc:'',label:''};
@@ -191,7 +222,7 @@ export class TemplateComponent implements OnInit {
     //   return res.id===parseInt(currentTaskId);
     //  });
      this.listTaskItem.find((res:any)=>{
-      return res.priority===this.id;
+      return res.priority===currentpriority;
      }).contentDetails=this.listContentDetail;
     console.log(this.listTaskItem);
 
@@ -212,8 +243,8 @@ export class TemplateComponent implements OnInit {
        }).dueTime = this.datetime.format("DD/MM/YYYY hh:mm:ss");      
        this.listTaskItem.find((res:any)=>{
         return res.priority===currentpriority;
-       }).userId=this.listMember;
-       
+       }).userId=this.listMember;     
+    
       localStorage.setItem("listTaskItem",JSON.stringify(this.listTaskItem));
     }
  

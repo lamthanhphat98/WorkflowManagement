@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Checklist } from '../model/activity';
 import { Template } from '../model/template';
 import { ChecklistDetailViewModel } from '../model/checklistdetail';
+import { environment } from './../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -13,29 +14,31 @@ export class ChecklistService {
   getActivity(organizationId,userId)
   {  
   
-    return this.http.get<Checklist[]>("https://localhost:44306/api/checklists/activity/"+organizationId+"/"+userId);
+    return this.http.get<Checklist[]>(environment.apiUrl+"/checklists/activity/"+organizationId+"/"+userId);
   }
   runChecklist(checklist:any)
   {
-    return this.http.post("https://localhost:44306/api/checklists/checklist",checklist);
+    return this.http.post(environment.apiUrl+"/checklists/checklist",checklist);
   }
   postTemplate(template:any)
   {
-    return this.http.post("https://localhost:44306/api/checklists/template",template);
+   // return this.http.post("https://localhost:44306/api"+"/checklists/template",template);
+
+    return this.http.post(environment.apiUrl+"/checklists/template",template);
   }
   getTemplate(organizationId,templateId,userId)
   {  
   
-    return this.http.get<Template>("https://localhost:44306/api/checklists/template/"+organizationId+"/"+templateId+"/"+userId);
+    return this.http.get<Template>(environment.apiUrl+"/checklists/template/"+organizationId+"/"+templateId+"/"+userId);
   }
   getChecklistDetail(organizationId,checklistId,userId)
   {  
   
-    return this.http.get<ChecklistDetailViewModel>("https://localhost:44306/api/checklists/checklist/"+organizationId+"/"+checklistId+"/"+userId);
+    return this.http.get<ChecklistDetailViewModel>(environment.apiUrl+"/checklists/checklist/"+organizationId+"/"+checklistId+"/"+userId);
   }
   getTemplateWithPromise(organizationId,templateId,userId) : Promise<Template>
   {  
   
-    return this.http.get<Template>("https://localhost:44306/api/checklists/template/"+organizationId+"/"+templateId+"/"+userId).toPromise();
+    return this.http.get<Template>(environment.apiUrl+"/checklists/template/"+organizationId+"/"+templateId+"/"+userId).toPromise();
   }
 }

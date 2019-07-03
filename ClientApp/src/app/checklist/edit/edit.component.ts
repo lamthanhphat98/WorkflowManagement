@@ -69,6 +69,7 @@ export class EditComponent implements OnInit {
     private taskItemService: TaskitemService) {
     this.id = parseInt(this.router.snapshot.paramMap.get("id"));
     this.currentPriority = parseInt(this.router.snapshot.paramMap.get("taskid"));
+    localStorage.setItem("currentPriorityEdit", this.currentPriority.toString());  
 
     if (isNaN(this.currentPriority)) {
       //this.currentPriority=1;
@@ -81,13 +82,14 @@ export class EditComponent implements OnInit {
 
     
     this.listTaskItem = JSON.parse(localStorage.getItem("listTaskItem"));
+    //console.log(this.listTaskItem);
 
     if (this.listTaskItem === undefined || this.listTaskItem===null) {
       this.template = this.router.snapshot.data['template'] as Template;
       this.listTaskItem = this.router.snapshot.data['template'].taskItemViewModels;
       console.log(this.listTaskItem);
     }
-    console.log(this.router.snapshot.data['template']);
+    //console.log(this.router.snapshot.data['template']);
     console.log("priority : ");
     console.log(this.currentPriority);
     // mẹ lủng OOP rồi list = 1 nhưng index = 0 =,=
@@ -169,7 +171,7 @@ export class EditComponent implements OnInit {
   ngOnInit() {
 
     console.log(this.taskId);
-    this.templateId = JSON.parse(localStorage.getItem("templateId"));
+   // this.templateId = JSON.parse(localStorage.getItem("templateId"));
     this.organizationId = JSON.parse(localStorage.getItem("OrganizationId"));
     this.userId = JSON.parse(localStorage.getItem("UserId"));
     this.getMember(this.organizationId);

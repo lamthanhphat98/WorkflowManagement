@@ -35,7 +35,8 @@ namespace WorkflowManagement.Repository
         {
             var organization = new SqlParameter("@OrganizationId", organizationId);
             var user = new SqlParameter("@UserId", userId);
-            return _context.Comment.FromSql("EXECUTE dbo.getCommentByOrganization @OrganizationId,@UserId", organization, user).ToList();
+            var getComment = _context.Comment.FromSql("EXECUTE dbo.getCommentByOrganization @OrganizationId", organization).Where(c => !c.UserId.Equals(userId)).ToList();
+            return getComment;
         }
 
         public List<CommentViewModel> getCommentByOrganization(int organizationId, string userId)
