@@ -23,6 +23,7 @@ namespace WorkflowManagement.Repository
             context.Organization.Add(organization);
             UserOrganization userOrganization = new UserOrganization();
             userOrganization.MemberId = organization.AdminId;
+            userOrganization.StatusMember = "MEMBER";
             userOrganization.OrganizationId = organization.Id;
             userOrganization.CurrentOrganization = false;
             context.UserOrganization.Add(userOrganization);

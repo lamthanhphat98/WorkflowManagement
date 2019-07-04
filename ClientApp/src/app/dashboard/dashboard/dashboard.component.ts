@@ -29,24 +29,27 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,) {
       
         this.allList=route.snapshot.data['dashboard'];
-        this.allList=JSON.parse(localStorage.getItem("allList"));
-        console.log(this.allList);
-        if (this.allList===null || this.allList === undefined || this.allList.length===0)
-       {
-         this.notification="You have not any organization now , create it !!!"
-         console.log(this.notification);
-       }            
-       else if(this.allList!==null || this.allList !== undefined || this.allList.length!==0)
-       {
-          this.organizationId  = JSON.parse(localStorage.getItem("OrganizationId")); 
-          this.getTemplates();
-          this.getChecklists();
-       }
-
-    
-    
- 
-
+        setTimeout(() => {
+          this.allList=JSON.parse(localStorage.getItem("allList"));
+          console.log(this.allList);
+            this.organizationId  = JSON.parse(localStorage.getItem("OrganizationId")); 
+            if(this.organizationId.toString()==="0")
+            {
+              this.notification="You have not any organization now , create it !!!"
+              console.log(this.notification);
+            }            
+             if(this.allList!==null || this.allList !== undefined || this.allList.length!==0)
+             {
+            this.organizationId  = JSON.parse(localStorage.getItem("OrganizationId")); 
+            this.getTemplates();
+            this.getChecklists();
+             }
+             else if(this.allList===null || this.allList === undefined || this.allList.length===0){
+              this.notification="You have not any template now , create it !!!"
+              console.log(this.notification);
+             }
+        }, 300);
+  
    }
 
   ngOnInit() {

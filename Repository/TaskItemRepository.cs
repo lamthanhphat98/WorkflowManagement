@@ -250,5 +250,86 @@ namespace WorkflowManagement.Repository
 
         }
 
+
+        public void updateTaskItemChecklist(List<TaskItemViewModel> taskItem)
+        {
+
+            int? checklistId = 0;
+            foreach (var item in taskItem)
+            {
+                if (item.TaskStatus.Equals("Running"))
+                {
+                    var currentTask = new TaskItem();
+                    currentTask.Id = item.Id;
+                    currentTask.ChecklistId = item.ChecklistId;
+                    checklistId = item.ChecklistId;
+                    currentTask.DueTime = DateTime.Parse(item.DueTime);
+                    currentTask.Name = item.Name;
+                    currentTask.Priority = item.Priority;
+                    currentTask.TaskStatus = item.TaskStatus;
+                    context.Entry(currentTask).State = EntityState.Modified;
+                    context.SaveChanges();
+                    //var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime)).FirstOrDefault();
+                    foreach (var content in item.ContentDetails)
+                    {
+                        if (content.Id != 0)
+                        {
+                            context.Entry(content).State = EntityState.Modified;
+
+                        }
+                    }
+                    context.SaveChanges();
+                }
+                else
+                {
+
+                    List<ContentDetail> contentDetails = new List<ContentDetail>();
+                    List<TaskMember> taskMembers = new List<TaskMember>();
+                    TaskItem task = new TaskItem();
+                    task.ChecklistId = checklistId;
+                    task.DueTime = DateTime.ParseExact(item.DueTime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                    task.Name = item.Name;
+                    task.Priority = item.Priority;
+                    //task.TaskStatus = item.TaskStatus;
+                    task.TaskStatus = "Running";
+                    context.TaskItem.Add(task);
+                    context.SaveChanges();
+                    var getTask = context.TaskItem.Where(t => t.Name.Equals(item.Name) && t.DueTime.Equals(task.DueTime) && t.TaskStatus.Equals("Template")).FirstOrDefault();
+                    var i = 1;
+                    foreach (var content in item.ContentDetails)
+                    {
+                        if (content.Id != 0)
+                        {
+                            ContentDetail detail = new ContentDetail();
+                            detail.ImageSrc = content.ImageSrc;
+                            detail.Label = content.Label;
+                            detail.OrderContent = i;
+                            detail.TaskItemId = getTask.Id;
+                            detail.Text = content.Text;
+                            detail.Type = content.Type;
+                            contentDetails.Add(detail);
+                        }
+                        i++;
+
+
+                    }
+                    foreach (var user in item.UserId)
+                    {
+
+                        TaskMember member = new TaskMember();
+                        member.UserId = user.Id;
+                        member.TaskId = getTask.Id;
+                        taskMembers.Add(member);
+                    }
+                    context.ContentDetail.AddRange(contentDetails);
+                    context.TaskMember.AddRange(taskMembers);
+                    context.SaveChanges();
+
+                    //context.Task
+                }
+            }
+
+        }
+
     }
 }

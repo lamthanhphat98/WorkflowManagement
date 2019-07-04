@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Checklist } from '../model/activity';
 import { Template } from '../model/template';
 import { ChecklistDetailViewModel } from '../model/checklistdetail';
 import { environment } from './../../environments/environment'
-
+var token = JSON.parse(localStorage.getItem("Token"));
+ const headers = new HttpHeaders().set('Authorization','Bearer '+token).set('Content-Type','application/json');
 @Injectable({
   providedIn: 'root'
 })

@@ -77,6 +77,23 @@ namespace WorkflowManagement.Controllers
             return Ok();
            // return Ok(result);
         }
+        [HttpPost("run/{userId}")]
+        public IActionResult runNewChecklist([FromRoute] string userId,[FromBody] TemplateViewModel templateViewModel)
+        {
+            var checklist = new Checklist();
+            checklist.Category = templateViewModel.Category;
+            checklist.TemplateId = templateViewModel.Id;
+            checklist.Description = templateViewModel.Description;
+            checklist.Name = templateViewModel.Name;
+            checklist.TemplateStatus = templateViewModel.TemplateStatus;
+            checklist.UserId = userId;
+            checklist.OrganizationId = templateViewModel.OrganizationId;
+            var result = checklistService.addTemplate(checklist);
+            //var result = checklistService.addTemplate(template);
+            taskItemService.addPostListTask(templateViewModel.taskItemViewModels.ToList(), result.Id);
+            return Ok();
+            // return Ok(result);
+        }
         [HttpGet("listtemplate/{organizationId}/{userId}")]
         public IActionResult getTemplateByUserId([FromRoute] int organizationId,string userId)
         {
