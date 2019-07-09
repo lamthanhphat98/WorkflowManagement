@@ -31,16 +31,21 @@ namespace WorkflowManagement.Controllers
             return Ok(taskItem);
         }
 
-        [HttpPost("template")]
-        public IActionResult PostListTaskItem([FromBody] List<TaskItemViewModel> taskItem)
+        [HttpPost("template/{templateId}")]
+        public IActionResult PostListTaskItem([FromRoute]int templateId,[FromBody] List<TaskItemViewModel> taskItem)
         {
-            taskItemService.addListTaskItem(taskItem);
+            taskItemService.addListTaskItem(taskItem, templateId);
             return Ok(taskItem);
         }
-        [HttpGet("taskoverdue/{userId}")]
-        public IActionResult GetTaskOverdue([FromRoute]  string userId)
+        [HttpGet("taskoverdue/{organizationId}/{userId}")]
+        public IActionResult GetTaskOverdue([FromRoute] int organizationId,  string userId)
         {
-            return Ok(taskItemService.getTaskItemByUserIdOnDay( userId));
+            return Ok(taskItemService.getTaskItemByUserIdOnDay(organizationId, userId));
+        }
+        [HttpGet("getupcoming/{organizationId}/{userId}")]
+        public IActionResult GetTaskItems([FromRoute]  int organizationId,String userId)
+        {
+            return Ok(taskItemService.getAllChecklistUpcoming(organizationId,userId));
         }
 
         [HttpGet("taskitems/{checklistId}")]

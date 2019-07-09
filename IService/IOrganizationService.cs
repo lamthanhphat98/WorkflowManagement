@@ -13,6 +13,7 @@ namespace WorkflowManagement.IService
 
         void addOrganization(Organization organization);
         List<Organization> GetAllOrganization(String userId);
+        void SwitchOrganization(String userId, int targetOrganizationId, int oldOrganizationId);
 
 
     }

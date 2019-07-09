@@ -79,7 +79,7 @@ namespace WorkflowManagement.Repository
         }
         public Checklist addTemplate(Checklist template)
         {
-            template.TimeCreated = DateTime.Now;
+            template.TimeCreated = DateTime.UtcNow;
             _context.Checklist.Add(template);
             _context.SaveChanges();
             return _context.Checklist.Where(t => t.TimeCreated.Equals(template.TimeCreated) && t.UserId.Equals(template.UserId)).FirstOrDefault();
@@ -127,15 +127,15 @@ namespace WorkflowManagement.Repository
             return templateVM;
 
         }
-
-        public List<ChecklistProgressViewModel> getAllChecklistProgress(int organizationId, string userId)
+        // now just take all checklist in one organization at the time.
+        public List<ChecklistProgressViewModel> getAllChecklistProgress(int organizationId)
         {
             int checkNumber = 0;
             var getOrganization = _context.Organization.Where(u =>  u.Id == organizationId).FirstOrDefault();
-            var result = _context.Checklist.Where(u => u.OrganizationId == getOrganization.Id && u.TemplateId!=null && u.UserId.Equals(userId)).ToList();
+            var result = _context.Checklist.Where(u => u.OrganizationId == getOrganization.Id && u.TemplateId!=null).ToList();
             List<ChecklistProgressViewModel> checklistViewModels = new List<ChecklistProgressViewModel>();
             foreach (var item in result)
-            {
+            {   
                 ChecklistProgressViewModel checklist = new ChecklistProgressViewModel();
                 checklist.Id = item.Id;
                 checklist.Name = item.Name;
@@ -228,7 +228,7 @@ namespace WorkflowManagement.Repository
         {
             var listTemplate = new List<TemplateMobileViewModel>();
 
-            var getAllTemplate = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.UserId.Equals(userId)).ToList();
+            var getAllTemplate = _context.Checklist.Where(c => c.OrganizationId == organizationId && c.UserId.Equals(userId) && c.TemplateId==null).ToList();
             foreach (var template in getAllTemplate)
             {
                 var templateViewmodel = new TemplateMobileViewModel() {

@@ -42,5 +42,11 @@ namespace Controllers
             var organization = organizationService.GetAllOrganization(userId);
             return Ok(organization);
         }
+        [HttpPut("switch/{userId}/{targetid}/{oldid}")]
+        public IActionResult GetAllOrganization([FromRoute] String userId,int targetid,int oldid)
+        {
+            organizationService.SwitchOrganization(userId, targetid, oldid);
+            return Ok();
+        }
     }
 }

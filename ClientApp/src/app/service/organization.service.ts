@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Organization } from '../model/organization';
-
+import { environment } from './../../environments/environment'
+import { Comment } from '../model/comment';
+var token = JSON.parse(localStorage.getItem("Token"));
+ const headers = new HttpHeaders().set('Authorization','Bearer '+token).set('Content-Type','application/json');
 @Injectable({
   providedIn: 'root'
 })
@@ -12,16 +15,26 @@ export class OrganizationService {
   getCurrentOrganization(userId)
   {  
     //return this.http.get<Organization>("https://localhost:44306/api/Organizations/current/2372592022969346");
-    return this.http.get<Organization>("https://localhost:44306/api/Organizations/current/"+userId);
+    return this.http.get<Organization>(environment.apiUrl+"/Organizations/current/"+userId);
+  }
+  getComment(organizationId,userId)
+  {  
+    //return this.http.get<Organization>("https://localhost:44306/api/Organizations/current/2372592022969346");
+    return this.http.get<Comment[]>(environment.apiUrl+"/Comments/notification/"+organizationId+"/"+userId);
   }
   getAllOrganization(userId)
   {  
     //return this.http.get<Organization>("https://localhost:44306/api/Organizations/current/2372592022969346");
-    return this.http.get<Organization[]>("https://localhost:44306/api/Organizations/organizations/"+userId);
+    return this.http.get<Organization[]>(environment.apiUrl+"/Organizations/organizations/"+userId);
   }
   postOrganization(organization:Organization)
   {
-    return this.http.post("https://localhost:44306/api/Organizations",organization);
+    return this.http.post(environment.apiUrl+"/Organizations",organization);
+    
+  }
+  switchOrganization(userId:string,targetId:number,oldId:number)
+  {
+    return this.http.put(environment.apiUrl+"/Organizations/switch/"+userId+"/"+targetId+"/"+oldId,null);
     
   }
 }

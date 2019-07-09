@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Organization } from 'src/app/model/organization';
 import { OrganizationService } from 'src/app/service/organization.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,23 +14,39 @@ export class HomeComponent implements OnInit {
   userId:string;
   imageUrl:string;
   oragization:Organization;
-  constructor(private organizationService : OrganizationService) { }
+  notifications:number;
+
+  
+  constructor(private organizationService : OrganizationService,private route:ActivatedRoute) {   
+  }
 
   ngOnInit() {
     this.userId=JSON.parse(localStorage.getItem("UserId"));
     this.name=JSON.parse(localStorage.getItem("Name"));
     this.imageUrl=JSON.parse(localStorage.getItem("ImageUrl"));
-    this.oragization = {id:0,adminId:'',currentOrganization:false,name:''};
-    this.getCurrentOrganization(this.userId);
+    this.oragization = JSON.parse(localStorage.getItem("Organization"));
+    this.notifications = JSON.parse(localStorage.getItem("Notification"));
+    if(this.notifications===null || this.notifications === undefined)
+    {
+      this.notifications=0;
+    }
+   // this.getCurrentOrganization(this.userId);
   }
   getCurrentOrganization(userId:string)
   {
     this.organizationService.getCurrentOrganization(userId).subscribe(res=>{
-     this.oragization=res;
-     console.log(this.oragization);
-     localStorage.setItem("OrganizationName",JSON.stringify(this.oragization.name));
-     localStorage.setItem("OrganizationId",JSON.stringify(this.oragization.id));
-     
+      if(!res)
+      {
+        localStorage.setItem("OrganizationId",JSON.stringify("None"));
+        console.log("false");
+      }
+      else
+      {
+        this.oragization=res;
+        console.log(this.oragization);
+        localStorage.setItem("OrganizationName",JSON.stringify(this.oragization.name));
+        localStorage.setItem("OrganizationId",JSON.stringify(this.oragization.id));
+      }    
     });  
   }
   logout()

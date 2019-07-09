@@ -6,6 +6,7 @@ using IRepository;
 using EntityContext;
 using WorkflowManagement.Models;
 using WorkflowManagement.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace WorkflowManagement.Repository
 {
@@ -22,6 +23,7 @@ namespace WorkflowManagement.Repository
             context.Organization.Add(organization);
             UserOrganization userOrganization = new UserOrganization();
             userOrganization.MemberId = organization.AdminId;
+            userOrganization.StatusMember = "MEMBER";
             userOrganization.OrganizationId = organization.Id;
             userOrganization.CurrentOrganization = false;
             context.UserOrganization.Add(userOrganization);
@@ -38,6 +40,20 @@ namespace WorkflowManagement.Repository
             var organizations = context.Organization.Where(o => o.AdminId.Equals(userId)).ToList();
 
             return organizations;
+        }
+        public void SwitchOrganization(String userId,int targetOrganizationId,int oldOrganizationId)
+        {
+            var getOrganization = context.Organization.Where(o => o.Id == targetOrganizationId).FirstOrDefault();
+            var oldOrganization = context.Organization.Where(o => o.Id == oldOrganizationId).FirstOrDefault();
+            if(oldOrganization != null)
+            {
+                oldOrganization.CurrentOrganization = false;
+                context.Entry(oldOrganization).State = EntityState.Modified;
+            }        
+            getOrganization.CurrentOrganization = true;
+           
+            context.Entry(getOrganization).State = EntityState.Modified;
+            context.SaveChanges();
         }
     }
 }

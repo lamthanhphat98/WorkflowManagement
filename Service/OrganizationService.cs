@@ -31,5 +31,10 @@ namespace WorkflowManagement.Service
         {
             return organizationRepository.GetCurrentOrganization(userId);
         }
+
+        public void SwitchOrganization(string userId, int targetOrganizationId, int oldOrganizationId)
+        {
+            organizationRepository.SwitchOrganization(userId, targetOrganizationId, oldOrganizationId);
+        }
     }
 }

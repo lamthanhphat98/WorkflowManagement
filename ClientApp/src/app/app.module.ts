@@ -22,6 +22,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { TemplateComponent } from './checklist/template/template.component';
 import { ChecklistResolverService } from './service/checklist-resolver.service';
 import { ChecklistDetailResolverService } from './service/checklistdetail-resolver.service';
+import { GetAllChecklistResolver } from './service/getallchecklist-resolver.service';
+import { CurrentOrganizationResolver } from './service/current-organization-resolver.service';
 
 
 
@@ -47,10 +49,10 @@ const routes :Routes = [
     path:"login",component:LoginComponent
   },
   {
-    path:"home",component:HomeComponent
+    path:"home",component:HomeComponent,resolve:{dashboard:CurrentOrganizationResolver}
   },
   {
-    path:"dashboard",component:DashboardComponent
+    path:"dashboard",component:DashboardComponent,resolve:{dashboard:GetAllChecklistResolver}
   },
   {
     path:"form",component:CreateformComponent

@@ -58,6 +58,7 @@ export class ChecklistComponent implements OnInit {
     private domSanitizer :DomSanitizer ) {
       this.id = parseInt(this.router.snapshot.paramMap.get("id"));
       this.taskId = parseInt(this.router.snapshot.paramMap.get("taskid"));
+      localStorage.setItem("currentPriorityChecklist",this.taskId.toString());
      
       if(this.taskId===NaN)
       {
@@ -128,7 +129,7 @@ export class ChecklistComponent implements OnInit {
   
    // localStorage.setItem("currentEditTask", this.taskId.toString());
     //console.log(this.taskId);
-    this.templateId = JSON.parse(localStorage.getItem("templateId"));
+   // this.templateId = JSON.parse(localStorage.getItem("templateId"));
     this.organizationId = JSON.parse(localStorage.getItem("OrganizationId"));
     this.userId = JSON.parse(localStorage.getItem("UserId"));
 

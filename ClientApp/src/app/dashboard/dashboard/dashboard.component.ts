@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChecklistDashboard } from 'src/app/model/checklistdashboard';
 import { DashboardService } from 'src/app/service/dashboard.service';
 
-import { Route, Router } from '@angular/router';
+import { Route, Router, ActivatedRoute } from '@angular/router';
 import { ChecklistService } from 'src/app/service/checklist.service';
 import { TemplateViewmodel } from 'src/app/model/templateViewModel';
 
@@ -24,32 +24,54 @@ export class DashboardComponent implements OnInit {
   listChecklist : ChecklistDashboard[] = [];
   templateName:string;
   template:TemplateViewmodel;
-  constructor(private dashboardSerivce : DashboardService,private router:Router,private checklistService:ChecklistService) { }
+  notification:string='';
+  constructor(private dashboardSerivce : DashboardService,private router:Router,private checklistService:ChecklistService,
+    private route: ActivatedRoute,) {
+      
+        this.allList=route.snapshot.data['dashboard'];
+        setTimeout(() => {
+          this.allList=JSON.parse(localStorage.getItem("allList"));
+          console.log(this.allList);
+            this.organizationId  = JSON.parse(localStorage.getItem("OrganizationId")); 
+            if(this.organizationId.toString()==="0")
+            {
+              this.notification="You have not any organization now , create it !!!"
+              console.log(this.notification);
+            }            
+             if(this.allList!==null || this.allList !== undefined || this.allList.length!==0)
+             {
+            this.organizationId  = JSON.parse(localStorage.getItem("OrganizationId")); 
+            this.getTemplates();
+            this.getChecklists();
+             }
+             else if(this.allList===null || this.allList === undefined || this.allList.length===0){
+              this.notification="You have not any template now , create it !!!"
+              console.log(this.notification);
+             }
+        }, 300);
+  
+   }
 
   ngOnInit() {
     localStorage.removeItem("listTaskItem");
-    localStorage.removeItem("currentPriorityEdit");
-    this.organizationId =JSON.parse(localStorage.getItem("OrganizationId"));
-    this.userId = JSON.parse(localStorage.getItem("UserId"));
-    setTimeout(()=>{
-      if(this.userId.length==0)
-      {
-        this.router.navigateByUrl("");
-      }
-    },300);
-    this.imageUrl=JSON.parse(localStorage.getItem("ImageUrl"));
-   
-    this.loadAllChecklists(this.organizationId,this.userId);
+    localStorage.removeItem("templateId");
 
-    setTimeout(() => {
-      this.getTemplates();
-    }, 300);
-    setTimeout(() => {
-      this.getChecklists();
-      console.log(this.listChecklist);
-      
-    }, 300);
-    //console.log(this.listTemplate);
+    localStorage.removeItem("currentPriorityEdit");
+     
+      this.userId = JSON.parse(localStorage.getItem("UserId"));
+      // this.loadAllChecklists(this.organizationId,this.userId);
+       setTimeout(()=>{
+         if(this.userId.length==0)
+         {
+           this.router.navigateByUrl("");
+         }
+       },300);
+       this.imageUrl=JSON.parse(localStorage.getItem("ImageUrl"));
+
+   
+  
+       //console.log(this.listTemplate);
+  
     
 
   }
@@ -60,7 +82,9 @@ export class DashboardComponent implements OnInit {
   loadAllChecklists(organizationId,userId)
   {
     this.dashboardSerivce.getChecklist(organizationId,userId).subscribe(res=>{
-      this.allList=res as ChecklistDashboard[];  });
+      this.allList=res as ChecklistDashboard[]; 
+      console.log(this.allList);
+    });
   }
   getChecklists()
   {
@@ -82,7 +106,7 @@ export class DashboardComponent implements OnInit {
   }
   newTemplate()
   {
-    console.log(this.templateName);
+    console.log(this.organizationId);
     this.template={id:0,userId:this.userId,name:this.templateName,description:'',organizationId:this.organizationId,templateId:null,templateStatus:'Template',timeCreated:null,category:this.categoryName}
     localStorage.setItem("nametemplate",this.templateName);
     this.checklistService.postTemplate(this.template).subscribe(res=>{
